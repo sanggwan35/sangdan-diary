@@ -1150,3 +1150,60 @@ nav a:hover {
 
     pointer-events: none;
 }
+
+
+/* ==================================================
+   TODAY'S ADVICE
+================================================== */
+
+.advice-section {
+    margin: 35px auto 10px;
+    padding: 25px 20px;
+    max-width: 600px;
+    text-align: center;
+    border: 1px solid rgba(61, 53, 66, 0.35);
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow: 3px 3px 0 rgba(61, 53, 66, 0.12);
+}
+
+.advice-label {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    background: #3d3542;
+    color: #fffaf3;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+#advice-text {
+    min-height: 25px;
+    margin: 10px 0 20px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+#advice-button {
+    padding: 9px 15px;
+    border: 1px solid #3d3542;
+    background: #fffaf3;
+    color: #3d3542;
+    font-family: monospace;
+    font-size: 12px;
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+#advice-button:hover {
+    background: #3d3542;
+    color: #fffaf3;
+    transform: translateY(-2px);
+}
+
+#advice-button:active {
+    transform: translateY(1px);
+}
