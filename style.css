@@ -1,0 +1,1152 @@
+/* =========================
+   전체 기본 디자인
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f5f0e8;
+    color: #3d3542;
+    font-family: monospace;
+    text-align: center;
+    margin: 0;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 32px;
+    letter-spacing: 3px;
+}
+
+p {
+    font-size: 16px;
+}
+
+
+/* =========================
+   기본 페이지 박스
+========================= */
+
+.container {
+    width: 750px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fffaf3;
+    border: 2px solid #3d3542;
+    box-shadow: 8px 8px 0 #3d3542;
+
+    animation: pageAppear 0.6s ease-out;
+}
+
+@keyframes pageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   네비게이션
+========================= */
+
+nav {
+    margin: 25px 0;
+}
+
+nav a {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 12px;
+    color: #3d3542;
+    text-decoration: none;
+    border: 2px solid #3d3542;
+    background-color: #f5f0e8;
+}
+
+nav a:hover {
+    background-color: #3d3542;
+    color: #fffaf3;
+}
+
+
+/* ==================================================
+   DIARY
+   ⚠️ 여기부터 DIARY 디자인
+   ⚠️ 현재 마음에 든 디자인 그대로 유지
+================================================== */
+
+.diary-tabs {
+    margin: 20px 0;
+}
+
+.diary-tabs button {
+    font-family: monospace;
+    font-size: 14px;
+    padding: 8px 16px;
+    margin: 3px;
+    border: 2px solid #3d3542;
+    background-color: #f5f0e8;
+    color: #3d3542;
+    cursor: pointer;
+}
+
+.diary-tabs button:hover {
+    background-color: #3d3542;
+    color: #fffaf3;
+}
+
+
+.diary-page .container {
+    width: 94%;
+    max-width: 1200px;
+}
+
+
+.diary-page #diary-list {
+    width: 100%;
+    margin-top: 25px;
+}
+
+
+.week-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin: 25px 0 16px;
+}
+
+.week-arrow {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border: 2px solid #3d3542;
+    border-radius: 50%;
+    background: #fffaf3;
+    color: #3d3542;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 18px;
+}
+
+.week-arrow:hover {
+    background: #3d3542;
+    color: #fffaf3;
+}
+
+
+.week-dates {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+    flex: 1;
+}
+
+.week-date {
+    min-width: 0;
+    padding: 10px 5px;
+    border: 1px solid #3d3542;
+    border-radius: 0;
+    background: #fffaf3;
+    color: #3d3542;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.35;
+    font-family: monospace;
+}
+
+.week-date:hover {
+    background: #f0e8dc;
+}
+
+.week-date.selected {
+    border-color: #3d3542;
+    background: #3d3542;
+    color: #fffaf3;
+}
+
+.week-date .day-name {
+    display: block;
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.week-date .day-number {
+    display: block;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+
+.selected-date-label {
+    margin: 0 0 18px;
+    text-align: center;
+    font-size: 15px;
+    color: #777;
+}
+
+
+.diary-day-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+.diary-day-column {
+    min-width: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.diary-day-column-title {
+    margin: 0 0 18px;
+    padding: 12px;
+    border-bottom: 2px solid #3d3542;
+    background: transparent;
+    text-align: center;
+    font-size: 18px;
+}
+
+
+/* =========================
+   DIARY = 줄노트
+========================= */
+
+.diary-post {
+    position: relative;
+
+    margin: 0 0 30px;
+    padding: 35px 30px 30px 58px;
+
+    text-align: left;
+
+    background-color: #fffdf7;
+
+    border: none;
+    border-radius: 0;
+
+    box-shadow: 3px 4px 0 rgba(61, 53, 66, 0.15);
+
+    background-image:
+        linear-gradient(
+            to right,
+            transparent 0,
+            transparent 42px,
+            rgba(180, 110, 110, 0.35) 42px,
+            rgba(180, 110, 110, 0.35) 43px,
+            transparent 43px
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(90, 130, 160, 0.22) 31px,
+            rgba(90, 130, 160, 0.22) 32px
+        );
+
+    line-height: 1.8;
+}
+
+.diary-post::before {
+    content: "";
+    position: absolute;
+
+    left: 12px;
+    top: 0;
+    bottom: 0;
+
+    width: 4px;
+
+    background:
+        radial-gradient(
+            circle,
+            #c9c0b7 2px,
+            transparent 3px
+        );
+
+    background-size: 4px 24px;
+    opacity: 0.65;
+}
+
+
+.diary-post .date {
+    margin: 0 0 10px;
+    color: #8a8088;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.diary-post h3 {
+    margin: 5px 0 10px;
+    font-size: 19px;
+    line-height: 1.6;
+}
+
+.diary-post .author {
+    color: #777;
+    font-size: 12px;
+}
+
+.diary-post > p:not(.date) {
+    margin: 18px 0 0;
+    line-height: 2;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+
+/* 사진 */
+
+.diary-image-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.diary-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+
+    border: 8px solid #fff;
+    box-shadow: 2px 3px 7px rgba(0, 0, 0, 0.15);
+}
+
+
+/* 댓글 */
+
+.diary-post .comment-area {
+    margin-top: 28px !important;
+    padding: 15px !important;
+
+    border: none !important;
+    border-top: 1px dashed #aaa !important;
+    border-radius: 0;
+
+    background: transparent;
+}
+
+.diary-post .comment-area > p:first-child {
+    margin: 0 0 12px;
+    font-size: 13px;
+}
+
+.diary-post .comment-list {
+    margin-bottom: 12px;
+}
+
+.diary-post .comment-list > div {
+    padding: 10px !important;
+
+    border: none !important;
+    border-bottom: 1px dashed #ccc !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+}
+
+.diary-post .comment-area textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    border: 1px solid #aaa;
+    border-radius: 0;
+
+    background: #fffdf7;
+    color: #3d3542;
+
+    font-family: monospace;
+    resize: vertical;
+}
+
+
+.diary-empty {
+    padding: 40px 10px;
+    text-align: center;
+    color: #888;
+}
+
+
+.diary-day-single {
+    width: 100%;
+}
+
+.diary-day-single .diary-post {
+    margin-bottom: 30px;
+}
+
+
+/* ==================================================
+   HOME
+================================================== */
+
+.top-sections {
+    display: flex;
+    gap: 15px;
+
+    width: 100%;
+    max-width: 540px;
+
+    margin: 30px auto 0;
+}
+
+.top-section {
+    flex: 1;
+    min-width: 0;
+    min-height: 130px;
+
+    padding: 20px;
+
+    background-color: #fffdf7;
+
+    /* 각각의 칸에는 테두리 없음 */
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    background-image:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(90, 130, 160, 0.22) 31px,
+            rgba(90, 130, 160, 0.22) 32px
+        );
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-section h2 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+}
+
+.top-section p {
+    margin: 6px 0;
+}
+
+
+/* 대표 D-DAY */
+
+#main-dday {
+    text-align: center;
+}
+
+#main-dday h3 {
+    margin: 0 0 8px;
+}
+
+#main-dday p {
+    margin: 5px 0;
+}
+
+
+/* 대표 이미지 */
+
+.main-image {
+    display: block;
+
+    width: 100%;
+    max-width: 540px;
+
+    height: auto;
+
+    margin: 30px auto 0;
+
+    /* 이미지 자체에는 테두리 없음 */
+    border: none;
+    box-shadow: none;
+
+    box-sizing: border-box;
+}
+
+
+/* 최근 일기 */
+
+.recent-section {
+    width: 100%;
+    max-width: 540px;
+
+    margin: 30px auto 0;
+    padding: 35px 30px 30px 55px;
+
+    background-color: #fffdf7;
+
+    /* 최근 일기에도 테두리 없음 */
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    background-image:
+        linear-gradient(
+            to right,
+            transparent 0,
+            transparent 42px,
+            rgba(180, 110, 110, 0.35) 42px,
+            rgba(180, 110, 110, 0.35) 43px,
+            transparent 43px
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(90, 130, 160, 0.22) 31px,
+            rgba(90, 130, 160, 0.22) 32px
+        );
+}
+
+.recent-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.diary-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+
+    transition:
+        transform 0.15s ease,
+        padding-left 0.15s ease;
+}
+
+.diary-item:hover {
+    transform: translateX(4px);
+}
+
+.diary-item:last-child {
+    border-bottom: none;
+}
+
+.diary-item strong {
+    font-size: 17px;
+}
+
+.diary-item p {
+    margin: 6px 0 0;
+    font-size: 14px;
+}
+
+.diary-item a {
+    color: #3d3542;
+    text-decoration: none;
+}
+
+.diary-item a:hover {
+    text-decoration: underline;
+}
+
+/* ==================================================
+   WRITE
+   HOME과 DIARY에 영향 안 주도록 전용 스타일
+================================================== */
+
+.write-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 35px 30px 30px 58px;
+
+    background-color: #fffdf7;
+    border: none;
+    border-radius: 0;
+    box-shadow: 3px 4px 0 rgba(61, 53, 66, 0.15);
+
+    background-image:
+        linear-gradient(
+            to right,
+            transparent 0,
+            transparent 42px,
+            rgba(180, 110, 110, 0.35) 42px,
+            rgba(180, 110, 110, 0.35) 43px,
+            transparent 43px
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 31px,
+            rgba(90, 130, 160, 0.22) 31px,
+            rgba(90, 130, 160, 0.22) 32px
+        );
+
+    text-align: left;
+}
+
+.write-container h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+
+.write-container label {
+    display: block;
+
+    margin-top: 20px;
+    margin-bottom: 8px;
+
+    font-weight: bold;
+}
+
+
+.write-container input,
+.write-container textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-family: Arial, sans-serif;
+}
+
+.write-container textarea {
+    min-height: 250px;
+    resize: vertical;
+}
+
+
+/* 사진 미리보기 */
+
+#imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+.preview-item {
+    position: relative;
+}
+
+.preview-item img {
+    width: 120px;
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+}
+
+
+/* 버튼 */
+
+.button-area {
+    display: flex;
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.button-area button {
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px 20px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-family: Arial, sans-serif;
+}
+
+#saveBtn {
+    background: #333;
+    color: white;
+}
+
+#cancelBtn {
+    background: #eee;
+    color: #333;
+}
+
+#saveBtn:hover {
+    opacity: 0.85;
+}
+
+#cancelBtn:hover {
+    background: #ddd;
+}
+
+#status {
+    margin-top: 15px;
+    color: #777;
+}
+
+
+/* ==================================================
+   LOGIN
+================================================== */
+
+.login-form {
+    width: 80%;
+    margin: 30px auto;
+    text-align: left;
+}
+
+.login-form label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.login-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+
+    font-family: monospace;
+
+    border: 2px solid #3d3542;
+    background-color: #fffaf3;
+}
+
+#login-button {
+    display: block;
+    margin: 25px auto 0;
+
+    padding: 10px 30px;
+
+    font-family: monospace;
+
+    border: 2px solid #3d3542;
+    background-color: #3d3542;
+    color: #fffaf3;
+
+    cursor: pointer;
+}
+
+#login-message {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+
+/* ==================================================
+   CALENDAR
+================================================== */
+
+.calendar-box {
+    margin-top: 25px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-header h3 {
+    margin: 0;
+}
+
+.calendar-header button {
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 24px;
+    background: none;
+    border: none;
+}
+
+.calendar-week,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-week div {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.calendar-day {
+    position: relative;
+    min-height: 60px;
+
+    background: none;
+    border: 1px solid #3d3542;
+
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    opacity: 0.6;
+}
+
+.calendar-day.empty {
+    cursor: default;
+    border: none;
+}
+
+.calendar-day.today {
+    font-weight: bold;
+}
+
+.calendar-day.has-diary {
+    font-weight: bold;
+}
+
+.diary-mark {
+    display: block;
+    font-size: 8px;
+    margin-top: 5px;
+}
+
+.selected-date-area {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #3d3542;
+}
+
+.calendar-diary {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #3d3542;
+}
+
+.calendar-diary h4 {
+    margin: 8px 0;
+}
+
+.calendar-diary p {
+    white-space: pre-wrap;
+}
+
+
+/* ==================================================
+   모바일
+================================================== */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .container {
+        padding: 20px;
+        box-shadow: 5px 5px 0 #3d3542;
+    }
+
+    /* DIARY */
+
+    .week-selector {
+        gap: 4px;
+    }
+
+    .week-arrow {
+        width: 32px;
+        height: 32px;
+    }
+
+    .week-dates {
+        gap: 4px;
+    }
+
+    .week-date {
+        padding: 8px 2px;
+    }
+
+    .week-date .day-name {
+        font-size: 9px;
+    }
+
+    .week-date .day-number {
+        font-size: 13px;
+    }
+
+    .diary-day-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .diary-post {
+        padding: 30px 20px 25px 48px;
+    }
+
+
+    /* HOME */
+
+    .top-sections {
+        flex-direction: column;
+    }
+
+
+    /* WRITE */
+
+    .write-container {
+        padding: 20px;
+    }
+
+    .button-area {
+        flex-direction: column;
+    }
+
+    .button-area button {
+        width: 100%;
+    }
+}
+/* 일기 표시 영역 */
+.calendar-day::after {
+    content: "";
+
+    width: 100%;
+    height: 36px;
+
+    margin-top: auto;
+
+    border-top: 1px solid #d5cec5;
+
+    box-sizing: border-box;
+}
+
+
+/* 일기가 있는 날짜 */
+.calendar-day.has-diary::after {
+    content: "●";
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #b33a2e;
+    font-size: 12px;
+}
+
+/* ==================================================
+   공통 헤더
+   모든 페이지에서 동일하게 사용
+================================================== */
+
+.site-header {
+    position: relative;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 3px;
+}
+
+.site-subtitle {
+    margin: 10px 0 25px;
+    font-size: 16px;
+}
+
+.site-nav-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-header nav {
+    margin: 0;
+}
+
+.site-header nav a {
+    display: inline-block;
+
+    margin: 5px;
+    padding: 8px 12px;
+
+    color: #3d3542;
+    text-decoration: none;
+
+    border: 2px solid #3d3542;
+    background-color: #f5f0e8;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.site-header nav a:hover {
+    background-color: #3d3542;
+    color: #fffaf3;
+
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 rgba(61, 53, 66, 0.25);
+}
+
+/* ==================================================
+   SEARCH
+   다른 메뉴와 분리해서 헤더 오른쪽에 배치
+================================================== */
+
+.site-search {
+    display: inline-block;
+
+    margin-top: 5px;
+    margin-left: 5px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #3d3542;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    text-decoration: none;
+
+    font-family: monospace;
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+.site-search:hover {
+    background: #3d3542;
+    color: #fffaf3;
+}
+
+
+
+
+/* ==================================================
+   화면이 좁아지면 SEARCH를 아래쪽으로 이동
+================================================== */
+
+@media (max-width: 850px) {
+
+    .site-search {
+        position: static;
+
+        display: inline-block;
+
+        margin-top: 10px;
+    }
+
+}
+
+
+/* ==================================================
+   CALENDAR - 날짜 살짝 흔들림
+================================================== */
+
+.week-date {
+    transition: transform 0.15s ease;
+}
+
+.week-date:hover {
+    animation: dateWiggle 0.35s ease;
+}
+
+@keyframes dateWiggle {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-3deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+
+    75% {
+        transform: rotate(-2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* ==================================================
+   BUTTON - 종이를 꾹 누르는 효과
+================================================== */
+
+.site-header nav a:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 1px 1px 0 rgba(61, 53, 66, 0.2);
+}
+
+
+
+
+/* ==================================================
+   HOME - 깔끔한 책 표지
+================================================== */
+
+.book-cover {
+    position: relative;
+
+    background: #fffaf3;
+
+    border: 2px solid #3d3542;
+    border-radius: 6px;
+
+    box-shadow:
+        5px 5px 0 #3d3542,
+        9px 9px 0 #d8d0c5;
+
+    overflow: hidden;
+}
+
+/* 표지 안쪽 얇은 프레임 */
+.book-cover::before {
+    content: "";
+
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+
+    border: 1px solid rgba(61, 53, 66, 0.25);
+
+    pointer-events: none;
+}
+
+/* 얇은 책등 */
+.book-cover::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 24px;
+
+    width: 1px;
+
+    background: rgba(61, 53, 66, 0.18);
+
+    pointer-events: none;
+}

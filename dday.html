@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>D-DAY</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ==================================================
+           D-DAY 전체
+        ================================================== */
+
+        .dday-page {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+
+        /* ==================================================
+           D-DAY 제목
+        ================================================== */
+
+        .dday-page h1 {
+            margin-bottom: 10px;
+        }
+
+
+        .dday-subtitle {
+            margin: 0 0 35px;
+
+            color: #8a8088;
+            font-size: 14px;
+        }
+
+
+        /* ==================================================
+           새 D-DAY 작성 영역
+        ================================================== */
+
+        .dday-write {
+            position: relative;
+
+            max-width: 650px;
+            margin: 0 auto 45px;
+
+            padding: 30px 35px 35px;
+
+            background-color: #fffdf7;
+
+            border: 1px solid #c9c0b7;
+            border-radius: 2px;
+
+            box-shadow:
+                4px 5px 0 rgba(61, 53, 66, 0.12);
+
+            background-image:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 31px,
+                    rgba(90, 130, 160, 0.14) 31px,
+                    rgba(90, 130, 160, 0.14) 32px
+                );
+
+            text-align: left;
+        }
+
+
+        /* 종이 위쪽 작은 라벨 */
+
+        .dday-write::before {
+            content: "MEMO";
+
+            position: absolute;
+
+            top: -13px;
+            left: 25px;
+
+            padding: 4px 13px;
+
+            background-color: #d8c7a8;
+
+            color: #5c5147;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            transform: rotate(-2deg);
+
+            box-shadow:
+                1px 2px 0 rgba(61, 53, 66, 0.12);
+        }
+
+
+        .dday-write h2 {
+            margin: 0 0 22px;
+
+            font-size: 20px;
+            text-align: center;
+        }
+
+
+        /* ==================================================
+           입력칸
+        ================================================== */
+
+        .dday-input-area {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+
+        .dday-input-area input {
+            box-sizing: border-box;
+
+            height: 44px;
+
+            padding: 10px 12px;
+
+            border: 1px solid #c9c0b7;
+            border-radius: 0;
+
+            background-color: rgba(255, 253, 247, 0.9);
+
+            color: #3d3542;
+
+            font-family: monospace;
+            font-size: 14px;
+
+            outline: none;
+        }
+
+
+        #dday-title {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        #dday-date {
+            width: 155px;
+        }
+
+
+        .dday-input-area input:focus {
+            border-color: #3d3542;
+        }
+
+
+        /* 추가 버튼 */
+
+        #add-dday {
+            height: 44px;
+
+            padding: 0 18px;
+
+            border: 2px solid #3d3542;
+            border-radius: 0;
+
+            background-color: #3d3542;
+            color: #fffaf3;
+
+            font-family: monospace;
+            font-size: 13px;
+
+            cursor: pointer;
+        }
+
+
+        #add-dday:hover {
+            background-color: #b33a2e;
+            border-color: #b33a2e;
+        }
+
+
+        /* ==================================================
+           등록된 D-DAY
+        ================================================== */
+
+        .dday-list-title {
+            margin: 0 0 25px;
+
+            font-size: 22px;
+            text-align: center;
+        }
+
+
+        #dday-list {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
+
+            gap: 25px;
+
+            width: 100%;
+        }
+
+
+        /* ==================================================
+           D-DAY 카드
+        ================================================== */
+
+        .dday-card {
+            position: relative;
+
+            min-height: 260px;
+
+            padding: 30px 25px 22px;
+
+            box-sizing: border-box;
+
+            background-color: #fffdf7;
+
+            border: 1px solid #c9c0b7;
+
+            box-shadow:
+                4px 5px 0 rgba(61, 53, 66, 0.12);
+
+            text-align: center;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        .dday-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                5px 8px 0 rgba(61, 53, 66, 0.15);
+        }
+
+
+        /* 카드마다 살짝 다른 기울기 */
+
+        .dday-card:nth-child(odd) {
+            transform: rotate(-0.6deg);
+        }
+
+
+        .dday-card:nth-child(even) {
+            transform: rotate(0.6deg);
+        }
+
+
+        .dday-card:nth-child(odd):hover {
+            transform:
+                rotate(-0.6deg)
+                translateY(-3px);
+        }
+
+
+        .dday-card:nth-child(even):hover {
+            transform:
+                rotate(0.6deg)
+                translateY(-3px);
+        }
+
+
+        /* ==================================================
+           대표 D-DAY
+        ================================================== */
+
+        .dday-card.main-dday {
+            grid-column: 1 / -1;
+
+            max-width: 600px;
+
+            width: 100%;
+
+            margin: 0 auto 10px;
+
+            padding-top: 38px;
+
+            background-color: #f8eee1;
+
+            border: 2px solid #3d3542;
+
+            box-shadow:
+                6px 7px 0 rgba(61, 53, 66, 0.18);
+
+            transform: none;
+        }
+
+
+        .dday-card.main-dday:hover {
+            transform: translateY(-3px);
+        }
+
+
+        /* 대표 라벨 */
+
+        .main-label {
+            display: inline-block;
+
+            margin-bottom: 15px;
+            padding: 5px 13px;
+
+            background-color: #3d3542;
+
+            color: #fffaf3;
+
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+
+        /* ==================================================
+           제목
+        ================================================== */
+
+        .dday-card h3 {
+            margin: 5px 0 15px;
+
+            font-size: 20px;
+
+            color: #3d3542;
+        }
+
+
+        .dday-card.main-dday h3 {
+            font-size: 24px;
+        }
+
+
+        /* ==================================================
+           D-DAY 숫자
+        ================================================== */
+
+        .dday-number {
+            margin: 12px 0 15px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 42px;
+            font-weight: bold;
+
+            letter-spacing: -1px;
+
+            color: #b33a2e;
+        }
+
+
+        .dday-card.main-dday .dday-number {
+            font-size: 58px;
+        }
+
+
+        /* ==================================================
+           날짜
+        ================================================== */
+
+        .dday-date-text {
+            margin: 0 0 22px;
+
+            color: #77716b;
+
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+
+        /* ==================================================
+           대표 표시
+        ================================================== */
+
+        .main-star {
+            margin: 0 0 15px;
+
+            color: #b33a2e;
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           버튼
+        ================================================== */
+
+        .dday-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: auto;
+        }
+
+
+        .dday-buttons button {
+            padding: 8px 12px;
+
+            border: 1px solid #8c857d;
+            border-radius: 0;
+
+            background-color: transparent;
+
+            color: #3d3542;
+
+            font-family: monospace;
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+
+        .dday-buttons button:hover {
+            background-color: #3d3542;
+            color: #fffaf3;
+        }
+
+
+        .dday-buttons .delete-button:hover {
+            background-color: #b33a2e;
+            border-color: #b33a2e;
+        }
+
+
+        /* ==================================================
+           D-DAY 없음
+        ================================================== */
+
+        .dday-empty {
+            grid-column: 1 / -1;
+
+            padding: 50px 20px;
+
+            background-color: #fffdf7;
+
+            border-top: 1px solid #c9c0b7;
+            border-bottom: 1px solid #c9c0b7;
+
+            color: #888;
+
+            text-align: center;
+        }
+
+
+        /* ==================================================
+           모바일
+        ================================================== */
+
+        @media (max-width: 700px) {
+
+            .dday-write {
+                padding: 30px 20px;
+            }
+
+
+            .dday-input-area {
+                flex-direction: column;
+            }
+
+
+            .dday-input-area input,
+            #dday-date,
+            #add-dday {
+                width: 100%;
+            }
+
+
+            #dday-list {
+                grid-template-columns: 1fr;
+            }
+
+
+            .dday-card.main-dday {
+                grid-column: auto;
+            }
+
+
+            .dday-card.main-dday .dday-number {
+                font-size: 48px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+    <h1>OUR LITTLE DIARY</h1>
+
+    <p class="site-subtitle">
+        상관단나 기록 저장소
+    </p>
+
+    <div class="site-nav-area">
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="diary.html">DIARY</a>
+            <a href="write.html">WRITE</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="dday.html">D-DAY</a>
+            <a href="mypage.html">MY PAGE</a>
+            <a href="trash.html">🗑️ TRASH</a>
+        </nav>
+    </div>
+
+    <a href="search.html" class="site-search">🔍 SEARCH</a>
+
+</header>
+
+<div class="dday-page">
+
+    <h1>D-DAY</h1>
+
+    <p class="dday-subtitle">
+        우리들의 특별한 날을 기록해요
+    </p>
+
+<style>
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.nav-wrapper nav {
+    margin: 0;
+}
+
+.search-link {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 1px solid #3d3542;
+    background: #fffaf3;
+    color: #3d3542;
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.search-link:hover {
+    background: #3d3542;
+    color: #fffaf3;
+}
+</style>
+
+    <!-- 새로운 D-DAY -->
+
+    <section class="dday-write">
+
+        <h2>새로운 D-DAY</h2>
+
+        <div class="dday-input-area">
+
+            <input
+                type="text"
+                id="dday-title"
+                placeholder="예: 회지 완성"
+            >
+
+            <input
+                type="date"
+                id="dday-date"
+            >
+
+            <button id="add-dday">
+                D-DAY 추가
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- 등록된 D-DAY -->
+
+    <h2 class="dday-list-title">
+        등록된 D-DAY
+    </h2>
+
+
+    <div id="dday-list">
+        불러오는 중...
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+/* ==================================================
+   Firebase
+================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+
+    authDomain:
+        "sangdan-diary.firebaseapp.com",
+
+    projectId:
+        "sangdan-diary",
+
+    storageBucket:
+        "sangdan-diary.firebasestorage.app",
+
+    messagingSenderId:
+        "224578307985",
+
+    appId:
+        "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+/* ==================================================
+   로그인 확인
+================================================== */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    loadDDays();
+
+});
+
+
+/* ==================================================
+   D-DAY 추가
+================================================== */
+
+document
+    .getElementById("add-dday")
+    .addEventListener(
+        "click",
+        async () => {
+
+            const title =
+                document
+                    .getElementById("dday-title")
+                    .value
+                    .trim();
+
+
+            const date =
+                document
+                    .getElementById("dday-date")
+                    .value;
+
+
+            if (!title || !date) {
+
+                alert(
+                    "제목과 날짜를 입력해주세요."
+                );
+
+                return;
+
+            }
+
+
+            await addDoc(
+                collection(db, "ddays"),
+                {
+
+                    title: title,
+
+                    date: date,
+
+                    createdBy:
+                        auth.currentUser.uid,
+
+                    isMain: false
+
+                }
+            );
+
+
+            document
+                .getElementById("dday-title")
+                .value = "";
+
+
+            document
+                .getElementById("dday-date")
+                .value = "";
+
+
+            loadDDays();
+
+        }
+    );
+
+
+/* ==================================================
+   D-DAY 불러오기
+================================================== */
+
+async function loadDDays() {
+
+    const list =
+        document.getElementById(
+            "dday-list"
+        );
+
+
+    list.innerHTML =
+        "불러오는 중...";
+
+
+    const snapshot =
+        await getDocs(
+            collection(db, "ddays")
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (snapshot.empty) {
+
+        const empty =
+            document.createElement("div");
+
+
+        empty.className =
+            "dday-empty";
+
+
+        empty.textContent =
+            "등록된 D-DAY가 없습니다.";
+
+
+        list.appendChild(empty);
+
+        return;
+
+    }
+
+
+    snapshot.forEach(
+        (ddayDoc) => {
+
+            const data =
+                ddayDoc.data();
+
+
+            const box =
+                document.createElement(
+                    "div"
+                );
+
+
+            box.className =
+                "dday-card";
+
+
+            /* 대표 여부 */
+
+            if (data.isMain === true) {
+
+                box.classList.add(
+                    "main-dday"
+                );
+
+            }
+
+
+            /* 대표 라벨 */
+
+            if (data.isMain === true) {
+
+                const mainLabel =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                mainLabel.className =
+                    "main-label";
+
+
+                mainLabel.textContent =
+                    "★ MAIN D-DAY";
+
+
+                box.appendChild(
+                    mainLabel
+                );
+
+            }
+
+
+            /* 제목 */
+
+            const title =
+                document.createElement(
+                    "h3"
+                );
+
+
+            title.textContent =
+                data.title;
+
+
+            /* D-DAY 숫자 */
+
+            const number =
+                document.createElement(
+                    "div"
+                );
+
+
+            number.className =
+                "dday-number";
+
+
+            number.textContent =
+                calculateDDay(
+                    data.date
+                );
+
+
+            /* 날짜 */
+
+            const date =
+                document.createElement(
+                    "p"
+                );
+
+
+            date.className =
+                "dday-date-text";
+
+
+            date.textContent =
+                data.date;
+
+
+            /* 대표 표시 */
+
+            if (data.isMain === true) {
+
+                const main =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                main.className =
+                    "main-star";
+
+
+                main.textContent =
+                    "★ 현재 대표 D-DAY";
+
+
+                box.appendChild(
+                    main
+                );
+
+            }
+
+
+            /* 버튼 영역 */
+
+            const buttons =
+                document.createElement(
+                    "div"
+                );
+
+
+            buttons.className =
+                "dday-buttons";
+
+
+            /* 대표 설정 버튼 */
+
+            const mainButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            mainButton.textContent =
+                data.isMain === true
+                    ? "대표 D-DAY 해제"
+                    : "대표로 설정";
+
+
+            mainButton.addEventListener(
+                "click",
+                async () => {
+
+                    const allDDays =
+                        await getDocs(
+                            collection(
+                                db,
+                                "ddays"
+                            )
+                        );
+
+
+                    for (
+                        const item
+                        of allDDays.docs
+                    ) {
+
+                        await updateDoc(
+
+                            doc(
+                                db,
+                                "ddays",
+                                item.id
+                            ),
+
+                            {
+                                isMain:
+                                    item.id ===
+                                    ddayDoc.id
+                            }
+
+                        );
+
+                    }
+
+
+                    loadDDays();
+
+                }
+            );
+
+
+            /* 삭제 버튼 */
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.className =
+                "delete-button";
+
+
+            deleteButton.textContent =
+                "삭제";
+
+
+            deleteButton.addEventListener(
+                "click",
+                async () => {
+
+                    const ok =
+                        confirm(
+                            "이 D-DAY를 삭제할까요?"
+                        );
+
+
+                    if (!ok) return;
+
+
+                    await deleteDoc(
+
+                        doc(
+                            db,
+                            "ddays",
+                            ddayDoc.id
+                        )
+
+                    );
+
+
+                    loadDDays();
+
+                }
+            );
+
+
+            buttons.appendChild(
+                mainButton
+            );
+
+
+            buttons.appendChild(
+                deleteButton
+            );
+
+
+            /* 카드에 추가 */
+
+            box.appendChild(
+                title
+            );
+
+
+            box.appendChild(
+                number
+            );
+
+
+            box.appendChild(
+                date
+            );
+
+
+            box.appendChild(
+                buttons
+            );
+
+
+            list.appendChild(
+                box
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   D-DAY 계산
+================================================== */
+
+function calculateDDay(dateString) {
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const target =
+        new Date(dateString);
+
+
+    target.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const difference =
+        target - today;
+
+
+    const days =
+        Math.round(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    if (days > 0) {
+
+        return "D-" + days;
+
+    }
+
+
+    if (days === 0) {
+
+        return "D-DAY";
+
+    }
+
+
+    return "D+" + Math.abs(days);
+
+}
+
+</script>
+
+</body>
+
+</html>

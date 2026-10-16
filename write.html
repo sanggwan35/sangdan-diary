@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WRITE - 우리들의 교환일기</title>
+    <link rel="stylesheet" href="style.css">
+
+    
+</head>
+
+<body>
+
+<div class="write-container">
+
+    <h1>일기 쓰기</h1>
+
+    <label for="authorName">작성자</label>
+    <input
+        type="text"
+        id="authorName"
+        placeholder="작성자 이름"
+    >
+
+    <label for="diaryDate">날짜</label>
+    <input
+        type="date"
+        id="diaryDate"
+    >
+
+    <label for="diaryTitle">제목</label>
+    <input
+        type="text"
+        id="diaryTitle"
+        placeholder="제목을 입력해주세요"
+    >
+
+    <label for="diaryContent">내용</label>
+    <textarea
+        id="diaryContent"
+        placeholder="오늘의 이야기를 적어주세요"
+    ></textarea>
+
+    <label for="diaryImages">사진</label>
+
+    <input
+        type="file"
+        id="diaryImages"
+        accept="image/*"
+        multiple
+    >
+
+    <div id="imagePreview"></div>
+
+    <div class="button-area">
+        <button id="saveBtn">저장하기</button>
+        <button id="draftBtn">임시저장</button>
+        <button id="cancelBtn">취소</button>
+    </div>
+
+    <div id="status"></div>
+
+</div>
+
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    doc,
+    getDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+/* =========================
+   Firebase 설정
+========================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+    authDomain: "sangdan-diary.firebaseapp.com",
+    projectId: "sangdan-diary",
+    storageBucket: "sangdan-diary.firebasestorage.app",
+    messagingSenderId: "224578307985",
+    appId: "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* =========================
+   HTML 요소
+========================= */
+
+const authorName =
+    document.getElementById("authorName");
+
+const diaryDate =
+    document.getElementById("diaryDate");
+
+const diaryTitle =
+    document.getElementById("diaryTitle");
+
+const diaryContent =
+    document.getElementById("diaryContent");
+
+const diaryImages =
+    document.getElementById("diaryImages");
+
+const imagePreview =
+    document.getElementById("imagePreview");
+
+const saveBtn =
+    document.getElementById("saveBtn");
+
+const cancelBtn =
+    document.getElementById("cancelBtn");
+
+const draftBtn =
+    document.getElementById("draftBtn");
+
+const status =
+    document.getElementById("status");
+
+
+let currentUser = null;
+
+let currentUserNickname = "";
+
+
+/* =========================
+   임시저장 키
+========================= */
+
+const DRAFT_KEY = "ourLittleDiaryDraft";
+
+
+/* =========================
+   로그인 확인
+========================= */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        alert("로그인이 필요합니다.");
+
+        location.href = "login.html";
+
+        return;
+    }
+
+    currentUser = user;
+
+    try {
+
+        const userDoc = await getDoc(
+            doc(db, "users", user.uid)
+        );
+
+        if (userDoc.exists()) {
+
+            currentUserNickname =
+                userDoc.data().nickname || "";
+
+            authorName.value =
+                currentUserNickname;
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+});
+
+
+/* =========================
+   임시저장 불러오기
+========================= */
+
+const savedDraft =
+    localStorage.getItem(DRAFT_KEY);
+
+if (savedDraft) {
+
+    try {
+
+        const draft =
+            JSON.parse(savedDraft);
+
+        const loadDraft =
+            confirm(
+                "임시저장된 일기가 있어요.\n\n" +
+                "불러오시겠어요?"
+            );
+
+        if (loadDraft) {
+
+            authorName.value =
+                draft.authorName || "";
+
+            diaryDate.value =
+                draft.diaryDate || "";
+
+            diaryTitle.value =
+                draft.diaryTitle || "";
+
+            diaryContent.value =
+                draft.diaryContent || "";
+
+            status.textContent =
+                "임시저장된 내용을 불러왔어요.";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "임시저장 불러오기 실패:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================
+   임시저장
+========================= */
+
+draftBtn.addEventListener("click", () => {
+
+    const draft = {
+
+        authorName:
+            authorName.value.trim(),
+
+        diaryDate:
+            diaryDate.value,
+
+        diaryTitle:
+            diaryTitle.value.trim(),
+
+        diaryContent:
+            diaryContent.value
+
+    };
+
+
+    localStorage.setItem(
+        DRAFT_KEY,
+        JSON.stringify(draft)
+    );
+
+
+    status.textContent =
+        "임시저장되었습니다.";
+
+    alert("임시저장되었습니다!");
+
+});
+
+
+/* =========================
+   사진 미리보기
+========================= */
+
+diaryImages.addEventListener("change", () => {
+
+    imagePreview.innerHTML = "";
+
+    const files =
+        Array.from(diaryImages.files);
+
+    if (files.length === 0) {
+        return;
+    }
+
+
+    /* 최대 3장 */
+
+    if (files.length > 3) {
+
+        alert("사진은 최대 3장까지 올릴 수 있어요.");
+
+        diaryImages.value = "";
+
+        return;
+    }
+
+
+    files.forEach((file) => {
+
+        const reader =
+            new FileReader();
+
+        reader.onload = (event) => {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "preview-item";
+
+
+            const img =
+                document.createElement("img");
+
+            img.src =
+                event.target.result;
+
+
+            item.appendChild(img);
+
+            imagePreview.appendChild(item);
+
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+});
+
+
+/* =========================
+   사진 압축
+========================= */
+
+function compressImage(file) {
+
+    return new Promise((resolve, reject) => {
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload = (event) => {
+
+            const img =
+                new Image();
+
+
+            img.onload = () => {
+
+                const canvas =
+                    document.createElement("canvas");
+
+                const maxWidth = 1000;
+
+                const maxHeight = 1000;
+
+
+                let width =
+                    img.width;
+
+                let height =
+                    img.height;
+
+
+                /* 가로 크기 제한 */
+
+                if (width > maxWidth) {
+
+                    height =
+                        height * (maxWidth / width);
+
+                    width =
+                        maxWidth;
+
+                }
+
+
+                /* 세로 크기 제한 */
+
+                if (height > maxHeight) {
+
+                    width =
+                        width * (maxHeight / height);
+
+                    height =
+                        maxHeight;
+
+                }
+
+
+                canvas.width =
+                    width;
+
+                canvas.height =
+                    height;
+
+
+                const ctx =
+                    canvas.getContext("2d");
+
+
+                ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+                const compressed =
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        0.7
+                    );
+
+
+                resolve(compressed);
+
+            };
+
+
+            img.onerror = reject;
+
+            img.src =
+                event.target.result;
+
+        };
+
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* =========================
+   저장하기
+========================= */
+
+saveBtn.addEventListener("click", async () => {
+
+    if (!currentUser) {
+
+        alert("로그인이 필요합니다.");
+
+        return;
+    }
+
+
+    const author =
+        authorName.value.trim();
+
+    const date =
+        diaryDate.value;
+
+    const title =
+        diaryTitle.value.trim();
+
+    const content =
+        diaryContent.value.trim();
+
+
+    /* =========================
+       기본 확인
+    ========================= */
+
+    if (!author) {
+
+        alert("작성자를 입력해주세요.");
+
+        return;
+    }
+
+    if (!date) {
+
+        alert("날짜를 선택해주세요.");
+
+        return;
+    }
+
+    if (!title) {
+
+        alert("제목을 입력해주세요.");
+
+        return;
+    }
+
+    if (!content) {
+
+        alert("내용을 입력해주세요.");
+
+        return;
+    }
+
+
+    try {
+
+        saveBtn.disabled = true;
+
+        status.textContent =
+            "저장 중이에요...";
+
+
+        /* =========================
+           사진 압축
+        ========================= */
+
+        const imageFiles =
+            Array.from(diaryImages.files);
+
+        const imageDataUrls = [];
+
+
+        for (let i = 0; i < imageFiles.length; i++) {
+
+            status.textContent =
+                `사진 처리 중이에요... (${i + 1}/${imageFiles.length})`;
+
+
+            const compressedImage =
+                await compressImage(
+                    imageFiles[i]
+                );
+
+
+            imageDataUrls.push(
+                compressedImage
+            );
+
+        }
+
+
+        /* =========================
+           Firestore 저장
+        ========================= */
+
+        await addDoc(
+            collection(db, "diaries"),
+            {
+                author: author,
+
+                authorName: author,
+
+                authorUid: currentUser.uid,
+
+                date: date,
+
+                title: title,
+
+                content: content,
+
+                imageDataUrls: imageDataUrls,
+
+                createdAt: serverTimestamp()
+            }
+        );
+
+
+        /* =========================
+           정식 저장 성공
+           → 임시저장 삭제
+        ========================= */
+
+        localStorage.removeItem(DRAFT_KEY);
+
+
+        alert("일기가 저장되었습니다!");
+
+
+        location.href =
+            "diary.html";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "저장 중 오류가 발생했습니다.\n\n" +
+            error.message
+        );
+
+
+        status.textContent =
+            "저장에 실패했습니다.";
+
+    } finally {
+
+        saveBtn.disabled =
+            false;
+
+    }
+
+});
+
+
+/* =========================
+   취소
+========================= */
+
+cancelBtn.addEventListener("click", () => {
+
+    location.href =
+        "diary.html";
+
+});
+
+</script>
+
+</body>
+</html>

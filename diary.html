@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>DIARY - 우리들의 교환일기</title>
+    <link rel="stylesheet" href="style.css">
+
+   
+</head>
+
+<body class="diary-page">
+
+    <header class="site-header">
+
+<h1>OUR LITTLE DIARY</h1>
+
+<p class="site-subtitle">
+    상관단나 기록 저장소
+</p>
+
+<div class="site-nav-area">
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="diary.html">DIARY</a>
+        <a href="write.html">WRITE</a>
+        <a href="calendar.html">CALENDAR</a>
+        <a href="dday.html">D-DAY</a>
+        <a href="mypage.html">MY PAGE</a>
+        <a href="trash.html">🗑️ TRASH</a>
+    </nav>
+</div>
+
+<a href="search.html" class="site-search">🔍 SEARCH</a>
+
+</header>
+
+<div class="container">
+
+<style>
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.nav-wrapper nav {
+    margin: 0;
+}
+
+.search-link {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 1px solid #3d3542;
+    background: #fffaf3;
+    color: #3d3542;
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.search-link:hover {
+    background: #3d3542;
+    color: #fffaf3;
+}
+</style>
+
+        <h2>📖 DIARY</h2>
+
+        <div class="diary-tabs">
+
+            <button id="all-button">ALL</button>
+
+            <button id="me-button">나</button>
+
+            <button id="friend-button">친구</button>
+
+        </div>
+
+        <div id="diary-list">
+
+            <p>일기를 불러오는 중...</p>
+
+        </div>
+
+    </div>
+
+
+    <script type="module">
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+
+        import {
+
+            getFirestore,
+            collection,
+            getDocs,
+            getDoc,
+            query,
+            orderBy,
+            doc,
+            updateDoc,
+            deleteDoc,
+            addDoc
+
+        } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+        // =========================
+        // Firebase 설정
+        // =========================
+
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+
+            authDomain: "sangdan-diary.firebaseapp.com",
+
+            projectId: "sangdan-diary",
+
+            storageBucket: "sangdan-diary.firebasestorage.app",
+
+            messagingSenderId: "224578307985",
+
+            appId: "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+
+        };
+
+
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth(app);
+
+        const db = getFirestore(app);
+
+
+        const diaryList =
+            document.getElementById("diary-list");
+
+
+        let allDiaries = [];
+
+        // 현재 보고 있는 탭
+        let currentFilter = "all";
+
+        // 현재 선택한 날짜
+        let selectedDate = new Date();
+
+        // 오늘 날짜의 일기 날짜 형식과 맞추기 위해 시간 제거
+        selectedDate.setHours(0, 0, 0, 0);
+
+        let currentUser = null;
+
+        let currentUserNickname = "";
+
+
+        // =========================
+        // 로그인 확인
+        // =========================
+
+        onAuthStateChanged(auth, async (user) => {
+
+            if (!user) {
+
+                window.location.href = "login.html";
+
+                return;
+
+            }
+
+
+            currentUser = user;
+
+
+            // =========================
+            // 현재 사용자 닉네임 불러오기
+            // =========================
+
+            try {
+
+                const userRef =
+                    doc(db, "users", user.uid);
+
+
+                const userSnapshot =
+                    await getDoc(userRef);
+
+
+                if (userSnapshot.exists()) {
+
+                    const userData =
+                        userSnapshot.data();
+
+
+                    currentUserNickname =
+                        userData.nickname ||
+                        "이름 없음";
+
+                }
+
+                else {
+
+                    currentUserNickname =
+                        "이름 없음";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                currentUserNickname =
+                    "이름 없음";
+
+            }
+
+
+            await loadDiaries();
+
+        });
+
+
+        // =========================
+        // 일기 불러오기
+        // =========================
+
+        async function loadDiaries() {
+
+            try {
+
+                const diaryQuery = query(
+
+                    collection(db, "diaries"),
+
+                    orderBy("date", "desc")
+
+                );
+
+
+                const snapshot =
+                    await getDocs(diaryQuery);
+
+
+                allDiaries = [];
+
+
+                
+snapshot.forEach((docSnapshot) => {
+
+    const diaryData =
+        docSnapshot.data();
+
+
+    if (diaryData.isTrashed === true) {
+        return;
+    }
+
+
+    allDiaries.push({
+
+        id: docSnapshot.id,
+
+        ...diaryData
+
+    });
+
+});
+
+
+
+                showDiaries(getFilteredDiaries(), currentFilter);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                diaryList.innerHTML =
+                    "<p>일기를 불러오는 중 문제가 생겼어요.</p>";
+
+            }
+
+        }
+
+
+        // =========================
+        // 일기 목록 표시
+        // =========================
+
+        function showDiaries(diaries, mode = currentFilter) {
+
+            diaryList.innerHTML = "";
+
+            renderWeekSelector();
+
+            const selectedLabel =
+                document.createElement("p");
+
+            selectedLabel.className =
+                "selected-date-label";
+
+            selectedLabel.id =
+                "selected-date-label";
+
+            diaryList.appendChild(selectedLabel);
+
+            renderSelectedDay(diaries, mode);
+        }
+
+
+        function renderWeekSelector() {
+
+            const oldSelector =
+                document.querySelector(".week-selector");
+
+            if (oldSelector) {
+                oldSelector.remove();
+            }
+
+            const selector =
+                document.createElement("div");
+
+            selector.className =
+                "week-selector";
+
+            const prev =
+                document.createElement("button");
+
+            prev.className =
+                "week-arrow";
+
+            prev.textContent = "‹";
+
+            prev.addEventListener(
+                "click",
+                () => {
+                    selectedDate = addDays(
+                        selectedDate,
+                        -7
+                    );
+                    showDiaries(
+                        getFilteredDiaries(),
+                        currentFilter
+                    );
+                }
+            );
+
+            const dates =
+                document.createElement("div");
+
+            dates.className =
+                "week-dates";
+
+            const next =
+                document.createElement("button");
+
+            next.className =
+                "week-arrow";
+
+            next.textContent = "›";
+
+            next.addEventListener(
+                "click",
+                () => {
+                    selectedDate = addDays(
+                        selectedDate,
+                        7
+                    );
+                    showDiaries(
+                        getFilteredDiaries(),
+                        currentFilter
+                    );
+                }
+            );
+
+            for (let i = 0; i < 7; i++) {
+
+                const date =
+                    addDays(
+                        selectedDate,
+                        i - 3
+                    );
+
+                const button =
+                    document.createElement("button");
+
+                button.className =
+                    "week-date";
+
+                if (
+                    date === selectedDate
+                ) {
+                    button.classList.add(
+                        "selected"
+                    );
+                }
+
+                const dayName =
+                    document.createElement("span");
+
+                dayName.className =
+                    "day-name";
+
+                dayName.textContent =
+                    getKoreanDayName(date);
+
+                const dayNumber =
+                    document.createElement("span");
+
+                dayNumber.className =
+                    "day-number";
+
+                dayNumber.textContent =
+                    formatMonthDay(date);
+
+                button.appendChild(dayName);
+                button.appendChild(dayNumber);
+
+                button.addEventListener(
+                    "click",
+                    () => {
+                        selectedDate = date;
+
+                        showDiaries(
+                            getFilteredDiaries(),
+                            currentFilter
+                        );
+                    }
+                );
+
+                dates.appendChild(button);
+            }
+
+            selector.appendChild(prev);
+            selector.appendChild(dates);
+            selector.appendChild(next);
+
+            diaryList.appendChild(selector);
+        }
+
+
+        function renderSelectedDay(
+            diaries,
+            mode
+        ) {
+
+            const label =
+                document.getElementById(
+                    "selected-date-label"
+                );
+
+            if (label) {
+                label.textContent =
+                    `${selectedDate.getFullYear()}년 ${
+                        selectedDate.getMonth() + 1
+                    }월 ${
+                        selectedDate.getDate()
+                    }일`;
+            }
+
+            const selectedKey =
+                formatDateKey(selectedDate);
+
+            const dayDiaries =
+                diaries.filter(
+                    diary =>
+                        diary.date === selectedKey
+                );
+
+            if (mode === "all") {
+
+                const columns =
+                    document.createElement("div");
+
+                columns.className =
+                    "diary-day-columns";
+
+                const myColumn =
+                    createDayColumn(
+                        "내 일기"
+                    );
+
+                const friendColumn =
+                    createDayColumn(
+                        "친구 일기"
+                    );
+
+                const myDiaries =
+                    dayDiaries.filter(
+                        diary =>
+                            diary.authorUid ===
+                            currentUser.uid
+                    );
+
+                const friendDiaries =
+                    dayDiaries.filter(
+                        diary =>
+                            diary.authorUid !==
+                            currentUser.uid
+                    );
+
+                renderDayDiaries(
+                    myColumn,
+                    myDiaries
+                );
+
+                renderDayDiaries(
+                    friendColumn,
+                    friendDiaries
+                );
+
+                columns.appendChild(myColumn);
+                columns.appendChild(friendColumn);
+
+                diaryList.appendChild(columns);
+
+                return;
+            }
+
+            const single =
+                document.createElement("div");
+
+            single.className =
+                "diary-day-single";
+
+            renderDayDiaries(
+                single,
+                dayDiaries
+            );
+
+            diaryList.appendChild(single);
+        }
+
+
+        function createDayColumn(titleText) {
+
+            const column =
+                document.createElement("section");
+
+            column.className =
+                "diary-day-column";
+
+            const title =
+                document.createElement("h3");
+
+            title.className =
+                "diary-day-column-title";
+
+            title.textContent =
+                titleText;
+
+            column.appendChild(title);
+
+            return column;
+        }
+
+
+        function renderDayDiaries(
+            target,
+            diaries
+        ) {
+
+            if (diaries.length === 0) {
+
+                const empty =
+                    document.createElement("p");
+
+                empty.className =
+                    "diary-empty";
+
+                empty.textContent =
+                    "이 날에는 일기가 없어요.";
+
+                target.appendChild(empty);
+
+                return;
+            }
+
+            diaries.forEach(
+                diary =>
+                    createDiaryPost(
+                        diary,
+                        target
+                    )
+            );
+        }
+
+
+        function addDays(date, amount) {
+
+            const result =
+                new Date(date);
+
+            result.setDate(
+                result.getDate() + amount
+            );
+
+            return result;
+        }
+
+
+        function formatDateKey(date) {
+
+            const year =
+                date.getFullYear();
+
+            const month =
+                String(
+                    date.getMonth() + 1
+                ).padStart(2, "0");
+
+            const day =
+                String(
+                    date.getDate()
+                ).padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        function formatMonthDay(date) {
+
+            return `${date.getMonth() + 1}/${
+                date.getDate()
+            }`;
+        }
+
+
+        function getKoreanDayName(date) {
+
+            const names = [
+                "일",
+                "월",
+                "화",
+                "수",
+                "목",
+                "금",
+                "토"
+            ];
+
+            return names[
+                date.getDay()
+            ];
+        }
+
+
+        function createDiaryPost(
+            diary,
+            targetElement
+        ) {
+
+            const post =
+                document.createElement("div");
+
+            post.className =
+                "diary-post";
+
+
+            // 날짜
+            const date =
+                document.createElement("p");
+
+            date.className =
+                "date";
+
+            date.textContent =
+                diary.date || "";
+
+            post.appendChild(date);
+
+
+            // 작성자
+            const author =
+                document.createElement("h3");
+
+            author.textContent =
+                diary.authorName ||
+                diary.author ||
+                "이름 없음";
+
+            post.appendChild(author);
+
+
+            // 제목
+            const title =
+                document.createElement("h3");
+
+            title.textContent =
+                diary.title || "제목 없음";
+
+            post.appendChild(title);
+
+
+            // 내용
+            const content =
+                document.createElement("p");
+
+            content.textContent =
+                diary.content || "";
+
+            post.appendChild(content);
+/* 사진 표시 */
+
+if (
+    diary.imageDataUrls &&
+    diary.imageDataUrls.length > 0
+) {
+
+    const imageArea =
+        document.createElement("div");
+
+    imageArea.style.display = "flex";
+    imageArea.style.flexDirection = "column";
+    imageArea.style.gap = "12px";
+    imageArea.style.marginTop = "15px";
+
+
+    diary.imageDataUrls.forEach((imageDataUrl) => {
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            imageDataUrl;
+
+        img.style.width = "100%";
+        img.style.maxWidth = "500px";
+        img.style.borderRadius = "10px";
+        img.style.display = "block";
+
+
+        imageArea.appendChild(img);
+
+    });
+
+
+    post.appendChild(imageArea);
+
+}
+
+            // 내 일기만 수정 / 삭제
+            if (
+                currentUser &&
+                diary.authorUid ===
+                currentUser.uid
+            ) {
+
+                const editButton =
+                    document.createElement("button");
+
+                editButton.textContent =
+                    "수정";
+
+                editButton.className =
+                    "save-button";
+
+                editButton.style.display =
+                    "inline-block";
+
+                editButton.style.margin =
+                    "15px 5px 0 0";
+
+                editButton.addEventListener(
+                    "click",
+                    () => {
+                        editDiary(
+                            diary,
+                            post
+                        );
+                    }
+                );
+
+
+                const deleteButton =
+                    document.createElement("button");
+
+                deleteButton.textContent =
+                    "삭제";
+
+                deleteButton.className =
+                    "save-button";
+
+                deleteButton.style.display =
+                    "inline-block";
+
+                deleteButton.addEventListener(
+                    "click",
+                    () => {
+                        deleteDiary(
+                            diary.id
+                        );
+                    }
+                );
+
+
+                post.appendChild(editButton);
+                post.appendChild(deleteButton);
+            }
+
+
+            // =========================
+            // 댓글 박스
+            // =========================
+
+            const commentArea =
+                document.createElement("div");
+
+            commentArea.className =
+                "comment-area";
+
+
+            const commentTitle =
+                document.createElement("p");
+
+            commentTitle.textContent =
+                "💬 댓글 0개";
+
+            commentTitle.style.fontWeight =
+                "bold";
+
+            commentArea.appendChild(
+                commentTitle
+            );
+
+
+            const commentList =
+                document.createElement("div");
+
+            commentList.className =
+                "comment-list";
+
+            commentArea.appendChild(
+                commentList
+            );
+
+
+            const commentInput =
+                document.createElement("textarea");
+
+            commentInput.placeholder =
+                "댓글을 입력하세요...";
+
+            commentInput.style.width =
+                "100%";
+
+            commentInput.style.boxSizing =
+                "border-box";
+
+            commentInput.style.height =
+                "70px";
+
+            commentInput.style.marginTop =
+                "10px";
+
+            commentInput.style.padding =
+                "8px";
+
+            commentInput.style.fontFamily =
+                "monospace";
+
+            commentInput.style.resize =
+                "vertical";
+
+
+            const commentButton =
+                document.createElement("button");
+
+            commentButton.textContent =
+                "댓글 등록";
+
+            commentButton.className =
+                "save-button";
+
+            commentButton.style.margin =
+                "10px 0 0 0";
+
+
+            commentArea.appendChild(
+                commentInput
+            );
+
+            commentArea.appendChild(
+                commentButton
+            );
+
+            post.appendChild(
+                commentArea
+            );
+
+
+            // 날짜를 누른 순간부터 일기 내용이 바로 이 박스 안에 보임
+            targetElement.appendChild(
+                post
+            );
+
+
+            // 댓글 불러오기
+            loadComments(
+                diary.id,
+                commentList,
+                commentTitle
+            );
+
+
+            // 댓글 등록
+            commentButton.addEventListener(
+                "click",
+                async () => {
+
+                    const text =
+                        commentInput.value.trim();
+
+                    if (!text) {
+
+                        alert(
+                            "댓글 내용을 입력해주세요."
+                        );
+
+                        return;
+                    }
+
+                    try {
+
+                        await addDoc(
+
+                            collection(
+                                db,
+                                "diaries",
+                                diary.id,
+                                "comments"
+                            ),
+
+                            {
+                                text: text,
+
+                                authorUid:
+                                    currentUser.uid,
+
+                                author:
+                                    currentUserNickname ||
+                                    "이름 없음",
+
+                                authorName:
+                                    currentUserNickname ||
+                                    "이름 없음",
+
+                                createdAt:
+                                    new Date()
+                            }
+                        );
+
+
+                        commentInput.value = "";
+
+                        await loadComments(
+                            diary.id,
+                            commentList,
+                            commentTitle
+                        );
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "댓글을 등록하는 중 문제가 생겼어요."
+                        );
+                    }
+                }
+            );
+        }
+
+
+        async function loadComments(
+    diaryId,
+    commentList,
+    commentTitle
+) {
+    commentList.innerHTML = "";
+
+    try {
+        const commentsRef = collection(
+            db,
+            "diaries",
+            diaryId,
+            "comments"
+        );
+
+        const snapshot = await getDocs(commentsRef);
+
+        const comments = [];
+
+        snapshot.forEach((commentDoc) => {
+            comments.push({
+                id: commentDoc.id,
+                ...commentDoc.data()
+            });
+        });
+
+        comments.sort((a, b) => {
+            const getTime = (value) => {
+                if (!value) return 0;
+
+                if (
+                    value &&
+                    typeof value.toDate === "function"
+                ) {
+                    return value.toDate().getTime();
+                }
+
+                if (value instanceof Date) {
+                    return value.getTime();
+                }
+
+                return 0;
+            };
+
+            return getTime(a.createdAt) - getTime(b.createdAt);
+        });
+
+        commentTitle.textContent =
+            `💬 댓글 ${comments.length}개`;
+
+        if (comments.length === 0) {
+            const empty = document.createElement("p");
+
+            empty.textContent = "아직 댓글이 없어요.";
+            empty.style.fontSize = "13px";
+
+            commentList.appendChild(empty);
+
+            return;
+        }
+
+        comments.forEach((comment) => {
+            createComment(
+                diaryId,
+                comment.id,
+                comment,
+                commentList
+            );
+        });
+
+    } catch (error) {
+
+        console.error(
+            "댓글 불러오기 오류:",
+            error
+        );
+
+        commentTitle.textContent = "💬 댓글";
+
+        commentList.innerHTML = "";
+
+        const errorMessage =
+            document.createElement("p");
+
+        errorMessage.textContent =
+            "댓글을 불러오지 못했어요.";
+
+        errorMessage.style.color = "#a00";
+
+        commentList.appendChild(
+            errorMessage
+        );
+    }
+}
+
+
+        // =========================
+        // 댓글 하나 만들기
+        // =========================
+
+        function formatCommentDate(date) {
+    if (!date) return "";
+
+    let d;
+
+    if (date.toDate) {
+        d = date.toDate();
+    } else if (date instanceof Date) {
+        d = date;
+    } else {
+        d = new Date(date);
+    }
+
+    if (isNaN(d.getTime())) {
+        return "";
+    }
+
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hour = String(d.getHours()).padStart(2, "0");
+    const minute = String(d.getMinutes()).padStart(2, "0");
+
+    return `${year}.${month}.${day} ${hour}:${minute}`;
+}
+        function createComment(
+            diaryId,
+            commentId,
+            comment,
+            commentList
+        ) {
+
+            const commentBox =
+                document.createElement("div");
+
+
+            commentBox.style.margin =
+                "10px 0";
+
+
+            commentBox.style.padding =
+                "10px";
+
+
+            commentBox.style.border =
+                "1px solid #3d3542";
+
+
+            // 작성자
+            const commentAuthor =
+                document.createElement("strong");
+
+
+            commentAuthor.textContent =
+                comment.authorName ||
+                comment.author ||
+                "이름 없음";
+
+
+            // 날짜
+            const commentDate =
+                document.createElement("span");
+
+
+            commentDate.textContent =
+                comment.createdAt
+                    ? ` · ${formatCommentDate(
+                        comment.createdAt
+                    )}`
+                    : "";
+
+
+            commentDate.style.fontSize =
+                "12px";
+
+
+            commentDate.style.opacity =
+                "0.7";
+
+
+            commentAuthor.appendChild(
+                commentDate
+            );
+
+
+            // 댓글 내용
+            const commentText =
+                document.createElement("p");
+
+
+            commentText.textContent =
+                comment.text;
+
+
+            commentText.style.margin =
+                "6px 0";
+
+
+            commentBox.appendChild(
+                commentAuthor
+            );
+
+
+            commentBox.appendChild(
+                commentText
+            );
+
+
+            // =========================
+            // 댓글 수정 / 삭제
+            // =========================
+
+            if (
+                comment.authorUid ===
+                currentUser.uid
+            ) {
+
+                const commentEdit =
+                    document.createElement("button");
+
+
+                commentEdit.textContent =
+                    "수정";
+
+
+                commentEdit.style.fontFamily =
+                    "monospace";
+
+
+                commentEdit.style.cursor =
+                    "pointer";
+
+
+                commentEdit.style.marginRight =
+                    "5px";
+
+
+                commentEdit.addEventListener(
+                    "click",
+                    () => {
+
+                        editComment(
+
+                            diaryId,
+
+                            commentId,
+
+                            comment,
+
+                            commentList
+
+                        );
+
+                    }
+                );
+
+
+                const commentDelete =
+                    document.createElement("button");
+
+
+                commentDelete.textContent =
+                    "삭제";
+
+
+                commentDelete.style.fontFamily =
+                    "monospace";
+
+
+                commentDelete.style.cursor =
+                    "pointer";
+
+
+                commentDelete.addEventListener(
+                    "click",
+                    async () => {
+
+                        const answer =
+                            confirm(
+                                "이 댓글을 삭제할까요?"
+                            );
+
+
+                        if (!answer) return;
+
+
+                        try {
+
+                            await deleteDoc(
+
+                                doc(
+                                    db,
+                                    "diaries",
+                                    diaryId,
+                                    "comments",
+                                    commentId
+                                )
+
+                            );
+
+
+                            const parent =
+                                commentList.parentElement;
+
+
+                            const commentTitle =
+                                parent.querySelector(
+                                    "p"
+                                );
+
+
+                            await loadComments(
+
+                                diaryId,
+
+                                commentList,
+
+                                commentTitle
+
+                            );
+
+
+                        } catch (error) {
+
+                            console.error(error);
+
+                            alert(
+                                "댓글을 삭제하는 중 문제가 생겼어요."
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                commentBox.appendChild(
+                    commentEdit
+                );
+
+
+                commentBox.appendChild(
+                    commentDelete
+                );
+
+            }
+
+
+            commentList.appendChild(
+                commentBox
+            );
+
+        }
+
+
+        // =========================
+        // 댓글 수정
+        // =========================
+
+        function editComment(
+            diaryId,
+            commentId,
+            comment,
+            commentList
+        ) {
+
+            commentList.innerHTML = "";
+
+
+            const input =
+                document.createElement("textarea");
+
+
+            input.value =
+                comment.text;
+
+
+            input.style.width =
+                "100%";
+
+
+            input.style.boxSizing =
+                "border-box";
+
+
+            input.style.height =
+                "70px";
+
+
+            input.style.padding =
+                "8px";
+
+
+            input.style.fontFamily =
+                "monospace";
+
+
+            input.style.resize =
+                "vertical";
+
+
+            const saveButton =
+                document.createElement("button");
+
+
+            saveButton.textContent =
+                "저장";
+
+
+            saveButton.className =
+                "save-button";
+
+
+            saveButton.style.margin =
+                "10px 5px 0 0";
+
+
+            const cancelButton =
+                document.createElement("button");
+
+
+            cancelButton.textContent =
+                "취소";
+
+
+            cancelButton.className =
+                "save-button";
+
+
+            cancelButton.style.marginTop =
+                "10px";
+
+
+            commentList.appendChild(
+                input
+            );
+
+
+            commentList.appendChild(
+                saveButton
+            );
+
+
+            commentList.appendChild(
+                cancelButton
+            );
+
+
+            saveButton.addEventListener(
+                "click",
+                async () => {
+
+                    const newText =
+                        input.value.trim();
+
+
+                    if (!newText) {
+
+                        alert(
+                            "댓글 내용을 입력해주세요."
+                        );
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        await updateDoc(
+
+                            doc(
+                                db,
+                                "diaries",
+                                diaryId,
+                                "comments",
+                                commentId
+                            ),
+
+                            {
+
+                                text: newText
+
+                            }
+
+                        );
+
+
+                        const parent =
+                            commentList.parentElement;
+
+
+                        const commentTitle =
+                            parent.querySelector(
+                                "p"
+                            );
+
+
+                        await loadComments(
+
+                            diaryId,
+
+                            commentList,
+
+                            commentTitle
+
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "댓글을 수정하는 중 문제가 생겼어요."
+                        );
+
+                    }
+
+                }
+            );
+
+
+            cancelButton.addEventListener(
+                "click",
+                async () => {
+
+                    const parent =
+                        commentList.parentElement;
+
+
+                    const commentTitle =
+                        parent.querySelector(
+                            "p"
+                        );
+
+
+                    await loadComments(
+
+                        diaryId,
+
+                        commentList,
+
+                        commentTitle
+
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =========================
+        // 일기 수정
+        // =========================
+
+        function editDiary(
+            diary,
+            post
+        ) {
+
+            post.innerHTML = "";
+
+
+            const date =
+                document.createElement("p");
+
+
+            date.className =
+                "date";
+
+
+            date.textContent =
+                diary.date;
+
+
+            const titleInput =
+                document.createElement("input");
+
+
+            titleInput.type =
+                "text";
+
+
+            titleInput.value =
+                diary.title;
+
+
+            titleInput.style.width =
+                "100%";
+
+
+            titleInput.style.boxSizing =
+                "border-box";
+
+
+            titleInput.style.padding =
+                "10px";
+
+
+            titleInput.style.marginBottom =
+                "15px";
+
+
+            titleInput.style.fontFamily =
+                "monospace";
+
+
+            titleInput.style.fontSize =
+                "18px";
+
+
+            const contentInput =
+                document.createElement("textarea");
+
+
+            contentInput.value =
+                diary.content;
+
+
+            contentInput.style.width =
+                "100%";
+
+
+            contentInput.style.boxSizing =
+                "border-box";
+
+
+            contentInput.style.height =
+                "250px";
+
+
+            contentInput.style.padding =
+                "10px";
+
+
+            contentInput.style.fontFamily =
+                "monospace";
+
+
+            contentInput.style.fontSize =
+                "14px";
+
+
+            contentInput.style.resize =
+                "vertical";
+
+
+            const saveButton =
+                document.createElement("button");
+
+
+            saveButton.textContent =
+                "저장";
+
+
+            saveButton.className =
+                "save-button";
+
+
+            saveButton.style.display =
+                "inline-block";
+
+
+            saveButton.style.margin =
+                "15px 5px 0 0";
+
+
+            const cancelButton =
+                document.createElement("button");
+
+
+            cancelButton.textContent =
+                "취소";
+
+
+            cancelButton.className =
+                "save-button";
+
+
+            cancelButton.style.display =
+                "inline-block";
+
+
+            cancelButton.style.margin =
+                "15px 0 0 0";
+
+
+            post.appendChild(
+                date
+            );
+
+
+            post.appendChild(
+                titleInput
+            );
+
+
+            post.appendChild(
+                contentInput
+            );
+
+
+            post.appendChild(
+                saveButton
+            );
+
+
+            post.appendChild(
+                cancelButton
+            );
+
+
+            saveButton.addEventListener(
+                "click",
+                async () => {
+
+                    const newTitle =
+                        titleInput.value.trim();
+
+
+                    const newContent =
+                        contentInput.value.trim();
+
+
+                    if (
+                        !newTitle ||
+                        !newContent
+                    ) {
+
+                        alert(
+                            "제목과 내용을 모두 입력해주세요."
+                        );
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        await updateDoc(
+
+                            doc(
+                                db,
+                                "diaries",
+                                diary.id
+                            ),
+
+                            {
+
+                                title:
+                                    newTitle,
+
+                                content:
+                                    newContent
+
+                            }
+
+                        );
+
+
+                        await loadDiaries();
+
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "수정하는 중 문제가 생겼어요."
+                        );
+
+                    }
+
+                }
+            );
+
+
+            cancelButton.addEventListener(
+                "click",
+                () => {
+
+                    showDiaries(
+                        getFilteredDiaries(),
+                        currentFilter
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =========================
+        // 일기 삭제
+        // =========================
+
+        
+async function deleteDiary(
+    diaryId
+) {
+
+    const answer =
+        confirm(
+            "이 일기를 휴지통으로 이동할까요?"
+        );
+
+
+    if (!answer) return;
+
+
+    try {
+
+        await updateDoc(
+
+            doc(
+                db,
+                "diaries",
+                diaryId
+            ),
+
+            {
+                isTrashed: true
+            }
+
+        );
+
+
+        alert(
+            "일기가 휴지통으로 이동되었습니다."
+        );
+
+
+        await loadDiaries();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "휴지통으로 이동하는 중 문제가 생겼어요."
+        );
+
+    }
+
+}
+
+
+
+        // 현재 탭에 맞는 일기만 가져오기
+        function getFilteredDiaries() {
+
+            if (currentFilter === "me") {
+
+                return allDiaries.filter(
+                    diary =>
+                        diary.authorUid ===
+                        currentUser.uid
+                );
+
+            }
+
+            if (currentFilter === "friend") {
+
+                return allDiaries.filter(
+                    diary =>
+                        diary.authorUid !==
+                        currentUser.uid
+                );
+
+            }
+
+            return allDiaries;
+
+        }
+
+
+        // =========================
+        // ALL
+        // =========================
+
+        document
+            .getElementById("all-button")
+            .addEventListener(
+                "click",
+                () => {
+
+                    currentFilter = "all";
+
+                    showDiaries(
+                        getFilteredDiaries(),
+                        currentFilter
+                    );
+
+                }
+            );
+
+
+        // =========================
+        // 나
+        // =========================
+
+        document
+            .getElementById("me-button")
+            .addEventListener(
+                "click",
+                () => {
+
+                    currentFilter = "me";
+
+                    showDiaries(
+                        getFilteredDiaries(),
+                        currentFilter
+                    );
+
+                }
+            );
+
+
+        // =========================
+        // 친구
+        // =========================
+
+        document
+            .getElementById("friend-button")
+            .addEventListener(
+                "click",
+                () => {
+
+                    currentFilter = "friend";
+
+                    showDiaries(
+                        getFilteredDiaries(),
+                        currentFilter
+                    );
+
+                }
+            );
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>우리들의 교환일기</title>
+
+    <link rel="stylesheet" href="style.css">
+
+   
+
+<body>
+
+<div class="container book-cover">
+
+
+<header class="site-header">
+
+    <h1>OUR LITTLE DIARY</h1>
+
+    <p class="site-subtitle">
+        상관단나 기록 저장소
+    </p>
+
+    <div class="site-nav-area">
+
+        <nav>
+
+            <a href="index.html">HOME</a>
+
+            <a href="diary.html">DIARY</a>
+
+            <a href="write.html">WRITE</a>
+
+            <a href="calendar.html">CALENDAR</a>
+
+            <a href="dday.html">D-DAY</a>
+
+            <a href="mypage.html">MY PAGE</a>
+
+            <a href="trash.html">🗑️ TRASH</a>
+
+        </nav>
+
+    </div>
+
+    <a href="search.html"
+       class="site-search">
+        🔍 SEARCH
+    </a>
+
+</header>
+
+    <div class="top-sections">
+
+        <div class="top-section">
+            <h2>오늘</h2>
+            <p id="today-date">불러오는 중...</p>
+        </div>
+
+        <div class="top-section">
+            <h2>★ 대표 D-DAY</h2>
+            <div id="main-dday">불러오는 중...</div>
+        </div>
+
+    </div>
+
+    <img src="main-image.png" alt="대표 이미지" class="main-image">
+
+    <div class="recent-section">
+
+        <h2>최근 일기</h2>
+
+        <div id="recent-diary-list">
+            불러오는 중...
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+    authDomain: "sangdan-diary.firebaseapp.com",
+    projectId: "sangdan-diary",
+    storageBucket: "sangdan-diary.firebasestorage.app",
+    messagingSenderId: "224578307985",
+    appId: "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    loadMainDDay();
+    loadRecentDiaries();
+
+});
+
+
+const today = new Date();
+
+document.getElementById("today-date").textContent =
+    today.toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        weekday: "long"
+    });
+
+
+async function loadMainDDay() {
+
+    const box = document.getElementById("main-dday");
+
+    const snapshot = await getDocs(
+        collection(db, "ddays")
+    );
+
+    let mainDDay = null;
+
+    snapshot.forEach((ddayDoc) => {
+
+        const data = ddayDoc.data();
+
+        if (data.isMain === true) {
+            mainDDay = data;
+        }
+
+    });
+
+
+    if (!mainDDay) {
+
+        box.innerHTML =
+            "<p>대표 D-DAY가 없습니다.</p>";
+
+        return;
+    }
+
+
+    const ddayNumber =
+        calculateDDay(mainDDay.date);
+
+
+    box.innerHTML = `
+        <h3>${mainDDay.title}</h3>
+        <p>${ddayNumber}</p>
+        <p>${mainDDay.date}</p>
+    `;
+
+}
+
+
+async function loadRecentDiaries() {
+
+    const box =
+        document.getElementById("recent-diary-list");
+
+    const snapshot =
+        await getDocs(
+            collection(db, "diaries")
+        );
+
+
+    const diaries = [];
+
+
+    snapshot.forEach((diaryDoc) => {
+
+        diaries.push({
+            id: diaryDoc.id,
+            ...diaryDoc.data()
+        });
+
+    });
+
+
+    diaries.sort((a, b) =>
+        String(b.date).localeCompare(
+            String(a.date)
+        )
+    );
+
+
+    const recent =
+        diaries.slice(0, 3);
+
+
+    box.innerHTML = "";
+
+
+    if (recent.length === 0) {
+
+        box.innerHTML =
+            "<p>아직 작성된 일기가 없습니다.</p>";
+
+        return;
+    }
+
+
+    recent.forEach((diary) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "diary-item";
+
+
+        const author =
+            diary.authorName ||
+            diary.author ||
+            "이름 없음";
+
+
+        item.innerHTML = `
+            <a href="diary.html">
+                <strong>${diary.title}</strong>
+            </a>
+
+            <p>${diary.date} · ${author}</p>
+        `;
+
+
+        box.appendChild(item);
+
+    });
+
+}
+
+
+function calculateDDay(dateString) {
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+
+    const target =
+        new Date(dateString);
+
+    target.setHours(0, 0, 0, 0);
+
+
+    const difference =
+        target - today;
+
+
+    const days =
+        Math.round(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    if (days > 0) {
+        return "D-" + days;
+    }
+
+    if (days === 0) {
+        return "D-DAY";
+    }
+
+    return "D+" + Math.abs(days);
+
+}
+
+</script>
+
+</body>
+</html>

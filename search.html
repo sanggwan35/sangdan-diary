@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SEARCH - 우리들의 교환일기</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==================================================
+           SEARCH
+        ================================================== */
+
+        .search-container {
+            width: 94%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .search-paper {
+            position: relative;
+
+            margin-top: 30px;
+            padding: 45px 45px 40px 70px;
+
+            text-align: left;
+
+            background-color: #fffdf7;
+
+            background-image:
+                linear-gradient(
+                    to right,
+                    transparent 0,
+                    transparent 50px,
+                    rgba(180, 110, 110, 0.35) 50px,
+                    rgba(180, 110, 110, 0.35) 51px,
+                    transparent 51px
+                ),
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 31px,
+                    rgba(90, 130, 160, 0.22) 31px,
+                    rgba(90, 130, 160, 0.22) 32px
+                );
+
+            box-shadow:
+                5px 6px 0 rgba(61, 53, 66, 0.15);
+        }
+
+        .search-paper::before {
+            content: "";
+
+            position: absolute;
+
+            left: 18px;
+            top: 0;
+            bottom: 0;
+
+            width: 4px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #c9c0b7 2px,
+                    transparent 3px
+                );
+
+            background-size: 4px 24px;
+
+            opacity: 0.65;
+        }
+
+        .search-label {
+            display: inline-block;
+
+            margin-bottom: 12px;
+            padding: 4px 10px;
+
+            background: #3d3542;
+            color: #fffaf3;
+
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .search-paper h2 {
+            margin: 0 0 30px;
+
+            font-size: 25px;
+        }
+
+
+        /* ==================================================
+           검색창
+        ================================================== */
+
+        .search-box {
+            display: flex;
+
+            gap: 8px;
+
+            margin-bottom: 35px;
+        }
+
+        .search-input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 13px 15px;
+
+            border: 1px solid #999;
+            border-radius: 0;
+
+            background: #fff;
+
+            color: #3d3542;
+
+            font-family: monospace;
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #3d3542;
+        }
+
+        .search-button {
+            padding: 13px 20px;
+
+            border: 2px solid #3d3542;
+
+            background: #3d3542;
+            color: #fffaf3;
+
+            font-family: monospace;
+
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background: #fffaf3;
+            color: #3d3542;
+        }
+
+
+        /* ==================================================
+           검색 안내
+        ================================================== */
+
+        .search-info {
+            margin-bottom: 20px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           검색 결과
+        ================================================== */
+
+        .search-result-list {
+            width: 100%;
+        }
+
+        .search-result {
+            position: relative;
+
+            padding: 18px 10px;
+
+            border-bottom: 1px dashed #bbb;
+        }
+
+        .search-result:last-child {
+            border-bottom: none;
+        }
+
+        .search-result a {
+            color: #3d3542;
+
+            text-decoration: none;
+        }
+
+        .search-result a:hover {
+            text-decoration: underline;
+        }
+
+        .result-title {
+            margin: 0 0 7px;
+
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .result-meta {
+            margin: 0 0 8px;
+
+            color: #888;
+
+            font-size: 12px;
+        }
+
+        .result-content {
+            margin: 0;
+
+            color: #666;
+
+            font-size: 13px;
+            line-height: 1.7;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty-result {
+            padding: 40px 10px;
+
+            text-align: center;
+
+            color: #888;
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           모바일
+        ================================================== */
+
+        @media (max-width: 600px) {
+
+            .search-paper {
+                padding: 35px 25px 30px 55px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container search-container">
+
+    <h1>SEARCH</h1>
+
+
+    <nav>
+
+        <a href="index.html">HOME</a>
+
+        <a href="diary.html">DIARY</a>
+
+        <a href="write.html">WRITE</a>
+
+        <a href="calendar.html">CALENDAR</a>
+
+        <a href="dday.html">D-DAY</a>
+
+        <a href="mypage.html">MY PAGE</a>
+
+        <a href="search.html">SEARCH</a>
+
+    </nav>
+
+
+    <section class="search-paper">
+
+        <div class="search-label">
+            FIND RECORD
+        </div>
+
+
+        <h2>
+            기록 찾기
+        </h2>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="search-input"
+                class="search-input"
+                placeholder="제목, 내용, 작성자를 검색해주세요."
+                autocomplete="off"
+            >
+
+            <button
+                id="search-button"
+                class="search-button"
+                type="button"
+            >
+                검색
+            </button>
+
+        </div>
+
+
+        <p
+            id="search-info"
+            class="search-info"
+        >
+            검색어를 입력해주세요.
+        </p>
+
+
+        <div
+            id="search-result-list"
+            class="search-result-list"
+        >
+
+            <div class="empty-result">
+                아직 검색하지 않았어요.
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+/* ==================================================
+   FIREBASE
+================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+
+    authDomain:
+        "sangdan-diary.firebaseapp.com",
+
+    projectId:
+        "sangdan-diary",
+
+    storageBucket:
+        "sangdan-diary.firebasestorage.app",
+
+    messagingSenderId:
+        "224578307985",
+
+    appId:
+        "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+/* ==================================================
+   ELEMENTS
+================================================== */
+
+const searchInput =
+    document.getElementById("search-input");
+
+
+const searchButton =
+    document.getElementById("search-button");
+
+
+const searchInfo =
+    document.getElementById("search-info");
+
+
+const searchResultList =
+    document.getElementById("search-result-list");
+
+
+let allDiaries = [];
+
+
+/* ==================================================
+   LOGIN
+================================================== */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if (!user) {
+
+            alert("로그인이 필요합니다.");
+
+            location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        await loadDiaries();
+
+    }
+);
+
+
+/* ==================================================
+   일기 전체 불러오기
+================================================== */
+
+async function loadDiaries() {
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "diaries"
+                )
+            );
+
+
+        allDiaries = [];
+
+
+        snapshot.forEach(
+            (diaryDoc) => {
+
+                allDiaries.push({
+
+                    id:
+                        diaryDoc.id,
+
+                    ...diaryDoc.data()
+
+                });
+
+            }
+        );
+
+
+        /* 최신 날짜순 */
+
+        allDiaries.sort(
+            (a, b) => {
+
+                return String(
+                    b.date || ""
+                ).localeCompare(
+                    String(
+                        a.date || ""
+                    )
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        searchInfo.textContent =
+            "일기를 불러오는 중 오류가 발생했습니다.";
+
+    }
+
+}
+
+
+/* ==================================================
+   검색
+================================================== */
+
+function searchDiaries() {
+
+    const keyword =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    if (!keyword) {
+
+        searchInfo.textContent =
+            "검색어를 입력해주세요.";
+
+        searchResultList.innerHTML = `
+            <div class="empty-result">
+                검색어를 입력해주세요.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const results =
+        allDiaries.filter(
+            (diary) => {
+
+                const title =
+                    String(
+                        diary.title || ""
+                    ).toLowerCase();
+
+
+                const content =
+                    String(
+                        diary.content || ""
+                    ).toLowerCase();
+
+
+                const author =
+                    String(
+                        diary.authorName ||
+                        diary.author ||
+                        ""
+                    ).toLowerCase();
+
+
+                return (
+                    title.includes(keyword) ||
+                    content.includes(keyword) ||
+                    author.includes(keyword)
+                );
+
+            }
+        );
+
+
+    searchInfo.textContent =
+        `"${searchInput.value.trim()}" 검색 결과 ${results.length}개`;
+
+
+    renderResults(results);
+
+}
+
+
+/* ==================================================
+   결과 출력
+================================================== */
+
+function renderResults(results) {
+
+    searchResultList.innerHTML = "";
+
+
+    if (results.length === 0) {
+
+        searchResultList.innerHTML = `
+            <div class="empty-result">
+                검색 결과가 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    results.forEach(
+        (diary) => {
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "search-result";
+
+
+            const title =
+                escapeHTML(
+                    diary.title ||
+                    "제목 없음"
+                );
+
+
+            const date =
+                escapeHTML(
+                    diary.date ||
+                    ""
+                );
+
+
+            const author =
+                escapeHTML(
+                    diary.authorName ||
+                    diary.author ||
+                    "이름 없음"
+                );
+
+
+            const content =
+                escapeHTML(
+                    diary.content ||
+                    ""
+                );
+
+
+            item.innerHTML = `
+
+                <a href="diary.html">
+
+                    <p class="result-title">
+                        ${title}
+                    </p>
+
+                    <p class="result-meta">
+                        ${date}
+                        ·
+                        ${author}
+                    </p>
+
+                    <p class="result-content">
+                        ${content}
+                    </p>
+
+                </a>
+
+            `;
+
+
+            searchResultList.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   검색 버튼
+================================================== */
+
+searchButton.addEventListener(
+    "click",
+    searchDiaries
+);
+
+
+/* ==================================================
+   ENTER 검색
+================================================== */
+
+searchInput.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            searchDiaries();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   HTML 안전 처리
+================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+</body>
+
+</html>

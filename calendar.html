@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>CALENDAR</title>
+
+    <link rel="stylesheet" href="style.css">
+
+
+    <style>
+
+        /* ==================================================
+           공통 헤더
+        ================================================== */
+
+        .site-header {
+            position: relative;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+
+        .site-header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+        }
+
+
+        .site-subtitle {
+            margin: 10px 0 25px;
+            font-size: 16px;
+        }
+
+
+        .site-nav-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .site-header nav {
+            margin: 0;
+        }
+
+
+        .site-header nav a {
+            display: inline-block;
+
+            margin: 5px;
+            padding: 8px 12px;
+
+            color: #3d3542;
+            text-decoration: none;
+
+            border: 2px solid #3d3542;
+
+            background-color: #f5f0e8;
+        }
+
+
+        .site-header nav a:hover {
+            background-color: #3d3542;
+            color: #fffaf3;
+        }
+
+
+        /* ==================================================
+           SEARCH
+        ================================================== */
+
+        .site-search {
+    display: inline-block;
+
+    margin-top: 5px;
+    margin-left: 5px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #3d3542;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    text-decoration: none;
+
+    font-family: monospace;
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+        .site-search:hover {
+            background: #3d3542;
+            color: #fffaf3;
+        }
+
+
+        /* ==================================================
+           CALENDAR - 레트로 종이 달력
+        ================================================== */
+
+        .calendar-box {
+            width: 100%;
+            max-width: 900px;
+            margin: 25px auto 0;
+            padding: 40px 45px 45px;
+
+            background-color: #fffdf7;
+
+            border: 1px solid #c9c0b7;
+            border-radius: 2px;
+
+            box-shadow:
+                4px 5px 0 rgba(61, 53, 66, 0.12),
+                0 12px 25px rgba(61, 53, 66, 0.08);
+        }
+
+
+        /* ==================================================
+           달력 상단
+        ================================================== */
+
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+
+        .calendar-header button {
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            background: transparent;
+
+            color: #3d3542;
+
+            font-family: monospace;
+            font-size: 30px;
+
+            cursor: pointer;
+        }
+
+
+        .calendar-header button:hover {
+            color: #b33a2e;
+        }
+
+
+        #month-title {
+            margin: 0;
+
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 2px;
+
+            color: #3d3542;
+        }
+
+
+        /* ==================================================
+           요일
+        ================================================== */
+
+        .calendar-week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+
+            border-top: 2px solid #77716b;
+            border-bottom: 2px solid #77716b;
+
+            margin-bottom: 0;
+        }
+
+
+        .calendar-week > div {
+            padding: 13px 5px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            color: #3d3542;
+
+            text-align: center;
+        }
+
+
+        .calendar-week > div:first-child {
+            color: #c9362b;
+        }
+
+
+        .calendar-week > div:last-child {
+            color: #24549a;
+        }
+
+
+        /* ==================================================
+           날짜 전체 영역
+        ================================================== */
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+
+            border-left: 1px solid #d5cec5;
+            border-top: 1px solid #d5cec5;
+        }
+
+
+        /* ==================================================
+           날짜 한 칸
+        ================================================== */
+
+        .calendar-day {
+            position: relative;
+
+            min-height: 115px;
+            padding: 0;
+
+            background: rgba(255, 253, 247, 0.75);
+
+            border: none;
+            border-right: 1px solid #d5cec5;
+            border-bottom: 1px solid #d5cec5;
+
+            cursor: pointer;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            text-align: center;
+
+            font-family: monospace;
+
+            transition:
+                background-color 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        .calendar-day:hover {
+            background-color: #f3ede3;
+        }
+
+
+        /* 빈 날짜 */
+
+        .calendar-day.empty {
+            background-color: #f8f4ed;
+            cursor: default;
+        }
+
+
+        .calendar-day.empty:hover {
+            background-color: #f8f4ed;
+        }
+
+
+        /* ==================================================
+           날짜 숫자 영역
+        ================================================== */
+
+        .calendar-day-number {
+            display: flex;
+
+            width: 100%;
+            height: 78px;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+            font-size: 22px;
+            font-weight: bold;
+
+            color: #2f2b2a;
+        }
+
+
+        .calendar-day:nth-child(7n + 1) .calendar-day-number {
+            color: #c9362b;
+        }
+
+
+        .calendar-day:nth-child(7n) .calendar-day-number {
+            color: #24549a;
+        }
+
+
+        /* ==================================================
+           날짜 아래 작은 영역
+        ================================================== */
+
+        .calendar-day:not(.empty)::after {
+            content: "";
+
+            display: flex;
+
+            width: 100%;
+            height: 37px;
+
+            box-sizing: border-box;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-top: auto;
+
+            border-top: 1px solid #d5cec5;
+
+            color: #b33a2e;
+            font-size: 12px;
+        }
+
+
+        /* ==================================================
+           일기가 있는 날
+        ================================================== */
+
+        .calendar-day.has-diary {
+            background-color: #faf4e8;
+        }
+
+
+        .calendar-day.has-diary::after {
+            content: "●";
+        }
+
+
+        /* ==================================================
+           오늘
+        ================================================== */
+
+        .calendar-day.today {
+            background-color: #f5eee3;
+        }
+
+
+        .calendar-day.today .calendar-day-number {
+            width: 38px;
+            height: 38px;
+
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            border-radius: 50%;
+
+            background-color: #3d3542;
+            color: #fffaf3 !important;
+        }
+
+
+        .calendar-day.today::after {
+            margin-top: auto;
+        }
+
+
+        /* ==================================================
+           선택한 날짜
+        ================================================== */
+
+        .calendar-day.selected {
+            background-color: #eee5d7;
+
+            box-shadow:
+                inset 0 0 0 3px #3d3542;
+        }
+
+
+        /* ==================================================
+           기존 diary-mark는 숨김
+        ================================================== */
+
+        .diary-mark {
+            display: none;
+        }
+
+
+        /* ==================================================
+           선택한 날짜 아래 영역
+        ================================================== */
+
+        .selected-date-area {
+            width: 100%;
+            max-width: 900px;
+
+            margin: 30px auto 0;
+            padding: 28px 30px;
+
+            box-sizing: border-box;
+
+            background-color: #fffdf7;
+
+            border: 1px solid #c9c0b7;
+            border-radius: 2px;
+
+            box-shadow:
+                3px 4px 0 rgba(61, 53, 66, 0.12);
+
+            text-align: left;
+        }
+
+
+        #selected-date-title {
+            margin: 0 0 20px;
+
+            font-size: 20px;
+            font-weight: bold;
+
+            color: #3d3542;
+        }
+
+
+        /* ==================================================
+           해당 날짜의 일기
+        ================================================== */
+
+        .calendar-diary {
+            margin-bottom: 18px;
+            padding: 18px 20px;
+
+            background-color: #fffdf7;
+
+            border: 1px solid #d5cec5;
+
+            box-shadow:
+                2px 2px 0 rgba(61, 53, 66, 0.08);
+
+            text-align: left;
+        }
+
+
+        .calendar-diary:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .calendar-diary h4 {
+            margin: 8px 0;
+
+            font-size: 17px;
+        }
+
+
+        .calendar-diary p {
+            margin: 5px 0;
+
+            line-height: 1.7;
+        }
+
+
+        /* ==================================================
+           일기 없음
+        ================================================== */
+
+        .no-diary {
+            color: #888;
+            line-height: 1.7;
+        }
+
+
+        /* ==================================================
+           모바일
+        ================================================== */
+
+        @media (max-width: 850px) {
+
+            .site-search {
+                position: static;
+                display: inline-block;
+                margin-top: 10px;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .calendar-box {
+                padding: 30px 10px 25px;
+            }
+
+
+            #month-title {
+                font-size: 24px;
+            }
+
+
+            .calendar-header button {
+                width: 35px;
+                height: 35px;
+
+                font-size: 24px;
+            }
+
+
+            .calendar-week > div {
+                font-size: 12px;
+                padding: 10px 2px;
+            }
+
+
+            .calendar-day {
+                min-height: 80px;
+            }
+
+
+            .calendar-day-number {
+                height: 52px;
+                font-size: 16px;
+            }
+
+
+            .calendar-day:not(.empty)::after {
+                height: 28px;
+                font-size: 9px;
+            }
+
+
+            .calendar-day.today .calendar-day-number {
+                width: 28px;
+                height: 28px;
+
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
+
+
+            .selected-date-area {
+                padding: 20px 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         공통 헤더
+    ================================================== -->
+
+    <header class="site-header">
+
+        <h1>OUR LITTLE DIARY</h1>
+
+        <p class="site-subtitle">
+    상관단나 기록 저장소
+</p>
+
+<div class="site-nav-area">
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="diary.html">DIARY</a>
+        <a href="write.html">WRITE</a>
+        <a href="calendar.html">CALENDAR</a>
+        <a href="dday.html">D-DAY</a>
+        <a href="mypage.html">MY PAGE</a>
+        <a href="trash.html">🗑️ TRASH</a>
+    </nav>
+</div>
+
+<a href="search.html" class="site-search">🔍 SEARCH</a>
+
+    </header>
+
+
+    <!-- ==================================================
+         CALENDAR
+    ================================================== -->
+
+    <main>
+
+        <h1>CALENDAR</h1>
+
+
+        <div class="calendar-box">
+
+            <div class="calendar-header">
+
+                <button id="prev-month">
+                    ‹
+                </button>
+
+
+                <h2 id="month-title"></h2>
+
+
+                <button id="next-month">
+                    ›
+                </button>
+
+            </div>
+
+
+            <div class="calendar-week">
+
+                <div>일</div>
+                <div>월</div>
+                <div>화</div>
+                <div>수</div>
+                <div>목</div>
+                <div>금</div>
+                <div>토</div>
+
+            </div>
+
+
+            <div
+                id="calendar-days"
+                class="calendar-days">
+            </div>
+
+        </div>
+
+
+        <div class="selected-date-area">
+
+            <h3 id="selected-date-title">
+                날짜를 선택해주세요.
+            </h3>
+
+
+            <div id="selected-diaries">
+
+                <p class="no-diary">
+                    날짜를 클릭하면 해당 날짜의 일기가 보여요.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script type="module">
+
+        import { initializeApp }
+            from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        }
+        from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            collection,
+            getDocs,
+            query,
+            orderBy
+        }
+        from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+        /* =========================
+           FIREBASE
+        ========================= */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+
+            authDomain:
+                "sangdan-diary.firebaseapp.com",
+
+            projectId:
+                "sangdan-diary",
+
+            storageBucket:
+                "sangdan-diary.firebasestorage.app",
+
+            messagingSenderId:
+                "224578307985",
+
+            appId:
+                "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+
+        };
+
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const auth =
+            getAuth(app);
+
+
+        const db =
+            getFirestore(app);
+
+
+        /* =========================
+           변수
+        ========================= */
+
+        let allDiaries = [];
+
+        let currentDate = new Date();
+
+        let selectedButton = null;
+
+
+        /* =========================
+           로그인 확인
+        ========================= */
+
+        onAuthStateChanged(
+            auth,
+            async (user) => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                await loadDiaries();
+
+                renderCalendar();
+
+            }
+        );
+
+
+        /* =========================
+           일기 불러오기
+        ========================= */
+
+        async function loadDiaries() {
+
+            try {
+
+                const diaryQuery =
+                    query(
+                        collection(
+                            db,
+                            "diaries"
+                        ),
+                        orderBy(
+                            "date",
+                            "asc"
+                        )
+                    );
+
+
+                const snapshot =
+                    await getDocs(
+                        diaryQuery
+                    );
+
+
+                allDiaries = [];
+
+
+                snapshot.forEach(
+                    (doc) => {
+
+                        allDiaries.push({
+
+                            id: doc.id,
+
+                            ...doc.data()
+
+                        });
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "일기 불러오기 실패:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           달력 그리기
+        ========================= */
+
+        function renderCalendar() {
+
+            const year =
+                currentDate.getFullYear();
+
+
+            const month =
+                currentDate.getMonth();
+
+
+            document
+                .getElementById(
+                    "month-title"
+                )
+                .textContent =
+                `${year}년 ${month + 1}월`;
+
+
+            const calendarDays =
+                document.getElementById(
+                    "calendar-days"
+                );
+
+
+            calendarDays.innerHTML = "";
+
+
+            selectedButton = null;
+
+
+            const firstDay =
+                new Date(
+                    year,
+                    month,
+                    1
+                ).getDay();
+
+
+            const lastDate =
+                new Date(
+                    year,
+                    month + 1,
+                    0
+                ).getDate();
+
+
+            /* =========================
+               이전 달 빈칸
+            ========================= */
+
+            for (
+                let i = 0;
+                i < firstDay;
+                i++
+            ) {
+
+                const empty =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                empty.className =
+                    "calendar-day empty";
+
+
+                calendarDays.appendChild(
+                    empty
+                );
+
+            }
+
+
+            /* =========================
+               날짜
+            ========================= */
+
+            for (
+                let day = 1;
+                day <= lastDate;
+                day++
+            ) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.className =
+                    "calendar-day";
+
+
+                const number =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                number.className =
+                    "calendar-day-number";
+
+
+                number.textContent =
+                    day;
+
+
+                button.appendChild(
+                    number
+                );
+
+
+                /* =========================
+                   오늘
+                ========================= */
+
+                const today =
+                    new Date();
+
+
+                if (
+
+                    year ===
+                    today.getFullYear()
+
+                    &&
+
+                    month ===
+                    today.getMonth()
+
+                    &&
+
+                    day ===
+                    today.getDate()
+
+                ) {
+
+                    button.classList.add(
+                        "today"
+                    );
+
+                }
+
+
+                /* =========================
+                   날짜 문자열
+                ========================= */
+
+                const monthString =
+                    String(
+                        month + 1
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const dayString =
+                    String(day)
+                        .padStart(
+                            2,
+                            "0"
+                        );
+
+
+                const dateString =
+                    `${year}-${monthString}-${dayString}`;
+
+
+                /* =========================
+                   해당 날짜의 일기
+                ========================= */
+
+                const dayDiaries =
+                    allDiaries.filter(
+                        diary =>
+                            diary.date ===
+                            dateString
+                    );
+
+
+                if (
+                    dayDiaries.length > 0
+                ) {
+
+                    button.classList.add(
+                        "has-diary"
+                    );
+
+                }
+
+
+                /* =========================
+                   날짜 클릭
+                ========================= */
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        if (
+                            selectedButton
+                        ) {
+
+                            selectedButton
+                                .classList
+                                .remove(
+                                    "selected"
+                                );
+
+                        }
+
+
+                        button.classList.add(
+                            "selected"
+                        );
+
+
+                        selectedButton =
+                            button;
+
+
+                        showDiariesForDate(
+                            dateString,
+                            dayDiaries
+                        );
+
+                    }
+                );
+
+
+                calendarDays.appendChild(
+                    button
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           날짜 클릭했을 때
+        ========================= */
+
+        function showDiariesForDate(
+            date,
+            diaries
+        ) {
+
+            const title =
+                document.getElementById(
+                    "selected-date-title"
+                );
+
+
+            const area =
+                document.getElementById(
+                    "selected-diaries"
+                );
+
+
+            title.textContent =
+                date;
+
+
+            area.innerHTML = "";
+
+
+            if (
+                diaries.length === 0
+            ) {
+
+                const empty =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                empty.className =
+                    "no-diary";
+
+
+                empty.textContent =
+                    "이 날에는 작성된 일기가 없어요.";
+
+
+                area.appendChild(
+                    empty
+                );
+
+
+                return;
+
+            }
+
+
+            diaries.forEach(
+                diary => {
+
+                    const box =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    box.className =
+                        "calendar-diary";
+
+
+                    const author =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    author.textContent =
+                        diary.authorName ||
+                        diary.author ||
+                        "이름 없음";
+
+
+                    const diaryTitle =
+                        document.createElement(
+                            "h4"
+                        );
+
+
+                    diaryTitle.textContent =
+                        diary.title;
+
+
+                    const content =
+                        document.createElement(
+                            "p"
+                        );
+
+
+                    content.textContent =
+                        diary.content;
+
+
+                    box.appendChild(
+                        author
+                    );
+
+
+                    box.appendChild(
+                        diaryTitle
+                    );
+
+
+                    box.appendChild(
+                        content
+                    );
+
+
+                    area.appendChild(
+                        box
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           이전 달
+        ========================= */
+
+        document
+            .getElementById(
+                "prev-month"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    currentDate.setMonth(
+                        currentDate.getMonth() - 1
+                    );
+
+                    renderCalendar();
+
+                }
+            );
+
+
+        /* =========================
+           다음 달
+        ========================= */
+
+        document
+            .getElementById(
+                "next-month"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    currentDate.setMonth(
+                        currentDate.getMonth() + 1
+                    );
+
+                    renderCalendar();
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>

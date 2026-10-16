@@ -1,0 +1,532 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>TRASH - 우리들의 교환일기</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <h1>OUR LITTLE DIARY</h1>
+
+    <p class="site-subtitle">
+        상관단나 기록 저장소
+    </p>
+
+    <div class="site-nav-area">
+
+        <nav>
+
+            <a href="index.html">HOME</a>
+
+            <a href="diary.html">DIARY</a>
+
+            <a href="write.html">WRITE</a>
+
+            <a href="calendar.html">CALENDAR</a>
+
+            <a href="dday.html">D-DAY</a>
+
+            <a href="mypage.html">MY PAGE</a>
+
+            <a href="trash.html">🗑️ TRASH</a>
+
+        </nav>
+
+    </div>
+
+    <a href="search.html"
+       class="site-search">
+        🔍 SEARCH
+    </a>
+
+</header>
+
+
+
+<div class="container">
+
+    <h2>🗑️ TRASH</h2>
+
+    <p>
+        휴지통에 있는 일기입니다.
+    </p>
+
+
+    <div id="trash-list">
+
+        <p>
+            휴지통을 불러오는 중...
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<script type="module">
+
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+
+/* =========================
+   Firebase 설정
+========================= */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+
+    authDomain:
+        "sangdan-diary.firebaseapp.com",
+
+    projectId:
+        "sangdan-diary",
+
+    storageBucket:
+        "sangdan-diary.firebasestorage.app",
+
+    messagingSenderId:
+        "224578307985",
+
+    appId:
+        "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+const trashList =
+    document.getElementById(
+        "trash-list"
+    );
+
+
+
+/* =========================
+   로그인 확인
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if (!user) {
+
+            location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        await loadTrash(user);
+
+    }
+);
+
+
+
+/* =========================
+   휴지통 불러오기
+========================= */
+
+async function loadTrash(user) {
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "diaries"
+                )
+            );
+
+
+        trashList.innerHTML = "";
+
+
+        let trashCount = 0;
+
+
+        snapshot.forEach(
+            (docSnapshot) => {
+
+                const diary =
+                    docSnapshot.data();
+
+
+                // 휴지통에 있는 일기만 표시
+                if (
+                    diary.isTrashed !== true
+                ) {
+
+                    return;
+
+                }
+
+
+                // 현재 로그인한 사람의 일기만 표시
+                if (
+                    diary.authorUid !==
+                    user.uid
+                ) {
+
+                    return;
+
+                }
+
+
+                trashCount++;
+
+
+                createTrashPost(
+                    docSnapshot.id,
+                    diary
+                );
+
+            }
+        );
+
+
+        if (trashCount === 0) {
+
+            trashList.innerHTML =
+                "<p>휴지통이 비어 있어요.</p>";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "휴지통 불러오기 오류:",
+            error
+        );
+
+
+        trashList.innerHTML =
+            "<p>일기를 불러오는 중 문제가 생겼어요.</p>";
+
+    }
+
+}
+
+
+
+/* =========================
+   휴지통 일기 표시
+========================= */
+
+function createTrashPost(
+    diaryId,
+    diary
+) {
+
+    const post =
+        document.createElement("div");
+
+
+    post.className =
+        "diary-post";
+
+
+    // 날짜
+    const date =
+        document.createElement("p");
+
+    date.className =
+        "date";
+
+    date.textContent =
+        diary.date || "";
+
+    post.appendChild(date);
+
+
+    // 작성자
+    const author =
+        document.createElement("h3");
+
+    author.textContent =
+        diary.authorName ||
+        diary.author ||
+        "이름 없음";
+
+    post.appendChild(author);
+
+
+    // 제목
+    const title =
+        document.createElement("h3");
+
+    title.textContent =
+        diary.title ||
+        "제목 없음";
+
+    post.appendChild(title);
+
+
+    // 내용
+    const content =
+        document.createElement("p");
+
+    content.textContent =
+        diary.content || "";
+
+    post.appendChild(content);
+
+
+
+    /* =========================
+       복구 버튼
+    ========================= */
+
+    const restoreButton =
+        document.createElement("button");
+
+
+    restoreButton.textContent =
+        "↩️ 복구";
+
+
+    restoreButton.className =
+        "save-button";
+
+
+    restoreButton.style.display =
+        "inline-block";
+
+
+    restoreButton.style.margin =
+        "15px 5px 0 0";
+
+
+    restoreButton.addEventListener(
+        "click",
+        () => {
+
+            restoreDiary(
+                diaryId
+            );
+
+        }
+    );
+
+
+
+    /* =========================
+       완전 삭제 버튼
+    ========================= */
+
+    const deleteButton =
+        document.createElement("button");
+
+
+    deleteButton.textContent =
+        "❌ 완전 삭제";
+
+
+    deleteButton.className =
+        "save-button";
+
+
+    deleteButton.style.display =
+        "inline-block";
+
+
+    deleteButton.addEventListener(
+        "click",
+        () => {
+
+            permanentlyDeleteDiary(
+                diaryId
+            );
+
+        }
+    );
+
+
+    post.appendChild(
+        restoreButton
+    );
+
+
+    post.appendChild(
+        deleteButton
+    );
+
+
+    trashList.appendChild(
+        post
+    );
+
+}
+
+
+
+/* =========================
+   일기 복구
+========================= */
+
+async function restoreDiary(
+    diaryId
+) {
+
+    const answer =
+        confirm(
+            "이 일기를 다시 DIARY로 복구할까요?"
+        );
+
+
+    if (!answer) return;
+
+
+    try {
+
+        await updateDoc(
+
+            doc(
+                db,
+                "diaries",
+                diaryId
+            ),
+
+            {
+                isTrashed: false
+            }
+
+        );
+
+
+        alert(
+            "일기가 복구되었습니다!"
+        );
+
+
+        location.reload();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "복구하는 중 문제가 생겼어요."
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   완전 삭제
+========================= */
+
+async function permanentlyDeleteDiary(
+    diaryId
+) {
+
+    const answer =
+        confirm(
+            "정말 완전히 삭제할까요?\n\n" +
+            "완전히 삭제하면 다시 복구할 수 없습니다."
+        );
+
+
+    if (!answer) return;
+
+
+    try {
+
+        await deleteDoc(
+
+            doc(
+                db,
+                "diaries",
+                diaryId
+            )
+
+        );
+
+
+        alert(
+            "일기가 완전히 삭제되었습니다."
+        );
+
+
+        location.reload();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "일기를 완전히 삭제하는 중 문제가 생겼어요."
+        );
+
+    }
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
