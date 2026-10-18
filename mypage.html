@@ -304,6 +304,797 @@
 
 
         }
+
+/* ==================================================
+   CHARACTER GROWTH - 상관쟝
+================================================== */
+
+.character-growth {
+    margin-top: 45px;
+    padding-top: 30px;
+    border-top: 2px dashed rgba(61, 53, 66, 0.35);
+}
+
+.character-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 10px;
+
+    background: #3d3542;
+    color: #fffaf3;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.character-growth h3 {
+    margin: 0 0 20px;
+    font-size: 22px;
+}
+
+.character-card {
+    padding: 25px;
+    border: 1px solid rgba(61, 53, 66, 0.3);
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.character-main {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.character-image-box {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px dashed rgba(61, 53, 66, 0.35);
+    background: rgba(255, 255, 255, 0.5);
+
+    font-size: 60px;
+}
+
+.character-name {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.character-level {
+    margin: 0;
+    font-size: 14px;
+}
+
+.character-exp {
+    margin: 8px 0 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.character-info {
+    margin-top: 25px;
+}
+
+.character-info-box {
+    margin-bottom: 15px;
+    padding: 15px;
+
+    border: 1px solid rgba(61, 53, 66, 0.2);
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.character-info-box:last-child {
+    margin-bottom: 0;
+}
+
+.character-info-title {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #777;
+    letter-spacing: 1px;
+}
+
+.character-info-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.character-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.character-list li {
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.character-owner-note {
+    margin-top: 15px;
+    text-align: center;
+    color: #888;
+    font-size: 11px;
+}
+
+@media (max-width: 600px) {
+
+    .character-card {
+        padding: 20px;
+    }
+
+    .character-image-box {
+        width: 150px;
+        height: 150px;
+    }
+
+}    
+
+    
+/* ==================================================
+   CHARACTER FEEDING - 밥 주기
+================================================== */
+
+.character-feed {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px dashed rgba(61, 53, 66, 0.25);
+}
+
+.character-feed-status {
+    margin: 0 0 15px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.character-feed-button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #3d3542;
+    background: #fffaf3;
+    color: #3d3542;
+    font-family: monospace;
+    font-size: 13px;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.character-feed-button:hover:not(:disabled) {
+    background: #3d3542;
+    color: #fffaf3;
+    transform: translateY(-2px);
+}
+
+.character-feed-button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.character-feed-button:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.character-feed-result {
+    margin-top: 15px;
+    padding: 18px;
+    border: 1px solid rgba(61, 53, 66, 0.2);
+    background: rgba(255, 255, 255, 0.4);
+    text-align: center;
+}
+
+.character-food-icon {
+    margin-bottom: 8px;
+    font-size: 38px;
+}
+
+.character-food-name {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.character-food-rarity {
+    margin: 0 0 10px;
+    font-size: 11px;
+    color: #777;
+}
+
+.character-food-description {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.character-food-rating {
+    margin: 10px 0 0;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.character-food-new {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+    
+/* ==================================================
+   FOOD COLLECTION - 음식 도감
+================================================== */
+
+.food-collection {
+    margin-top: 35px;
+    padding-top: 30px;
+    border-top: 2px dashed rgba(61, 53, 66, 0.35);
+}
+
+.food-collection-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.food-collection-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    background: #3d3542;
+    color: #fffaf3;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.food-collection-header h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.food-collection-progress {
+    margin: 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.food-collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.food-collection-item {
+    min-height: 150px;
+    padding: 15px 10px;
+    border: 1px solid rgba(61, 53, 66, 0.25);
+    background: rgba(255, 255, 255, 0.35);
+    text-align: center;
+}
+
+.food-collection-item.undiscovered {
+    opacity: 0.6;
+}
+
+.food-collection-icon {
+    margin-bottom: 8px;
+    font-size: 30px;
+}
+
+.food-collection-name {
+    margin: 0 0 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.food-collection-rarity {
+    margin: 0 0 8px;
+    font-size: 10px;
+    color: #777;
+}
+
+.food-collection-description {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.food-collection-rating {
+    margin: 8px 0 0;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.food-collection-question {
+    margin: 0;
+    font-size: 32px;
+}
+
+@media (max-width: 700px) {
+    .food-collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .food-collection-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+    
+/* ==================================================
+   CHARACTER ACTION - 오늘의 행동
+================================================== */
+
+
+/* ==================================================
+   CHARACTER LETTERS - 상관쟝의 편지
+================================================== */
+
+.character-letters {
+    margin-top: 35px;
+    padding-top: 30px;
+    border-top: 2px dashed rgba(61, 53, 66, 0.35);
+}
+
+.character-letters-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.character-letters-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+
+    background: #3d3542;
+    color: #fffaf3;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.character-letters-header h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.character-letter-status {
+    margin: 0;
+    color: #888;
+    font-size: 12px;
+}
+
+.character-letter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.character-letter {
+    padding: 20px;
+
+    border: 1px solid rgba(61, 53, 66, 0.3);
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.character-letter.unread {
+    border: 2px solid #3d3542;
+    background: #fffaf3;
+}
+
+.character-letter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+
+    border-bottom: 1px dashed #bbb;
+}
+
+.character-letter-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.character-letter-date {
+    margin: 0;
+    color: #888;
+    font-size: 11px;
+}
+
+.character-letter-new {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 3px 6px;
+
+    background: #3d3542;
+    color: #fffaf3;
+
+    font-size: 9px;
+}
+
+.character-letter-content {
+    margin: 0;
+
+    white-space: pre-line;
+
+    font-size: 13px;
+    line-height: 2;
+}
+
+.character-letter-open {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+
+    border: 1px solid #3d3542;
+    background: transparent;
+    color: #3d3542;
+
+    font-family: monospace;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.character-letter-open:hover {
+    background: #3d3542;
+    color: #fffaf3;
+}
+
+.character-letter-content.hidden {
+    display: none;
+}
+
+.character-letter-empty {
+    padding: 30px 15px;
+
+    border: 1px dashed rgba(61, 53, 66, 0.3);
+
+    text-align: center;
+    color: #888;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+.character-action {
+    margin-top: 35px;
+    padding-top: 30px;
+    border-top: 2px dashed rgba(61, 53, 66, 0.35);
+}
+
+.character-action-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.character-action-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    background: #3d3542;
+    color: #fffaf3;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.character-action-header h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.character-action-date {
+    margin: 0;
+    color: #888;
+    font-size: 11px;
+}
+
+.character-action-box {
+    padding: 25px 20px;
+    border: 1px solid rgba(61, 53, 66, 0.25);
+    background: rgba(255, 255, 255, 0.4);
+    text-align: center;
+}
+
+.character-action-icon {
+    margin-bottom: 12px;
+    font-size: 42px;
+}
+
+.character-action-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+    .character-action-box {
+        padding: 20px 15px;
+    }
+}
+
+    
+.character-image-wrapper {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 15px;
+}
+
+.character-image-wrapper .character-image-box {
+    width: 180px;
+    height: 180px;
+    margin: 0;
+}
+
+.character-action-bubble {
+    position: absolute;
+    z-index: 20;
+    top: -25px;
+    left: 120px;
+
+    width: 190px;
+    min-height: 55px;
+    padding: 11px 13px;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    border: 1px solid #3d3542;
+    border-radius: 18px;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    box-shadow: 3px 3px 0 rgba(61, 53, 66, 0.15);
+
+    text-align: left;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+.character-action-bubble::after {
+    content: "";
+
+    position: absolute;
+    left: 25px;
+    bottom: -7px;
+
+    width: 12px;
+    height: 12px;
+
+    background: #fffaf3;
+
+    border-right: 1px solid #3d3542;
+    border-bottom: 1px solid #3d3542;
+
+    transform: rotate(45deg);
+}
+
+
+.character-action-bubble .character-action-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+}
+
+.character-action-bubble .character-action-text {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+
+    .character-image-wrapper {
+        width: 150px;
+        height: 150px;
+    }
+
+    .character-image-wrapper .character-image-box {
+        width: 150px;
+        height: 150px;
+    }
+
+    .character-action-bubble {
+        left: 75px;
+        width: 175px;
+        top: -20px;
+    }
+
+}
+
+/* ==================================================
+   CHARACTER LETTER - 편지 아이콘
+================================================== */
+
+.character-letter-button {
+    position: absolute;
+    z-index: 30;
+
+    right: -38px;
+    bottom: 18px;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border: 1px solid #3d3542;
+    border-radius: 50%;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    font-size: 22px;
+    line-height: 42px;
+
+    cursor: pointer;
+
+    box-shadow: 3px 3px 0 rgba(61, 53, 66, 0.18);
+
+    animation: letterBounce 1.2s ease-in-out infinite;
+}
+
+.character-letter-button:hover {
+    background: #3d3542;
+    color: #fffaf3;
+}
+
+.character-letter-new-badge {
+    position: absolute;
+
+    top: -8px;
+    right: -8px;
+
+    padding: 3px 5px;
+
+    background: #3d3542;
+    color: #fffaf3;
+
+    font-size: 8px;
+    line-height: 1;
+
+    letter-spacing: 1px;
+}
+
+@keyframes letterBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+}
+
+
+/* ==================================================
+   CHARACTER LETTER - 편지 팝업
+================================================== */
+
+.character-letter-modal {
+    position: fixed;
+    z-index: 9999;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(61, 53, 66, 0.45);
+}
+
+.character-letter-modal-box {
+    position: relative;
+
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+
+    padding: 35px 30px;
+
+    overflow-y: auto;
+
+    border: 2px solid #3d3542;
+
+    background: #fffaf3;
+
+    box-shadow: 7px 7px 0 rgba(61, 53, 66, 0.25);
+}
+
+.character-letter-close {
+    position: absolute;
+
+    top: 10px;
+    right: 13px;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    background: transparent;
+    color: #3d3542;
+
+    font-family: monospace;
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.character-letter-close:hover {
+    transform: scale(1.15);
+}
+
+.character-letter-modal-title {
+    margin: 0 35px 5px 0;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.character-letter-modal-date {
+    margin: 0 0 25px;
+
+    color: #888;
+
+    font-size: 11px;
+}
+
+.character-letter-modal-content {
+    padding-top: 20px;
+
+    border-top: 1px dashed #bbb;
+
+    white-space: pre-line;
+
+    font-size: 13px;
+    line-height: 2;
+}
+
+@media (max-width: 600px) {
+
+    .character-letter-button {
+        right: -25px;
+        bottom: 10px;
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 19px;
+        line-height: 38px;
+    }
+
+    .character-letter-modal-box {
+        padding: 30px 22px;
+    }
+
+}
+
+    
     </style>
 </head>
 
@@ -455,7 +1246,269 @@
 
         <!-- 내 일기 -->
 
+    
+<!-- ==================================================
+     상관쟝 성장
+================================================== -->
+
+<section class="character-growth">
+
+    <div class="character-label">
+        CHARACTER
+    </div>
+
+    <h3>상관쟝의 성장</h3>
+
+    <div class="character-card">
+
         
+<div class="character-main">
+
+    <div class="character-image-wrapper">
+
+        <div
+            id="character-action-bubble"
+            class="character-action-bubble"
+        >
+            <span
+                id="character-action-icon"
+                class="character-action-icon"
+            >☁</span>
+
+            <span
+                id="character-action-text"
+                class="character-action-text"
+            >불러오는 중...</span>
+        </div>
+
+        <div
+    id="character-image"
+    class="character-image-box"
+>
+    🧸
+</div>
+
+<!-- 비밀 이벤트가 발생했을 때 나타나는 아이콘 -->
+<button
+    id="character-secret-event-button"
+    class="character-letter-button"
+    style="display: none;"
+    type="button"
+>
+    ✨
+</button>
+
+<!-- 비밀 이벤트 팝업 -->
+<div
+    id="character-secret-event-modal"
+    class="character-letter-modal"
+    style="display: none;"
+>
+    <div class="character-letter-modal-box">
+        <button
+            id="character-secret-event-close"
+            class="character-letter-close"
+            type="button"
+        >
+            ×
+        </button>
+
+        <p
+            id="character-secret-event-title"
+            class="character-letter-modal-title"
+        ></p>
+
+        <div
+            id="character-secret-event-content"
+            class="character-letter-modal-content"
+        ></div>
+    </div>
+</div>
+
+<!-- 편지가 도착했을 때 나타나는 아이콘 -->
+<button
+    id="character-letter-button"
+    class="character-letter-button"
+    style="display: none;"
+    type="button"
+>
+    ✉️
+    <span
+        id="character-letter-new"
+        class="character-letter-new-badge"
+    >
+        NEW
+    </span>
+</button>
+
+<!-- 편지 팝업 -->
+<div
+    id="character-letter-modal"
+    class="character-letter-modal"
+    style="display: none;"
+>
+    <div class="character-letter-modal-box">
+
+        <button
+            id="character-letter-close"
+            class="character-letter-close"
+            type="button"
+        >
+            ×
+        </button>
+
+        <p
+            id="character-letter-modal-title"
+            class="character-letter-modal-title"
+        ></p>
+
+        <p
+            id="character-letter-modal-date"
+            class="character-letter-modal-date"
+        ></p>
+
+        <div
+            id="character-letter-modal-content"
+            class="character-letter-modal-content"
+        ></div>
+
+    </div>
+</div>
+
+    </div>
+
+    <p id="character-name" class="character-name">
+        상관쟝
+    </p>
+
+    <p id="character-level" class="character-level">
+        Lv.1
+    </p>
+
+    <p id="character-exp" class="character-exp">
+        EXP 0
+    </p>
+
+</div>
+
+
+
+        <div class="character-info">
+
+            <div class="character-info-box">
+
+                <p class="character-info-title">
+                    GROWTH
+                </p>
+
+                <p
+                    id="character-growth-text"
+                    class="character-info-text">
+                    불러오는 중...
+                </p>
+
+            </div>
+
+
+            <div class="character-info-box">
+
+                <p class="character-info-title">
+                    할 수 있는 것
+                </p>
+
+                <ul
+                    id="character-can-list"
+                    class="character-list">
+                </ul>
+
+            </div>
+
+
+            <div class="character-info-box">
+
+                <p class="character-info-title">
+                    하고 싶은 것
+                </p>
+
+                <p
+                    id="character-want-text"
+                    class="character-info-text">
+                    불러오는 중...
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p class="character-owner-note">
+            상관쟝은 단나님이 육성하고 있습니다.
+        </p>
+
+        
+<div class="character-feed">
+
+    <p id="character-feed-status" class="character-feed-status">
+        오늘 0/3회
+    </p>
+
+    <button
+        id="character-feed-button"
+        class="character-feed-button"
+    >
+        🍚 상관쟝에게 밥 주기
+    </button>
+
+    <div
+        id="character-feed-result"
+        class="character-feed-result"
+        style="display: none;"
+    >
+    </div>
+
+</div>
+
+
+    </div>
+
+<!-- ==================================================
+     음식 도감
+================================================== -->
+
+<div class="food-collection">
+
+    <div class="food-collection-header">
+
+        <div class="food-collection-label">
+            FOOD COLLECTION
+        </div>
+
+        <h3>상관쟝의 음식 도감</h3>
+
+        <p
+            id="food-collection-progress"
+            class="food-collection-progress"
+        >
+            발견한 음식 0 / 25
+        </p>
+
+    </div>
+
+    <div
+        id="food-collection-grid"
+        class="food-collection-grid"
+    >
+    </div>
+
+</div>
+
+
+
+
+</section>
+
+
+
 <!-- 두 사람의 일기 -->
 
 <div class="diary-profiles">
@@ -602,6 +1655,154 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     await loadMyPage(user);
+    await loadCharacterGrowth(user);
+    await loadCharacterFeeding(user);
+    loadFoodCollection();
+    await loadCharacterLetters(user);
+    await loadCharacterSecretEvent(user);
+
+/* ==================================================
+   CHARACTER ACTION - 오늘의 행동
+================================================== */
+
+const characterActionList = [
+    {
+        icon: "💤",
+        text: "낮잠을 자고 있습니다."
+    },
+    {
+        icon: "📖",
+        text: "만화책을 읽고 있습니다."
+    },
+    {
+        icon: "🍙",
+        text: "밥을 기다리고 있습니다."
+    },
+    {
+        icon: "🔍",
+        text: "무언가를 찾고 있습니다."
+    },
+    {
+        icon: "🌱",
+        text: "화분을 보고 있습니다."
+    },
+    {
+        icon: "🪟",
+        text: "창밖을 바라보고 있습니다."
+    },
+    {
+        icon: "🧸",
+        text: "인형과 놀고 있습니다."
+    },
+    {
+        icon: "☁",
+        text: "멍하니 있습니다."
+    },
+    {
+        icon: "✏",
+        text: "뭔가를 그리고 있습니다."
+    },
+    {
+        icon: "😴",
+        text: "졸고 있습니다."
+    },
+    {
+        icon: "🤔",
+        text: "무언가를 고민하고 있습니다."
+    },
+    {
+        icon: "🧹",
+        text: "방을 정리하고 있습니다."
+    },
+    {
+        icon: "🍪",
+        text: "간식을 먹고 있습니다."
+    },
+    {
+        icon: "🐾",
+        text: "그냥 돌아다니고 있습니다."
+    },
+    {
+        icon: "",
+        text: "아무것도 하지 않고 있습니다."
+    }
+];
+
+await loadCharacterAction();
+
+async function loadCharacterAction() {
+
+    try {
+
+        const characterRef =
+            doc(db, "characters", CHARACTER_ID);
+
+        const characterDoc =
+            await getDoc(characterRef);
+
+        let data = {};
+
+        if (characterDoc.exists()) {
+            data = characterDoc.data();
+        }
+
+        const todayKey = getTodayKey();
+
+        let actionIndex;
+
+        if (
+            data.actionDate === todayKey &&
+            typeof data.actionIndex === "number"
+        ) {
+
+            actionIndex = data.actionIndex;
+
+        } else {
+
+            actionIndex = Math.floor(
+                Math.random() * characterActionList.length
+            );
+
+            await setDoc(
+                characterRef,
+                {
+                    actionDate: todayKey,
+                    actionIndex: actionIndex
+                },
+                { merge: true }
+            );
+
+        }
+
+        const action =
+            characterActionList[actionIndex];
+
+        document.getElementById(
+            "character-action-icon"
+        ).textContent = action.icon;
+
+        document.getElementById(
+            "character-action-text"
+        ).textContent = action.text;
+
+    
+
+    } catch (error) {
+
+        console.error(
+            "오늘의 행동을 불러오는 중 오류:",
+            error
+        );
+
+        document.getElementById(
+            "character-action-text"
+        ).textContent =
+            "상관쟝은 지금 뭔가를 하고 있는 것 같다.";
+
+    }
+
+}
+
 
 });
 
@@ -970,6 +2171,1592 @@ saveNicknameButton.addEventListener(
     }
 );
 
+/* ==================================================
+   CHARACTER GROWTH - 상관쟝
+================================================== */
+
+const CHARACTER_ID = "sangkwan";
+const CHARACTER_OWNER_UID = FRIEND_UID;
+
+const characterGrowthData = {
+
+    1: {
+        growth:
+            "상관쟝은 당신을 빤히 바라보고 있다. 아직은 혼자 무언갈 할 수 있는 용기가 부족한 것 같다.",
+
+        can: [
+            "밥 먹기",
+            "낮잠 자기",
+            "당신 바라보기"
+        ],
+
+        want:
+            "단나랑 친해지기!",
+
+        levelUp:
+            "상관쟝은 조금 자랐다..! 이제 단나에게 말을 걸어볼 수 있는 용기도 생긴 것 같다..!"
+    },
+
+    2: {
+        growth:
+            "상관쟝은 이제 혼자서도 제법 돌아다닌다! 가끔 보이지 않으면 어디선가 사고를 치고 있다.",
+
+        can: [
+            "로켓 인형 없이 잠자기",
+            "혼자 돌아다니기"
+        ],
+
+        want:
+            "단나에게 장난치기!",
+
+        levelUp:
+            "상관쟝이 한층 더 씩씩해졌다! ...아마도?"
+    },
+
+    3: {
+        growth:
+            "상관쟝은 이제 꽤나 당당해졌다!! 물론 단나의 응원과 격려는 아직 필수이다.",
+
+        can: [
+            "장난치기",
+            "거울 보며 멋진 포즈 연습하기",
+            "공포영화 보기"
+        ],
+
+        want:
+            "단나에게 멋진 모습 보여주기!",
+
+        levelUp:
+            "상관쟝은 더욱 의젓해졌다! 단나와 서슴없이 장난칠 수 있는 사이가 되었다!"
+    },
+
+    4: {
+        growth:
+            "상관쟝은 이제 당신에게 이것저것 자랑하러 온다. 별것 아닌 것도 굉장히 대단한 일인 것처럼 이야기한다.",
+
+        can: [
+            "그림 그리기",
+            "편지 쓰기",
+            "멋진 포즈 보여주기"
+        ],
+
+        want:
+            "단나의 메가베스트프렌드 되기!",
+
+        levelUp:
+            "상관쟝은 어느새 많이 자랐다! 혼자서도 할 수 있는 것들을 할 수 있게 됐지만 그래도 단나 옆은 떠나지 않는다."
+    },
+
+    5: {
+        growth:
+            "상관쟝은 이제 어엿한 사회인이 되었다. 사회는 매정하고 해야 할 일은 많지만 여전히 일상 속에 당신의 존재를 소중히 여긴다.",
+
+        can: [
+            "혼자서 할 일 하기",
+            "편지 쓰기",
+            "이것저것 만들기"
+        ],
+
+        want:
+            "단나와 오래오래 놀기!",
+
+        levelUp:
+            ""
+    }
+
+};
+
+
+/* ------------------------------
+   레벨 계산
+------------------------------ */
+
+function getCharacterLevel(exp) {
+
+    if (exp >= 100) {
+        return 5;
+    }
+
+    if (exp >= 50) {
+        return 4;
+    }
+
+    if (exp >= 25) {
+        return 3;
+    }
+
+    if (exp >= 10) {
+        return 2;
+    }
+
+    return 1;
+
+}
+
+
+/* ------------------------------
+   상관쟝 성장 불러오기
+------------------------------ */
+
+async function loadCharacterGrowth(user) {
+
+    try {
+
+        const characterRef =
+            doc(
+                db,
+                "characters",
+                CHARACTER_ID
+            );
+
+        const characterDoc =
+            await getDoc(characterRef);
+
+        let exp = 0;
+
+        if (characterDoc.exists()) {
+
+            const data =
+                characterDoc.data();
+
+            exp =
+                Number(data.exp) || 0;
+
+        }
+
+
+        /*
+         * 상관쟝은 단나님이 쓴 일기를 통해
+         * EXP를 얻는다.
+         *
+         * 이미 얻은 EXP보다 줄어들지 않도록
+         * Math.max를 사용한다.
+         */
+
+        const diarySnapshot =
+            await getDocs(
+                collection(db, "diaries")
+            );
+
+        let friendDiaryCount = 0;
+
+        diarySnapshot.forEach((diaryDoc) => {
+
+            const data = diaryDoc.data();
+
+            if (
+                data.authorUid ===
+                CHARACTER_OWNER_UID
+            ) {
+
+                friendDiaryCount++;
+
+            }
+
+        });
+
+
+        const newExp =
+            Math.max(
+                exp,
+                friendDiaryCount
+            );
+
+
+        /*
+         * 처음 만들었거나
+         * EXP가 늘어난 경우에만 저장
+         */
+
+        if (
+            !characterDoc.exists() ||
+            newExp > exp
+        ) {
+
+            await setDoc(
+                characterRef,
+                {
+                    characterId:
+                        CHARACTER_ID,
+
+                    name:
+                        "상관쟝",
+
+                    ownerUid:
+                        CHARACTER_OWNER_UID,
+
+                    exp:
+                        newExp
+                },
+                {
+                    merge: true
+                }
+            );
+
+        }
+
+
+        const level =
+            getCharacterLevel(newExp);
+
+        const levelData =
+            characterGrowthData[level];
+
+
+        /* ------------------------------
+           화면 표시
+        ------------------------------ */
+
+        document
+            .getElementById("character-level")
+            .textContent =
+                `Lv.${level}`;
+
+        document
+            .getElementById("character-exp")
+            .textContent =
+                `EXP ${newExp}`;
+
+
+        document
+            .getElementById("character-growth-text")
+            .textContent =
+                levelData.growth;
+
+
+        document
+            .getElementById("character-want-text")
+            .textContent =
+                levelData.want;
+
+
+        const canList =
+            document
+                .getElementById(
+                    "character-can-list"
+                );
+
+        canList.innerHTML = "";
+
+        levelData.can.forEach((text) => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent = text;
+
+            canList.appendChild(li);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "상관쟝 성장 정보를 불러오는 중 오류:",
+            error
+        );
+
+    }
+
+}
+
+/* ==================================================
+   CHARACTER FEEDING - 밥 주기
+================================================== */
+
+const characterFoodList = [
+    {
+        icon: "🍙",
+        name: "주먹밥",
+        rarity: "일반",
+        description: "작고 동그랗다. 간단하지만 찰진 밥맛이 맛있다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍳",
+        name: "김치볶음밥",
+        rarity: "일반",
+        description: "밥이 김치와 함께 붉게 볶아져 있다. 위에 계란프라이가 영롱하게 올라가 있다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍳",
+        name: "오므라이스",
+        rarity: "일반",
+        description: "폭신한 달걀 아래에 맛있는 밥이 숨어 있다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍛",
+        name: "카레",
+        rarity: "일반",
+        description: "냄새부터 맛있다!",
+        rating: "★★★★"
+    },
+    {
+        icon: "🥪",
+        name: "샌드위치",
+        rarity: "일반",
+        description: "이것저것 들어 있어서 만들기에 따라 다양한 맛을 낼 수 있다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍮",
+        name: "커피 푸딩",
+        rarity: "레전드",
+        description: "쉽게 구할 수 없는 디저트. 먹으면 사이키 쿠스오를 이해하게 된다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🌭",
+        name: "핫도그",
+        rarity: "희귀",
+        description: "한 손에 들고 먹기 좋지만 자주 먹지 않는 음식.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍓",
+        name: "딸기",
+        rarity: "희귀",
+        description: "새콤달콤 빨갛다. 하지만 비싸서 자주 먹을 수 없는 과일.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🪷",
+        name: "연근",
+        rarity: "일반",
+        description: "구멍이 숭숭 뚫린 동그란 뿌리채소.",
+        rating: "★★"
+    },
+    {
+        icon: "🐰",
+        name: "치이카와",
+        rarity: "레전드",
+        description: "의태형이면 먹을 수 있지만 상관쟝은 그냥 인간이라 먹지 못한다.",
+        rating: "★"
+    },
+    {
+        icon: "🌈",
+        name: "마카롱",
+        rarity: "희귀",
+        description: "알록달록 달콤한 디저트. 귀엽게도 생겼다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍜",
+        name: "라멘",
+        rarity: "희귀",
+        description: "따끈한 국물에 면이 듬뿍. 후루룩 먹으면 왠지 힘이 나는 것 같다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🥩",
+        name: "돈까스",
+        rarity: "희귀",
+        description: "바삭하게 튀긴 돼지고기에 소스를 듬뿍 뿌린 음식.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🫘",
+        name: "낫또",
+        rarity: "일반",
+        description: "끈적끈적 냄새도 특이한 음식. 건강에는 아주 좋다고 한다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🐙",
+        name: "타코야끼",
+        rarity: "희귀",
+        description: "동글동글 반죽 속에 문어 등장! 뜨거우니까 조심히 먹어야한다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🥬",
+        name: "김치",
+        rarity: "일반",
+        description: "매콤새콤 밥 반찬! 상관쟝은 배추 김치가 최고라고 한다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍗",
+        name: "치킨너겟",
+        rarity: "일반",
+        description: "작고 바삭한 닭고기 튀김. 밥 반찬으로도 좋다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍦",
+        name: "아이스크림",
+        rarity: "일반",
+        description: "차갑고 달콤한 간식. 녹기 전에 빨리 먹어야 한다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🥚",
+        name: "삶은 계란",
+        rarity: "일반",
+        description: "껍질을 까면 하얀 계란이 나온다. 단백질 충전!",
+        rating: "★★★★"
+    },
+    {
+        icon: "🧀",
+        name: "치즈김밥",
+        rarity: "일반",
+        description: "김밥 속에 고소한 치즈가 들어 있다. 집어 먹기 좋은 든든한 한끼 식사!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍍🍕",
+        name: "파인애플 피자",
+        rarity: "희귀",
+        description: "달콤한 파인애플이 올라간 피자.",
+        rating: "★★"
+    },
+    {
+        icon: "🍫🌿",
+        name: "민트초코라떼",
+        rarity: "희귀",
+        description: "시원한 민트와 달콤한 초콜릿이 어우러진 음료.",
+        rating: "★★★"
+    },
+    {
+        icon: "🌿🥛",
+        name: "민트라떼(초코×)",
+        rarity: "레전드",
+        description: "부드러운 우유와 상쾌한 민트향이 어우러진 라떼. 파는 곳이 찾기 힘들어 잘 못 먹는다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍔",
+        name: "햄버거",
+        rarity: "일반",
+        description: "빵 사이에 고기와 채소가 잔뜩 들어있다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍣",
+        name: "연어 초밥",
+        rarity: "희귀",
+        description: "부드러운 생연어를 올린 초밥. 영롱한 주황빛이 먹음직스럽다.",
+        rating: "★★★★★"
+    }
+];
+
+const characterFeedStatus = document.getElementById("character-feed-status");
+const characterFeedButton = document.getElementById("character-feed-button");
+const characterFeedResult = document.getElementById("character-feed-result");
+
+function getTodayKey() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const date = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${date}`;
+}
+
+function updateCharacterFeedUI(feedCount, isOwner) {
+
+    characterFeedStatus.textContent = `오늘 ${feedCount}/3회`;
+
+    if (!isOwner) {
+        characterFeedButton.disabled = true;
+        characterFeedButton.textContent = "🍚 단나님이 밥을 줄 수 있습니다.";
+        return;
+    }
+
+    if (feedCount >= 3) {
+        characterFeedButton.disabled = true;
+        characterFeedButton.textContent = "오늘은 밥을 다 먹었습니다!";
+        return;
+    }
+
+    characterFeedButton.disabled = false;
+    characterFeedButton.textContent = "🍚 상관쟝에게 밥 주기";
+}
+
+async function loadCharacterFeeding(user) {
+
+    try {
+
+        const characterRef = doc(db, "characters", CHARACTER_ID);
+        const characterDoc = await getDoc(characterRef);
+
+        let data = {};
+
+        if (characterDoc.exists()) {
+            data = characterDoc.data();
+        }
+
+        const todayKey = getTodayKey();
+
+        let feedCount = 0;
+
+        if (data.feedDate === todayKey) {
+            feedCount = Number(data.feedCount) || 0;
+        }
+
+        const isOwner = user.uid === CHARACTER_OWNER_UID;
+
+        updateCharacterFeedUI(feedCount, isOwner);
+
+    } catch (error) {
+
+        console.error("밥 주기 정보를 불러오는 중 오류:", error);
+
+    }
+
+}
+
+async function feedCharacter() {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert("로그인이 필요합니다.");
+        return;
+    }
+
+    if (user.uid !== CHARACTER_OWNER_UID) {
+        alert("상관쟝은 단나님이 키우고 있습니다.");
+        return;
+    }
+
+    try {
+
+        characterFeedButton.disabled = true;
+
+        const characterRef = doc(db, "characters", CHARACTER_ID);
+        const characterDoc = await getDoc(characterRef);
+
+        let data = {};
+
+        if (characterDoc.exists()) {
+            data = characterDoc.data();
+        }
+
+        const todayKey = getTodayKey();
+
+        let feedCount = 0;
+
+        if (data.feedDate === todayKey) {
+            feedCount = Number(data.feedCount) || 0;
+        }
+
+        if (feedCount >= 3) {
+
+            updateCharacterFeedUI(3, true);
+
+            characterFeedResult.style.display = "block";
+            characterFeedResult.innerHTML = `
+                <p class="character-food-description">
+                    오늘은 배가 충분히 부릅니다.<br>
+                    내일 다시 밥을 줄 수 있습니다.
+                </p>
+            `;
+
+            return;
+        }
+
+        const randomIndex = Math.floor(
+            Math.random() * characterFoodList.length
+        );
+
+        const food = characterFoodList[randomIndex];
+
+        const newFeedCount = feedCount + 1;
+
+        const oldDiscoveredFoods = Array.isArray(data.discoveredFoods)
+            ? data.discoveredFoods
+            : [];
+
+        const isNewFood = !oldDiscoveredFoods.includes(food.name);
+
+        const newDiscoveredFoods = isNewFood
+            ? [...oldDiscoveredFoods, food.name]
+            : oldDiscoveredFoods;
+
+        await setDoc(
+            characterRef,
+            {
+                characterId: CHARACTER_ID,
+                name: "상관쟝",
+                ownerUid: CHARACTER_OWNER_UID,
+                feedDate: todayKey,
+                feedCount: newFeedCount,
+                discoveredFoods: newDiscoveredFoods
+            },
+            { merge: true }
+        );
+
+        updateCharacterFeedUI(newFeedCount, true);
+
+        characterFeedResult.style.display = "block";
+
+        characterFeedResult.innerHTML = `
+            ${
+                isNewFood
+                    ? `<p class="character-food-new">✨ 새로운 음식 발견!</p>`
+                    : ""
+            }
+
+            <div class="character-food-icon">
+                ${food.icon}
+            </div>
+
+            <p class="character-food-name">
+                ${food.name}
+            </p>
+
+            <p class="character-food-rarity">
+                ${food.rarity}
+            </p>
+
+            <p class="character-food-description">
+                ${food.description}
+            </p>
+
+            <p class="character-food-rating">
+                ${food.rating}
+            </p>
+        `;
+
+    } catch (error) {
+
+        console.error("밥 주기 중 오류:", error);
+
+        alert(
+            "상관쟝에게 밥을 주는 중 오류가 발생했습니다.\n\n" +
+            error.message
+        );
+
+        const characterDoc = await getDoc(
+            doc(db, "characters", CHARACTER_ID)
+        );
+
+        let feedCount = 0;
+
+        if (characterDoc.exists()) {
+
+            const data = characterDoc.data();
+
+            if (data.feedDate === getTodayKey()) {
+                feedCount = Number(data.feedCount) || 0;
+            }
+
+        }
+
+        updateCharacterFeedUI(feedCount, true);
+
+    }
+
+}
+
+characterFeedButton.addEventListener(
+    "click",
+    feedCharacter
+);
+
+
+/* ==================================================
+   CHARACTER LETTERS - 상관쟝의 편지
+================================================== */
+
+const characterLetterList = [
+
+    {
+        id: "letter_1",
+        trigger: 3,
+        title: "첫 번째 편지",
+        content:
+`단나!
+
+나 오늘 재밌는 걸 하나 생각해봤는데!
+근데 아직 비밀이야.
+절대로 말 안 할 거야!
+
+...궁금해?`
+    },
+
+    {
+        id: "letter_2",
+        trigger: 7,
+        title: "두 번째 편지",
+        content:
+`단나
+
+오늘 뭐 해?
+나는.. 아무것도 안하고 있어..!!`
+    },
+
+    {
+        id: "letter_3",
+        trigger: 10,
+        title: "세 번째 편지",
+        content:
+`단나!
+
+오늘 맛있는 거 줘서 고마워!
+다음에는 내가 단나한테 맛있는 거 줄게!
+
+...근데 내가 만들 수 있을까?`
+    },
+
+    {
+        id: "letter_4",
+        trigger: 20,
+        title: "네 번째 편지",
+        content:
+`단나!
+
+꼭 하고 싶은 말이 있었는데
+편지 쓰니까 까먹었어...
+
+아!
+좋아한다는 말이었어!`
+    },
+
+    {
+        id: "letter_5",
+        trigger: 27,
+        title: "다섯 번째 편지",
+        content:
+`단나!
+
+오늘은 혼자서 놀았는데 조금 심심했어.
+역시 단나가 제일 재밌어!`
+    },
+
+    {
+        id: "letter_6",
+        trigger: 40,
+        title: "여섯 번째 편지",
+        content:
+`단나!
+
+오늘은 일찍 일어났지롱~
+
+응..
+그냥 자랑하고 싶었어...`
+    },
+
+    {
+        id: "letter_7",
+        trigger: 55,
+        title: "일곱 번째 편지",
+        content:
+`단나 보고 싶다!!!`
+    },
+
+    {
+        id: "letter_8",
+        trigger: 70,
+        title: "여덟 번째 편지",
+        content:
+`단나가 좋아!
+
+단나는 정말 왕 귀엽고,
+글도 잘 쓰고,
+그림도 잘 그리고,
+똑똑하고,
+착하고,
+말도 잘 들어주고,
+성실하고,
+재밌고,
+웃기고,
+우주 여행도 다녀오고,
+
+아 우주는 아직이야?`
+    },
+
+    {
+        id: "letter_9",
+        trigger: 80,
+        title: "아홉 번째 편지",
+        content:
+`단나!
+
+오늘도 편지를 썼어.
+왜 자꾸 쓰냐고?
+그냥 쓰고 싶어서!
+
+...싫어?`
+    },
+
+    {
+        id: "letter_10",
+        trigger: 85,
+        title: "열 번째 편지",
+        content:
+`단나!
+
+내가 나중에 엄청 유명해지면
+사인해줄게!
+
+미리 받아두고 싶으면
+지금도 가능해~!`
+    },
+
+    {
+        id: "letter_11",
+        trigger: 93,
+        title: "열한 번째 편지",
+        content:
+`단나!
+
+내일도 놀자!
+
+...내일 말고 오늘도 괜찮아!`
+    },
+
+    {
+        id: "letter_12",
+        trigger: 99,
+        title: "열두 번째 편지",
+        content:
+`단나!
+
+나 오늘 좋은 생각이 났어.
+우리 같이 놀면 재밌을 것 같아!
+
+...아니,
+그냥 좋은 생각인 것 같아서...`
+    },
+    
+    {
+        id: "letter_13",
+        trigger: 100,
+        title: "열세 번째 편지",
+        content:
+`단나!
+
+언제나 너를 응원하고 있어.
+
+단나를 알게 된 건 정말
+큰 행운이었던 것 같아.
+
+언제나 고마워..!`
+    }
+
+];
+
+// ==========================================
+// 상관쟝 비밀 이벤트
+// ==========================================
+
+const characterSecretEventList = [
+    {
+        id: "secret_1",
+        title: "[???] 이상한 일이 발생했습니다.",
+        content:
+`상관쟝이 갑자기 당신을 바라보고 있습니다.
+...
+“거기 있었어?”
+
+아무 일도 없었던 것처럼 다시 돌아갑니다.`
+    },
+
+    {
+        id: "secret_2",
+        title: "[???] 상관쟝이 뭔가를 숨겼습니다.",
+        content:
+`무엇을 숨겼는지는 알려주지 않습니다.
+나중에 알려줄 생각도 없어 보입니다.`
+    },
+
+    {
+        id: "secret_3",
+        title: "[비밀 이벤트] 선물을 발견했습니다. 🎁",
+        content:
+`작은 상자를 발견했습니다.
+열어보니...
+
+빈 상자였습니다.
+
+상관쟝은 조금 실망했습니다.`
+    },
+
+    {
+        id: "secret_4",
+        title: "[???] 상관쟝이 웃고 있습니다.",
+        content:
+`무슨 좋은 일이 있었던 모양입니다.
+물어보자 고개를 저었습니다.
+
+비밀인 것 같습니다.`
+    },
+
+    {
+        id: "secret_5",
+        title: "[비밀 이벤트] 옥수수",
+        content:
+`상관쟝이 옥수수를 발견했습니다.
+
+네.`
+    },
+
+    {
+        id: "secret_6",
+        title: "[???] 돌멩이",
+        content:
+`상관쟝이 돌멩이를 주웠습니다.
+한참 바라봅니다.
+
+다시 내려놓았습니다.`
+    },
+
+    {
+        id: "secret_7",
+        title: "[???] 나뭇잎",
+        content:
+`상관쟝의 머리 위에 나뭇잎이 떨어졌습니다. 🍃
+
+상관쟝은 눈치채지 못했습니다.`
+    },
+
+    {
+        id: "secret_8",
+        title: "[비밀 이벤트] 바람",
+        content:
+`바람이 불었습니다.
+상관쟝의 머리카락이 조금 흔들렸습니다.
+
+그것뿐입니다.`
+    },
+
+    {
+        id: "secret_9",
+        title: "[???] 누군가의 흔적",
+        content:
+`상관쟝이 밀밭 색 머리카락을 발견했습니다.
+누군가 다녀간 흔적 같습니다.
+
+하지만 누구인지는 모릅니다.`
+    },
+
+    {
+        id: "secret_10",
+        title: "[비밀 이벤트] 오늘의 성과",
+        content:
+`오늘 캐릭터가 해낸 일:
+
+일어나기.
+
+훌륭합니다.`
+    }
+];
+
+
+
+const characterLetterButton =
+    document.getElementById("character-letter-button");
+
+const characterSecretEventButton =
+    document.getElementById("character-secret-event-button");
+
+const characterSecretEventModal =
+    document.getElementById("character-secret-event-modal");
+
+const characterSecretEventClose =
+    document.getElementById("character-secret-event-close"); 
+
+const characterSecretEventTitle =
+    document.getElementById("character-secret-event-title");
+
+const characterSecretEventContent =
+    document.getElementById("character-secret-event-content");
+
+const characterLetterNew =
+    document.getElementById("character-letter-new");
+
+const characterLetterModal =
+    document.getElementById("character-letter-modal");
+
+const characterLetterClose =
+    document.getElementById("character-letter-close");
+
+const characterLetterModalTitle =
+    document.getElementById("character-letter-modal-title");
+
+const characterLetterModalDate =
+    document.getElementById("character-letter-modal-date");
+
+const characterLetterModalContent =
+    document.getElementById("character-letter-modal-content");
+
+
+/* ------------------------------
+   편지 날짜
+------------------------------ */
+
+function getLetterDate() {
+
+    const today = new Date();
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(today.getMonth() + 1)
+            .padStart(2, "0");
+
+    const date =
+        String(today.getDate())
+            .padStart(2, "0");
+
+    return `${year}-${month}-${date}`;
+
+}
+
+
+/* ------------------------------
+   편지 저장
+------------------------------ */
+
+async function saveCharacterLetters(letters) {
+
+    await setDoc(
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        ),
+        {
+            letters: letters
+        },
+        {
+            merge: true
+        }
+    );
+
+}
+
+
+/* ------------------------------
+   편지 팝업 닫기
+------------------------------ */
+
+function closeCharacterLetter() {
+
+    characterLetterModal.style.display =
+        "none";
+
+}
+
+characterLetterClose.addEventListener(
+    "click",
+    closeCharacterLetter
+);
+
+characterLetterModal.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target ===
+            characterLetterModal
+        ) {
+
+            closeCharacterLetter();
+
+        }
+
+    }
+);
+
+
+/* ------------------------------
+   편지 표시
+------------------------------ */
+
+function renderCharacterLetters(letters) {
+
+    /*
+     * 받은 편지가 없으면
+     * 편지 아이콘도 숨긴다.
+     */
+
+    if (
+        !letters ||
+        letters.length === 0
+    ) {
+
+        characterLetterButton.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    /*
+     * 편지가 하나라도 있으면
+     * 편지 아이콘을 보여준다.
+     */
+
+    characterLetterButton.style.display =
+        "block";
+
+
+    /*
+     * 읽지 않은 편지가 있는지 확인
+     */
+
+    const unreadCount =
+        letters.filter(
+            (letter) => !letter.read
+        ).length;
+
+
+    if (unreadCount > 0) {
+
+        characterLetterNew.style.display =
+            "block";
+
+    } else {
+
+        characterLetterNew.style.display =
+            "none";
+
+    }
+
+
+    /*
+     * 편지 아이콘 클릭
+     */
+
+    characterLetterButton.onclick =
+        () => {
+
+            const latestLetter =
+                [...letters].reverse()[0];
+
+            if (!latestLetter) {
+                return;
+            }
+
+
+            characterLetterModalTitle.textContent =
+                `💌 ${latestLetter.title}`;
+
+            characterLetterModalDate.textContent =
+                latestLetter.date;
+
+            characterLetterModalContent.textContent =
+                latestLetter.content;
+
+
+            characterLetterModal.style.display =
+                "flex";
+
+
+            /*
+             * 새 편지였다면 읽음 처리
+             */
+
+            if (!latestLetter.read) {
+
+                latestLetter.read = true;
+
+                saveCharacterLetters(
+                    letters
+                );
+
+                characterLetterNew.style.display =
+                    "none";
+
+            }
+
+        };
+
+}
+
+
+/* ------------------------------
+   편지 이벤트 확인
+------------------------------ */
+
+async function loadCharacterLetters(user) {
+    try {
+
+        if (user.uid === CHARACTER_OWNER_UID) {
+            characterLetterButton.style.display = "none";
+            return;
+        }
+
+        const characterRef =
+            doc(db, "characters", CHARACTER_ID);
+
+        const characterDoc =
+            await getDoc(characterRef);
+
+        let data = {};
+
+        if (characterDoc.exists()) {
+            data = characterDoc.data();
+        }
+
+        let letters =
+            Array.isArray(data.letters)
+                ? data.letters
+                : [];
+
+        const diarySnapshot =
+            await getDocs(
+                collection(db, "diaries")
+            );
+
+        let diaryCount = 0;
+
+        diarySnapshot.forEach((diaryDoc) => {
+            const diaryData = diaryDoc.data();
+
+            if (
+                diaryData.authorUid ===
+                CHARACTER_OWNER_UID
+            ) {
+                diaryCount++;
+            }
+        });
+
+        // 마지막으로 편지를 확인했을 때의 일기 개수
+        const lastLetterDiaryCount =
+            typeof data.lastLetterDiaryCount === "number"
+                ? data.lastLetterDiaryCount
+                : 0;
+
+        // 일기 개수가 실제로 늘어났을 때만 새로운 편지를 보냄
+        if (diaryCount > lastLetterDiaryCount) {
+
+            // 현재 조건을 만족하면서 아직 받지 않은 편지들
+            const availableLetters =
+                characterLetterList.filter((letterData) => {
+
+                    const alreadyReceived =
+                        letters.some(
+                            (letter) =>
+                                letter.id ===
+                                letterData.id
+                        );
+
+                    return (
+                        diaryCount >= letterData.trigger &&
+                        !alreadyReceived
+                    );
+                });
+
+            // 받을 수 있는 편지가 있다면 랜덤으로 하나 선택
+            if (availableLetters.length > 0) {
+
+                const randomIndex =
+                    Math.floor(
+                        Math.random() *
+                        availableLetters.length
+                    );
+
+                const selectedLetter =
+                    availableLetters[randomIndex];
+
+                letters.push({
+                    id: selectedLetter.id,
+                    title: selectedLetter.title,
+                    content: selectedLetter.content,
+                    date: getLetterDate(),
+                    read: false
+                });
+            }
+
+            // 현재 일기 개수를 저장
+            await setDoc(
+                characterRef,
+                {
+                    letters: letters,
+                    lastLetterDiaryCount: diaryCount
+                },
+                { merge: true }
+            );
+        }
+
+        renderCharacterLetters(letters);
+
+    } catch (error) {
+
+        console.error(
+            "상관쟝의 편지를 불러오는 중 오류:",
+            error
+        );
+
+        characterLetterButton.style.display = "none";
+    }
+}
+
+// ==========================================
+// 상관쟝 비밀 이벤트 발생
+// ==========================================
+
+async function loadCharacterSecretEvent(user) {
+    try {
+
+        // 상관쟝 본인은 비밀 이벤트를 받지 않음
+        if (user.uid === CHARACTER_OWNER_UID) {
+            characterSecretEventButton.style.display = "none";
+            return;
+        }
+
+        const characterRef =
+            doc(db, "characters", CHARACTER_ID);
+
+        const characterDoc =
+            await getDoc(characterRef);
+
+        let data = {};
+
+        if (characterDoc.exists()) {
+            data = characterDoc.data();
+        }
+
+        // 친구가 쓴 일기 개수 확인
+        const diarySnapshot =
+            await getDocs(
+                collection(db, "diaries")
+            );
+
+        let diaryCount = 0;
+
+        diarySnapshot.forEach((diaryDoc) => {
+            const diaryData = diaryDoc.data();
+
+            if (
+                diaryData.authorUid ===
+                CHARACTER_OWNER_UID
+            ) {
+                diaryCount++;
+            }
+        });
+
+        // 아직 일기를 10개 쓰지 않았다면 종료
+        if (diaryCount < 10) {
+            characterSecretEventButton.style.display = "none";
+            return;
+        }
+
+        // 이미 이 일기 개수에서 이벤트를 확인했다면 다시 발생하지 않음
+        const lastSecretEventDiaryCount =
+            typeof data.lastSecretEventDiaryCount === "number"
+                ? data.lastSecretEventDiaryCount
+                : 0;
+
+        if (diaryCount === lastSecretEventDiaryCount) {
+            renderCharacterSecretEvent(data.secretEvent);
+            return;
+        }
+
+        // 현재 일기 개수를 기록
+        await setDoc(
+            characterRef,
+            {
+                lastSecretEventDiaryCount: diaryCount
+            },
+            { merge: true }
+        );
+
+        // 30% 확률
+        const eventChance = Math.random();
+
+        if (eventChance > 0.3) {
+            characterSecretEventButton.style.display = "none";
+            return;
+        }
+
+        // 10개의 이벤트 중 랜덤 선택
+        const randomIndex =
+            Math.floor(
+                Math.random() *
+                characterSecretEventList.length
+            );
+
+        const selectedEvent =
+            characterSecretEventList[randomIndex];
+
+        const secretEvent = {
+            id: selectedEvent.id,
+            title: selectedEvent.title,
+            content: selectedEvent.content
+        };
+
+        // 이벤트 저장
+        await setDoc(
+            characterRef,
+            {
+                secretEvent: secretEvent
+            },
+            { merge: true }
+        );
+
+        // 화면에 표시
+        renderCharacterSecretEvent(secretEvent);
+
+    } catch (error) {
+        console.error(
+            "비밀 이벤트를 불러오는 중 오류:",
+            error
+        );
+
+        characterSecretEventButton.style.display = "none";
+    }
+}
+
+// ==========================================
+// 비밀 이벤트 화면 표시
+// ==========================================
+
+function renderCharacterSecretEvent(secretEvent) {
+
+    if (!secretEvent) {
+        characterSecretEventButton.style.display = "none";
+        return;
+    }
+
+    // 비밀 이벤트 아이콘 표시
+    characterSecretEventButton.style.display = "block";
+
+    // ✨ 버튼을 눌렀을 때
+    characterSecretEventButton.onclick = () => {
+
+        characterSecretEventTitle.textContent =
+            secretEvent.title;
+
+        characterSecretEventContent.textContent =
+            secretEvent.content;
+
+        characterSecretEventModal.style.display = "flex";
+    };
+}
+
+
+
+
+/* ==================================================
+   FOOD COLLECTION - 음식 도감
+================================================== */
+
+function loadFoodCollection() {
+
+    try {
+
+        const foodCollectionGrid =
+            document.getElementById("food-collection-grid");
+
+        const foodCollectionProgress =
+            document.getElementById("food-collection-progress");
+
+        if (!foodCollectionGrid || !foodCollectionProgress) {
+            return;
+        }
+
+        getDoc(
+            doc(db, "characters", CHARACTER_ID)
+        ).then((characterDoc) => {
+
+            let discoveredFoods = [];
+
+            if (characterDoc.exists()) {
+
+                const data = characterDoc.data();
+
+                discoveredFoods = Array.isArray(data.discoveredFoods)
+                    ? data.discoveredFoods
+                    : [];
+
+            }
+
+            const discoveredCount =
+                characterFoodList.filter((food) =>
+                    discoveredFoods.includes(food.name)
+                ).length;
+
+            foodCollectionProgress.textContent =
+                `발견한 음식 ${discoveredCount} / ${characterFoodList.length}`;
+
+            foodCollectionGrid.innerHTML = "";
+
+            characterFoodList.forEach((food) => {
+
+                const isDiscovered =
+                    discoveredFoods.includes(food.name);
+
+                const item = document.createElement("div");
+
+                item.className =
+                    "food-collection-item" +
+                    (isDiscovered ? "" : " undiscovered");
+
+                if (isDiscovered) {
+
+                    item.innerHTML = `
+                        <div class="food-collection-icon">
+                            ${food.icon}
+                        </div>
+
+                        <p class="food-collection-name">
+                            ${food.name}
+                        </p>
+
+                        <p class="food-collection-rarity">
+                            ${food.rarity}
+                        </p>
+
+                        <p class="food-collection-description">
+                            ${food.description}
+                        </p>
+
+                        <p class="food-collection-rating">
+                            ${food.rating}
+                        </p>
+                    `;
+
+                } else {
+
+                    item.innerHTML = `
+                        <div class="food-collection-icon">
+                            ❔
+                        </div>
+
+                        <p class="food-collection-name">
+                            ???
+                        </p>
+
+                        <p class="food-collection-rarity">
+                            미발견
+                        </p>
+
+                        <p class="food-collection-description">
+                            아직 먹어보지 않은 음식입니다.
+                        </p>
+                    `;
+
+                }
+
+                foodCollectionGrid.appendChild(item);
+
+            });
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "음식 도감을 불러오는 중 오류:",
+            error
+        );
+
+    }
+
+}
+
+
 
 /* ==================================================
    HTML 안전 처리
@@ -991,22 +3778,22 @@ function escapeHTML(value) {
    추후 기능
 ================================================== */
 
-document
-    .getElementById("draft-button")
-    .addEventListener("click", () => {
+const draftButton = document.getElementById("draft-button");
 
+if (draftButton) {
+    draftButton.addEventListener("click", () => {
         alert("임시저장 기능은 다음 단계에서 연결할 예정이에요!");
-
     });
+}
 
 
-document
-    .getElementById("trash-button")
-    .addEventListener("click", () => {
+const trashButton = document.getElementById("trash-button");
 
+if (trashButton) {
+    trashButton.addEventListener("click", () => {
         alert("휴지통 기능은 다음 단계에서 연결할 예정이에요!");
-
     });
+}
 
 </script>
 
