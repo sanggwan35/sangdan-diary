@@ -15,7 +15,7 @@
 
         .mypage-container {
             width: 94%;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -25,7 +25,7 @@
             padding: 45px 45px 40px 70px;
             text-align: left;
 
-            background-color: #fffdf7;
+            background-color: #fcf8ee;
 
             background-image:
                 linear-gradient(
@@ -71,7 +71,7 @@
             margin-bottom: 12px;
             padding: 4px 10px;
 
-            background: #3d3542;
+            background: #625044;
             color: #fffaf3;
 
             font-size: 11px;
@@ -320,7 +320,7 @@
     margin-bottom: 12px;
     padding: 4px 10px;
 
-    background: #3d3542;
+    background: #625044;
     color: #fffaf3;
 
     font-size: 11px;
@@ -547,7 +547,7 @@
     display: inline-block;
     margin-bottom: 10px;
     padding: 4px 10px;
-    background: #3d3542;
+    background: #625044;
     color: #fffaf3;
     font-size: 11px;
     letter-spacing: 2px;
@@ -629,9 +629,6 @@
 }
 
     
-/* ==================================================
-   CHARACTER ACTION - 오늘의 행동
-================================================== */
 
 
 /* ==================================================
@@ -654,7 +651,7 @@
     margin-bottom: 10px;
     padding: 4px 10px;
 
-    background: #3d3542;
+    background: #625044;
     color: #fffaf3;
 
     font-size: 11px;
@@ -1094,7 +1091,307 @@
 
 }
 
+    /* ==================================================
+   TWO CHARACTERS
+================================================== */
+
+.character-two-column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.character-two-column .character-growth {
+    margin-top: 0;
+}
+
+@media (max-width: 700px) {
+    .character-two-column {
+        grid-template-columns: 1fr;
+    }
+}
     
+    /* ==================================================
+   FOOD COLLECTION TOGGLE
+================================================== */
+
+.food-collection-toggle {
+    display: block;
+    width: 100%;
+    margin: 15px 0 0;
+    padding: 10px 15px;
+
+    border: 1px solid #333;
+    background: #fff;
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.food-collection-toggle:hover {
+    background: #f5f5f5;
+}
+
+.food-collection-content {
+    display: none;
+    margin-top: 15px;
+}
+
+.food-collection-content.open {
+    display: block;
+}
+
+/* ==================================================
+   MY PAGE - 모바일 최적화
+================================================== */
+
+@media (max-width: 700px) {
+
+    /* 마이페이지 전체 폭 */
+    .mypage-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* 노트 종이 여백 줄이기 */
+    .mypage-paper {
+        margin-top: 20px;
+        padding: 30px 18px 30px 38px;
+    }
+
+    .mypage-paper h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+
+    /* 프로필 카드 */
+    .profile-area {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+
+    .profile-card {
+        padding: 18px 15px;
+        gap: 14px;
+    }
+
+    .profile-name {
+        font-size: 18px;
+    }
+
+    .profile-icon {
+        flex-shrink: 0;
+    }
+
+    /* 닉네임 변경 영역 */
+    .nickname-area.show {
+        flex-wrap: wrap;
+    }
+
+    .nickname-area input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .nickname-area button {
+        flex-shrink: 0;
+    }
+
+
+    /* 통계 */
+    .stats-area {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .stat-box {
+        padding: 15px 8px;
+    }
+
+    .stat-box .stat-number {
+        font-size: 23px;
+    }
+
+
+    /* 캐릭터 두 명 */
+    .character-two-column {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .character-growth {
+        margin-top: 30px;
+        padding-top: 25px;
+    }
+
+    .character-card {
+        padding: 15px;
+    }
+
+    .character-growth h3 {
+        font-size: 20px;
+    }
+
+
+    /* 캐릭터 이미지 */
+    .character-image-wrapper {
+        width: 135px;
+        height: 135px;
+    }
+
+    .character-image-wrapper .character-image-box {
+        width: 135px;
+        height: 135px;
+        font-size: 50px;
+    }
+
+
+    /* 오늘의 행동 말풍선 */
+    .character-action-bubble {
+        left: 60px;
+        top: -15px;
+        width: 165px;
+        max-width: calc(100vw - 120px);
+        min-height: 48px;
+        padding: 9px 11px;
+        font-size: 10px;
+    }
+
+    .character-action-bubble .character-action-icon {
+        font-size: 18px;
+    }
+
+    .character-action-bubble .character-action-text {
+        font-size: 10px;
+    }
+
+
+    /* 편지 / 이벤트 버튼 */
+    .character-letter-button {
+        right: -8px;
+        bottom: 5px;
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+        line-height: 38px;
+    }
+
+
+    /* 캐릭터 정보 */
+    .character-info {
+        margin-top: 20px;
+    }
+
+    .character-info-box {
+        padding: 13px;
+        margin-bottom: 10px;
+    }
+
+    .character-info-text {
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .character-list li {
+        font-size: 12px;
+    }
+
+
+    /* 밥 주기 */
+    .character-feed {
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+
+    .character-feed-button {
+        padding: 11px 10px;
+        font-size: 12px;
+    }
+
+    .character-feed-result {
+        padding: 15px 10px;
+    }
+
+
+    /* 음식 도감 */
+    .food-collection {
+        margin-top: 25px;
+        padding-top: 25px;
+    }
+
+    .food-collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .food-collection-item {
+        min-height: 130px;
+        padding: 12px 7px;
+    }
+
+    .food-collection-icon {
+        font-size: 26px;
+    }
+
+    .food-collection-name {
+        font-size: 12px;
+    }
+
+    .food-collection-description {
+        font-size: 10px;
+    }
+
+
+    /* 두 사람의 일기 */
+    .diary-profiles {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .my-diary-title {
+        font-size: 16px;
+    }
+
+
+    /* 편지 목록 */
+    .character-letter {
+        padding: 15px;
+    }
+
+    .character-letter-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .character-letter-title {
+        font-size: 15px;
+    }
+
+    .character-letter-content {
+        font-size: 12px;
+        line-height: 1.9;
+    }
+
+
+    /* 편지 팝업 */
+    .character-letter-modal {
+        padding: 12px;
+    }
+
+    .character-letter-modal-box {
+        width: 100%;
+        max-width: 100%;
+        max-height: 85vh;
+        padding: 28px 18px;
+    }
+}
+
     </style>
 </head>
 
@@ -1102,7 +1399,7 @@
 
 <header class="site-header">
 
-    <h1>OUR LITTLE DIARY</h1>
+    <h1>SANGWAN-DANNA PRISON</h1>
 
     <p class="site-subtitle">
         상관단나 기록 저장소
@@ -1251,6 +1548,7 @@
      상관쟝 성장
 ================================================== -->
 
+<div class="character-two-column">
 <section class="character-growth">
 
     <div class="character-label">
@@ -1449,7 +1747,7 @@
 <div class="character-feed">
 
     <p id="character-feed-status" class="character-feed-status">
-        오늘 0/3회
+        오늘 0/1회
     </p>
 
     <button
@@ -1477,37 +1775,292 @@
 
 <div class="food-collection">
 
-    <div class="food-collection-header">
-
-        <div class="food-collection-label">
-            FOOD COLLECTION
-        </div>
-
-        <h3>상관쟝의 음식 도감</h3>
-
-        <p
-            id="food-collection-progress"
-            class="food-collection-progress"
-        >
-            발견한 음식 0 / 25
-        </p>
-
-    </div>
+    <button
+        type="button"
+        class="food-collection-toggle"
+        id="food-collection-toggle"
+    >
+        🍴 상관쟝의 음식 도감 보기
+    </button>
 
     <div
-        id="food-collection-grid"
-        class="food-collection-grid"
+        class="food-collection-content"
+        id="food-collection-content"
     >
+
+        <div class="food-collection-header">
+
+            <div class="food-collection-label">
+                FOOD COLLECTION
+            </div>
+
+            <h3>상관쟝의 음식 도감</h3>
+
+            <p
+                id="food-collection-progress"
+                class="food-collection-progress"
+            >
+                발견한 음식 0 / 25
+            </p>
+
+        </div>
+
+        <div
+            id="food-collection-grid"
+            class="food-collection-grid"
+        >
+        </div>
+
     </div>
 
 </div>
 
 
+</section>
+
+<!-- ==================================================
+     단나쟝 성장
+================================================== -->
+
+<section class="character-growth">
+
+    <div class="character-label">
+        CHARACTER
+    </div>
+
+    <h3>단나쟝의 성장</h3>
+
+    <div class="character-card">
+
+        <div class="character-main">
+
+            <div class="character-image-wrapper">
+
+                <div
+                    id="danna-character-action-bubble"
+                    class="character-action-bubble"
+                >
+                    <span
+                        id="danna-character-action-icon"
+                        class="character-action-icon"
+                    >☁</span>
+
+                    <span
+                        id="danna-character-action-text"
+                        class="character-action-text"
+                    >불러오는 중...</span>
+                </div>
+
+                <div
+                    id="danna-character-image"
+                    class="character-image-box"
+                >
+                    🌱
+                </div>
+
+                <!-- 비밀 이벤트가 발생했을 때 나타나는 아이콘 -->
+                <button
+                    id="danna-secret-event-button"
+                    class="character-letter-button"
+                    style="display: none;"
+                    type="button"
+                >
+                    ✨
+                </button>
+
+                <!-- 비밀 이벤트 팝업 -->
+                <div
+                    id="danna-secret-event-modal"
+                    class="character-letter-modal"
+                    style="display: none;"
+                >
+                    <div class="character-letter-modal-box">
+
+                        <button
+                            id="danna-secret-event-close"
+                            class="character-letter-close"
+                            type="button"
+                        >
+                            ×
+                        </button>
+
+                        <p
+                            id="danna-secret-event-title"
+                            class="character-letter-modal-title"
+                        ></p>
+
+                        <div
+                            id="danna-secret-event-content"
+                            class="character-letter-modal-content"
+                        ></div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <p
+                id="danna-character-name"
+                class="character-name"
+            >
+                단나쟝
+            </p>
+
+            <p
+                id="danna-character-level"
+                class="character-level"
+            >
+                Lv.1
+            </p>
+
+            <p
+                id="danna-character-exp"
+                class="character-exp"
+            >
+                EXP 0
+            </p>
+
+        </div>
+
+
+
+        <div class="character-info">
+
+            <div class="character-info-box">
+
+                <p class="character-info-title">
+                    GROWTH
+                </p>
+
+                <p
+                    id="danna-character-growth-text"
+                    class="character-info-text"
+                >
+                    단나쟝은 당신을 수줍게 바라보고 있다. 아직은 혼자 행동하기엔 미숙해 보인다.
+                </p>
+
+            </div>
+
+
+            <div class="character-info-box">
+
+                <p class="character-info-title">
+                    할 수 있는 것
+                </p>
+
+                <ul
+                    id="danna-character-can-list"
+                    class="character-list"
+                >
+                </ul>
+
+            </div>
+
+
+            <div class="character-info-box">
+
+                <p class="character-info-title">
+                    하고 싶은 것
+                </p>
+
+                <p
+                    id="danna-character-want-text"
+                    class="character-info-text"
+                >
+                    상관이랑 놀기
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p class="character-owner-note">
+            단나쟝은 상관님이 육성하고 있습니다.
+        </p>
+
+
+        <div class="character-feed">
+
+            <p
+                id="danna-character-feed-status"
+                class="character-feed-status"
+            >
+                오늘 0/1회
+            </p>
+
+            <button
+                id="danna-character-feed-button"
+                class="character-feed-button"
+                type="button"
+            >
+                🍚 단나쟝에게 밥 주기
+            </button>
+
+            <div
+                id="danna-character-feed-result"
+                class="character-feed-result"
+                style="display: none;"
+            >
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ==================================================
+         음식 도감
+    ================================================== -->
+
+    <div class="food-collection">
+
+    <button
+        type="button"
+        class="food-collection-toggle"
+        id="danna-food-collection-toggle"
+    >
+        🍴 단나쟝의 음식 도감 보기
+    </button>
+
+    <div
+        class="food-collection-content"
+        id="danna-food-collection-content"
+    >
+
+        <div class="food-collection-header">
+
+            <div class="food-collection-label">
+                FOOD COLLECTION
+            </div>
+
+            <h3>단나쟝의 음식 도감</h3>
+
+            <p
+                id="danna-food-collection-progress"
+                class="food-collection-progress"
+            >
+                발견한 음식 0 / 25
+            </p>
+
+        </div>
+
+        <div
+            id="danna-food-collection-grid"
+            class="food-collection-grid"
+        >
+        </div>
+
+    </div>
+
+</div>
 
 
 </section>
 
-
+</div>
 
 <!-- 두 사람의 일기 -->
 
@@ -1639,27 +2192,7 @@ const friendDiaryList =
     document.getElementById("friend-diary-list");
 
 
-/* ==================================================
-   LOGIN
-================================================== */
 
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-
-        alert("로그인이 필요합니다.");
-
-        location.href = "login.html";
-
-        return;
-    }
-
-    await loadMyPage(user);
-    await loadCharacterGrowth(user);
-    await loadCharacterFeeding(user);
-    loadFoodCollection();
-    await loadCharacterLetters(user);
-    await loadCharacterSecretEvent(user);
 
 /* ==================================================
    CHARACTER ACTION - 오늘의 행동
@@ -1728,7 +2261,6 @@ const characterActionList = [
     }
 ];
 
-await loadCharacterAction();
 
 async function loadCharacterAction() {
 
@@ -1803,8 +2335,69 @@ async function loadCharacterAction() {
 
 }
 
+async function loadDannaAction() {
 
-});
+    const characterRef = doc(
+        db,
+        "characters",
+        DANNA_CHARACTER_ID
+    );
+
+    const characterSnap = await getDoc(characterRef);
+
+    let actionIndex;
+    let actionDate;
+
+    const today = getTodayKey();
+
+    if (characterSnap.exists()) {
+
+        const data = characterSnap.data();
+
+        actionIndex = data.dannaActionIndex;
+        actionDate = data.dannaActionDate;
+
+    }
+
+    // 오늘 처음 접속했다면 새로운 행동을 랜덤으로 선택
+    if (actionDate !== today) {
+
+        actionIndex = Math.floor(
+            Math.random() * dannaActionList.length
+        );
+
+        actionDate = today;
+
+        await setDoc(
+            characterRef,
+            {
+                dannaActionIndex: actionIndex,
+                dannaActionDate: actionDate
+            },
+            { merge: true }
+        );
+    }
+
+    const action = dannaActionList[actionIndex];
+
+    const iconElement = document.getElementById(
+        "danna-character-action-icon"
+    );
+
+    const textElement = document.getElementById(
+        "danna-character-action-text"
+    );
+
+    if (iconElement) {
+        iconElement.textContent = action.icon;
+    }
+
+    if (textElement) {
+        textElement.textContent = action.text;
+    }
+}
+
+
 
 
 /* ==================================================
@@ -2177,6 +2770,211 @@ saveNicknameButton.addEventListener(
 
 const CHARACTER_ID = "sangkwan";
 const CHARACTER_OWNER_UID = FRIEND_UID;
+const DANNA_CHARACTER_ID = "danna";
+const foodCollectionGrid = document.getElementById(
+    "food-collection-grid"
+);
+
+const foodCollectionToggle = document.getElementById(
+    "food-collection-toggle"
+);
+
+const foodCollectionContent = document.getElementById(
+    "food-collection-content"
+);
+
+const dannaFoodCollectionGrid = document.getElementById(
+    "danna-food-collection-grid"
+);
+
+const dannaFoodCollectionToggle = document.getElementById(
+    "danna-food-collection-toggle"
+);
+
+const dannaFoodCollectionContent = document.getElementById(
+    "danna-food-collection-content"
+);
+
+const dannaFoodCollectionProgress = document.getElementById(
+    "danna-food-collection-progress"
+);
+
+const dannaCharacterFeedStatus = document.getElementById(
+    "danna-character-feed-status"
+);
+
+const dannaCharacterFeedButton = document.getElementById(
+    "danna-character-feed-button"
+);
+
+const dannaCharacterFeedResult = document.getElementById(
+    "danna-character-feed-result"
+);
+
+if (foodCollectionToggle && foodCollectionContent) {
+
+    foodCollectionToggle.addEventListener("click", () => {
+
+        foodCollectionContent.classList.toggle("open");
+
+        if (foodCollectionContent.classList.contains("open")) {
+
+            foodCollectionToggle.textContent =
+                "🍴 상관쟝의 음식 도감 접기";
+
+        } else {
+
+            foodCollectionToggle.textContent =
+                "🍴 상관쟝의 음식 도감 보기";
+
+        }
+
+    });
+
+}
+
+
+if (dannaFoodCollectionToggle && dannaFoodCollectionContent) {
+
+    dannaFoodCollectionToggle.addEventListener("click", () => {
+
+        dannaFoodCollectionContent.classList.toggle("open");
+
+        if (dannaFoodCollectionContent.classList.contains("open")) {
+
+            dannaFoodCollectionToggle.textContent =
+                "🍴 단나쟝의 음식 도감 접기";
+
+        } else {
+
+            dannaFoodCollectionToggle.textContent =
+                "🍴 단나쟝의 음식 도감 보기";
+
+        }
+
+    });
+
+}
+
+
+const dannaGrowthData = {
+    1: {
+        growth: "단나쟝은 당신을 수줍게 바라보고 있다. 아직은 혼자 행동하기엔 미숙해 보인다.",
+        can: [
+            "밥 먹기",
+            "노래 흥얼 거리기",
+            "당신 바라보기"
+        ],
+        want: "상관이랑 놀기",
+        levelUp: "단나쟝은 조금 자랐다!! 이제 상관이에게 놀기 신청을 할 수 있게 되었다!"
+    },
+
+    2: {
+        growth: "단나쟝은 이제 혼자서도 잘 돌아다닌다! 다양한 경험을 하는 것 같다.",
+        can: [
+            "도전해보기",
+            "혼자 돌아다니기"
+        ],
+        want: "상관이에게 직접 그린 그림 선물하기",
+        levelUp: "단나쟝이 제법 단단해졌다! 문제가 생기면 두렵지만 피하지 않는다."
+    },
+
+    3: {
+        growth: "단나쟝이 할 수 있는 것이 많이 늘었다! 다방면에 재능이 있어 보인다. 새로운 것에 두려워하지 않기 때문일까?",
+        can: [
+            "여행 다니기",
+            "그림 그리기",
+            "독서하기"
+        ],
+        want: "상관이와 공포 영화 보기",
+        levelUp: "단나쟝은 어느새 어엿하게 자랐다! 좋아하는 것이나 하고 싶은 것은 솔직하게 표현한다."
+    },
+
+    4: {
+        growth: "단나쟝은 요즘 재미있는 것을 발견하면 눈을 반짝이며 이것저것 보여주러 온다.",
+        can: [
+            "편지쓰기",
+            "예쁜 것 모으기",
+            "편지 쓰기"
+        ],
+        want: "상관이와 여행 가기",
+        levelUp: "단나쟝은 많이 자랐다! 이제는 누군가에게 자신이 먼저 손을 내밀어 줄 수도 있게 되었다."
+    },
+
+    5: {
+        growth: "단나쟝은 이제 어엿한 사회인이다! 씩씩하고 당차게 세상을 마주하지만, 상관이와 둘만 있으면 여전히 어린아이처럼 헤헤 웃는다.",
+        can: [
+            "새로운 추억 만들기",
+            "편지 쓰기",
+            "배우고 싶은 것 공부하기"
+        ],
+        want: "상관이와 오래오래 놀기",
+        levelUp: ""
+    }
+};
+
+const dannaActionList = [
+    {
+        icon: "💤",
+        text: "낮잠을 자고 있습니다."
+    },
+    {
+        icon: "📖",
+        text: "책을 읽고 있습니다."
+    },
+    {
+        icon: "🍙",
+        text: "밥을 기다리고 있습니다."
+    },
+    {
+        icon: "🔍",
+        text: "무언가를 찾고 있습니다."
+    },
+    {
+        icon: "🌱",
+        text: "화분을 보고 있습니다."
+    },
+    {
+        icon: "🪟",
+        text: "창밖을 바라보고 있습니다."
+    },
+    {
+        icon: "🧸",
+        text: "인형과 놀고 있습니다."
+    },
+    {
+        icon: "☁",
+        text: "멍하니 있습니다."
+    },
+    {
+        icon: "✏",
+        text: "뭔가를 그리고 있습니다."
+    },
+    {
+        icon: "😴",
+        text: "졸고 있습니다."
+    },
+    {
+        icon: "🤔",
+        text: "무언가를 고민하고 있습니다."
+    },
+    {
+        icon: "🧹",
+        text: "방을 정리하고 있습니다."
+    },
+    {
+        icon: "🍪",
+        text: "간식을 먹고 있습니다."
+    },
+    {
+        icon: "🐾",
+        text: "그냥 돌아다니고 있습니다."
+    },
+    {
+        icon: "☁",
+        text: "아무것도 하지 않고 있습니다."
+    }
+];
 
 const characterGrowthData = {
 
@@ -2461,6 +3259,55 @@ async function loadCharacterGrowth(user) {
 
 }
 
+async function loadDannaGrowth(user) {
+
+    const characterRef = doc(
+        db,
+        "characters",
+        DANNA_CHARACTER_ID
+    );
+
+    const characterSnap = await getDoc(characterRef);
+
+    let exp = 0;
+
+    if (characterSnap.exists()) {
+        const data = characterSnap.data();
+        exp = data.exp || 0;
+    }
+
+    const level = getCharacterLevel(exp);
+    const growthData = dannaGrowthData[level];
+
+    document.getElementById("danna-character-level").textContent =
+        `Lv.${level}`;
+
+    document.getElementById("danna-character-exp").textContent =
+        `EXP ${exp}`;
+
+    document.getElementById("danna-character-growth-text").textContent =
+        growthData.growth;
+
+    document.getElementById("danna-character-want-text").textContent =
+        growthData.want;
+
+    const canList = document.getElementById(
+        "danna-character-can-list"
+    );
+
+    canList.innerHTML = "";
+
+    growthData.can.forEach(item => {
+
+        const li = document.createElement("li");
+
+        li.textContent = item;
+
+        canList.appendChild(li);
+
+    });
+}
+
 /* ==================================================
    CHARACTER FEEDING - 밥 주기
 ================================================== */
@@ -2643,6 +3490,278 @@ const characterFoodList = [
     }
 ];
 
+const dannaFoodList = [
+    {
+        icon: "🥧",
+        name: "에그타르트",
+        rarity: "희귀",
+        description: "바삭한 타르트 안에 부드럽고 달콤한 계란 크림이 가득 들어 있다. 따뜻할 때 먹으면 더 맛있다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍔",
+        name: "햄버거",
+        rarity: "일반",
+        description: "빵 사이에 고기와 채소가 잔뜩 들어 있다. 한입에 먹기엔 조금 크다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍉",
+        name: "수박",
+        rarity: "일반",
+        description: "시원하고 달콤한 여름 과일. 씨를 골라내며 먹어야 한다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍚",
+        name: "컵밥",
+        rarity: "일반",
+        description: "따뜻한 밥 위에 여러 가지 맛있는 재료가 듬뿍 올라간 간편한 한 끼. 컵 하나에 맛있는 게 잔뜩 들어 있다!",
+        rating: "★★★★"
+    },
+    {
+        icon: "🌽",
+        name: "콘치즈",
+        rarity: "일반",
+        description: "달콤한 옥수수 위에 치즈를 듬뿍 올려 녹인 음식.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🫐",
+        name: "무화과",
+        rarity: "희귀",
+        description: "부드럽고 달콤한 과육에 톡톡 씹히는 씨앗이 들어 있는 과일. 은은한 단맛이 매력적이다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🐹",
+        name: "치이카와",
+        rarity: "레전드",
+        description: "작고 귀여운 모습이 단나쟝의 마음에 쏙 든다! 보기만 해도 괜히 기분이 좋아지고 꼭 안아주고 싶어진다. 하지만 먹을 수는 없다.",
+        rating: "★"
+    },
+    {
+        icon: "🍪",
+        name: "과자",
+        rarity: "일반",
+        description: "바삭바삭하고 달콤한 간식. 종류가 정말 많아서 하나를 고르려다 한 봉지를 전부 고르게 된다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍜",
+        name: "컵라면",
+        rarity: "일반",
+        description: "뜨거운 물만 부으면 금방 먹을 수 있는 간편한 음식. 따끈한 국물과 쫄깃한 면을 후루룩 먹으면 맛있다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🍳",
+        name: "오믈렛 수플레",
+        rarity: "희귀",
+        description: "달걀흰자를 폭신하게 거품 내어 구운 아주 부드러운 오믈렛. 몽글몽글한 모양이 구름 같다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🐚",
+        name: "전복 버터구이",
+        rarity: "레전드",
+        description: "통통한 전복을 버터에 구워 고소한 풍미를 더한 음식. 쫄깃한 식감이 재미있다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🌿",
+        name: "고수",
+        rarity: "일반",
+        description: "향이 아주 강한 허브. 좋아하는 사람도 많지만 처음 먹으면 당황할 수 있다!",
+        rating: "★"
+    },
+    {
+        icon: "🌶",
+        name: "마라샹궈",
+        rarity: "희귀",
+        description: "매콤하고 얼얼한 마라 향신료에 여러 가지 재료를 볶아 만든 음식. 맵기 조절을 할 수 있다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🐟",
+        name: "연어회덮밥",
+        rarity: "희귀",
+        description: "신선한 연어회와 채소를 밥 위에 듬뿍 올린 음식. 부드러운 연어와 새콤달콤한 양념이 잘 어울린다.",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🌶",
+        name: "김치찌개",
+        rarity: "일반",
+        description: "김치와 여러 재료를 넣고 보글보글 끓인 따뜻한 찌개. 얼큰하고 깊은 맛이 나서 밥과 함께 먹으면 맛있다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🦀",
+        name: "간장게장",
+        rarity: "레전드",
+        description: "싱싱한 게를 짭짤하고 달콤한 간장 양념에 숙성시킨 음식. 밥을 쓱쓱 비벼 먹으면 정말 맛있다!",
+        rating: "★★★★★"
+    },
+    {
+        icon: "🥕",
+        name: "안 익은 당근",
+        rarity: "일반",
+        description: "아삭하고 은은하게 달콤한 주황색 채소. 건강에는 좋다지만 단나쟝은 다른 맛있는 걸 먼저 찾을 것 같다!",
+        rating: "★"
+    },
+    {
+        icon: "🍺",
+        name: "맥주",
+        rarity: "일반",
+        description: "보리의 씁쓸한 맛과 특유의 향이 나는 음료.",
+        rating: "★★★★"
+    },
+    {
+        icon: "☕",
+        name: "블랙커피",
+        rarity: "일반",
+        description: "씁쓸하고 진한 향이 나는 커피. 단나쟝은 단 게 더 좋다.",
+        rating: "★★"
+    },
+    {
+        icon: "🍗",
+        name: "닭볶음탕",
+        rarity: "일반",
+        description: "닭고기와 감자, 채소를 매콤한 양념에 푹 끓인 음식. 국물에 밥을 비벼 먹어도 맛있다!",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍱",
+        name: "유부초밥",
+        rarity: "일반",
+        description: "달콤짭짤한 유부 속에 새콤한 밥을 가득 채운 음식. 한입에 먹기 좋은 크기다!",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍚",
+        name: "볶음밥",
+        rarity: "일반",
+        description: "밥과 여러 가지 재료를 함께 볶아 만든 간단한 음식. 냉장고에 있는 재료로도 만들 수 있다!",
+        rating: "★★★★"
+    },
+    {
+        icon: "🍖",
+        name: "장조림",
+        rarity: "일반",
+        description: "고기를 간장 양념에 푹 조려 만든 반찬. 짭짤하고 달콤해서 밥과 함께 먹기 좋다.",
+        rating: "★★★★"
+    },
+    {
+        icon: "🫘",
+        name: "번데기",
+        rarity: "일반",
+        description: "누에의 번데기를 삶아 양념한 길거리 간식. 고소하고 짭짤하지만 독특한 향과 식감 때문에 호불호가 크게 갈린다!",
+        rating: "★"
+    },
+    {
+        icon: "🪸",
+        name: "멍게",
+        rarity: "희귀",
+        description: "바다 향이 아주 진하고 독특한 풍미가 나는 해산물. 신선할수록 향긋하지만 특유의 맛 때문에 호불호가 크게 갈린다!",
+        rating: "★★★★★"
+    }
+];
+
+async function loadDannaFoodCollection() {
+
+    const characterRef = doc(
+        db,
+        "characters",
+        DANNA_CHARACTER_ID
+    );
+
+    const characterSnap = await getDoc(characterRef);
+
+    let discoveredFoods = [];
+
+    if (characterSnap.exists()) {
+
+        const data = characterSnap.data();
+
+        discoveredFoods = Array.isArray(data.discoveredFoods)
+            ? data.discoveredFoods
+            : [];
+
+    }
+
+    const discoveredCount =
+        dannaFoodList.filter((food) =>
+            discoveredFoods.includes(food.name)
+        ).length;
+
+    dannaFoodCollectionProgress.textContent =
+        `발견한 음식 ${discoveredCount} / ${dannaFoodList.length}`;
+
+    dannaFoodCollectionGrid.innerHTML = "";
+
+    dannaFoodList.forEach((food) => {
+
+        const isDiscovered =
+            discoveredFoods.includes(food.name);
+
+        const item = document.createElement("div");
+
+        item.className =
+            "food-collection-item" +
+            (isDiscovered ? "" : " undiscovered");
+
+        if (isDiscovered) {
+
+            item.innerHTML = `
+                <div class="food-collection-icon">
+                    ${food.icon}
+                </div>
+
+                <p class="food-collection-name">
+                    ${food.name}
+                </p>
+
+                <p class="food-collection-rarity">
+                    ${food.rarity}
+                </p>
+
+                <p class="food-collection-description">
+                    ${food.description}
+                </p>
+
+                <p class="food-collection-rating">
+                    ${food.rating}
+                </p>
+            `;
+
+        } else {
+
+            item.innerHTML = `
+                <div class="food-collection-icon">
+                    ❔
+                </div>
+
+                <p class="food-collection-name">
+                    ???
+                </p>
+
+                <p class="food-collection-rarity">
+                    미발견
+                </p>
+
+                <p class="food-collection-description">
+                    아직 먹어보지 않은 음식입니다.
+                </p>
+            `;
+
+        }
+
+        dannaFoodCollectionGrid.appendChild(item);
+
+    });
+}
+
 const characterFeedStatus = document.getElementById("character-feed-status");
 const characterFeedButton = document.getElementById("character-feed-button");
 const characterFeedResult = document.getElementById("character-feed-result");
@@ -2659,23 +3778,202 @@ function getTodayKey() {
 
 function updateCharacterFeedUI(feedCount, isOwner) {
 
-    characterFeedStatus.textContent = `오늘 ${feedCount}/3회`;
+    characterFeedStatus.textContent =
+        `오늘 ${feedCount}/1회`;
 
     if (!isOwner) {
+
         characterFeedButton.disabled = true;
-        characterFeedButton.textContent = "🍚 단나님이 밥을 줄 수 있습니다.";
+
+        characterFeedButton.textContent =
+            "🍚 단나님이 밥을 줄 수 있습니다.";
+
         return;
     }
 
-    if (feedCount >= 3) {
+    if (feedCount >= 1) {
+
         characterFeedButton.disabled = true;
-        characterFeedButton.textContent = "오늘은 밥을 다 먹었습니다!";
+
+        characterFeedButton.textContent =
+            "오늘은 밥을 다 먹었습니다!";
+
         return;
     }
 
     characterFeedButton.disabled = false;
-    characterFeedButton.textContent = "🍚 상관쟝에게 밥 주기";
+
+    characterFeedButton.textContent =
+        "🍚 상관쟝에게 밥 주기";
 }
+
+
+function updateDannaFeedUI(feedCount, isOwner) {
+
+    dannaCharacterFeedStatus.textContent =
+        `오늘 ${feedCount}/1회`;
+
+    if (!isOwner) {
+
+        dannaCharacterFeedButton.disabled = true;
+
+        dannaCharacterFeedButton.textContent =
+            "🍚 상관님이 밥을 줄 수 있습니다.";
+
+        return;
+    }
+
+    if (feedCount >= 1) {
+
+        dannaCharacterFeedButton.disabled = true;
+
+        dannaCharacterFeedButton.textContent =
+            "오늘은 밥을 다 먹었습니다!";
+
+        return;
+    }
+
+    dannaCharacterFeedButton.disabled = false;
+
+    dannaCharacterFeedButton.textContent =
+        "🍚 단나쟝에게 밥 주기";
+}
+
+async function loadDannaFeeding(user) {
+
+    const characterRef = doc(
+        db,
+        "characters",
+        DANNA_CHARACTER_ID
+    );
+
+    const characterSnap = await getDoc(characterRef);
+
+    let feedCount = 0;
+
+    if (characterSnap.exists()) {
+
+        const data = characterSnap.data();
+
+        if (data.feedDate === getTodayKey()) {
+            feedCount = Number(data.feedCount) || 0;
+        }
+    }
+
+    const isOwner = user.uid !== FRIEND_UID;
+
+    updateDannaFeedUI(feedCount, isOwner);
+}
+
+async function feedDannaCharacter() {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert("로그인이 필요합니다.");
+        return;
+    }
+
+    // 단나쟝 주인만 밥을 줄 수 있음
+    if (user.uid === FRIEND_UID) {
+        alert("단나쟝은 단나님이 밥을 줄 수 있습니다.");
+        return;
+    }
+
+    const characterRef = doc(
+        db,
+        "characters",
+        DANNA_CHARACTER_ID
+    );
+
+    const characterSnap = await getDoc(characterRef);
+
+    let feedCount = 0;
+    let discoveredFoods = [];
+
+    if (characterSnap.exists()) {
+
+        const data = characterSnap.data();
+
+        if (data.feedDate === getTodayKey()) {
+            feedCount = Number(data.feedCount) || 0;
+        }
+
+        discoveredFoods = Array.isArray(data.discoveredFoods)
+            ? data.discoveredFoods
+            : [];
+    }
+
+    // 하루 1번 제한
+    if (feedCount >= 1) {
+
+        updateDannaFeedUI(1, true);
+
+        alert("오늘은 이미 단나쟝에게 밥을 줬어요!");
+
+        return;
+    }
+
+    // 랜덤 음식 선택
+    const food =
+        dannaFoodList[
+            Math.floor(Math.random() * dannaFoodList.length)
+        ];
+
+    const newFeedCount = feedCount + 1;
+
+    const isNewFood =
+        !discoveredFoods.includes(food.name);
+
+    if (isNewFood) {
+        discoveredFoods.push(food.name);
+    }
+
+    await setDoc(
+        characterRef,
+        {
+            characterId: DANNA_CHARACTER_ID,
+            name: "단나쟝",
+            ownerUid: user.uid,
+            feedDate: getTodayKey(),
+            feedCount: newFeedCount,
+            discoveredFoods: discoveredFoods
+        },
+        { merge: true }
+    );
+
+    updateDannaFeedUI(newFeedCount, true);
+
+    dannaCharacterFeedResult.style.display = "block";
+
+    if (isNewFood) {
+
+        dannaCharacterFeedResult.innerHTML = `
+            ${food.icon} <strong>${food.name}</strong>을(를) 먹었습니다!<br>
+            새로운 음식 도감이 발견되었습니다! ✨
+        `;
+
+    } else {
+
+        dannaCharacterFeedResult.innerHTML = `
+            ${food.icon} <strong>${food.name}</strong>을(를) 먹었습니다!<br>
+            이미 발견한 음식입니다.
+        `;
+    }
+
+    await loadDannaFoodCollection();
+}
+
+if (dannaCharacterFeedButton) {
+
+    dannaCharacterFeedButton.addEventListener(
+        "click",
+        feedDannaCharacter
+    );
+
+}
+
+
 
 async function loadCharacterFeeding(user) {
 
@@ -2745,9 +4043,9 @@ async function feedCharacter() {
             feedCount = Number(data.feedCount) || 0;
         }
 
-        if (feedCount >= 3) {
+        if (feedCount >= 1) {
 
-            updateCharacterFeedUI(3, true);
+            updateCharacterFeedUI(1, true);
 
             characterFeedResult.style.display = "block";
             characterFeedResult.innerHTML = `
@@ -3794,6 +5092,53 @@ if (trashButton) {
         alert("휴지통 기능은 다음 단계에서 연결할 예정이에요!");
     });
 }
+
+
+/* ==================================================
+   LOGIN
+================================================== */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        alert("로그인이 필요합니다.");
+
+        location.href = "login.html";
+
+        return;
+    }
+
+    try {
+
+        await loadMyPage(user);
+
+        await loadCharacterGrowth(user);
+        await loadDannaGrowth(user);
+
+        await loadCharacterFeeding(user);
+        await loadDannaFeeding(user);
+
+        loadFoodCollection();
+        loadDannaFoodCollection();
+
+        await loadCharacterLetters(user);
+        await loadCharacterSecretEvent(user);
+
+        await loadCharacterAction();
+        await loadDannaAction();
+
+    } catch (error) {
+
+        console.error(
+            "마이페이지 정보를 불러오는 중 오류:",
+            error
+        );
+
+    }
+
+});
+
 
 </script>
 
