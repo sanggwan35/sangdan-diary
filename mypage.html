@@ -2208,10 +2208,6 @@ const characterActionList = [
         text: "만화책을 읽고 있습니다."
     },
     {
-        icon: "🍙",
-        text: "밥을 기다리고 있습니다."
-    },
-    {
         icon: "🔍",
         text: "무언가를 찾고 있습니다."
     },
@@ -2277,6 +2273,154 @@ async function loadCharacterAction() {
         if (characterDoc.exists()) {
             data = characterDoc.data();
         }
+
+
+
+        const dannaSecretEvents = [
+
+    {
+        title: "[???] 이상한 일이 발생했습니다.",
+        content: `
+단나쟝이 갑자기 당신을 바라보고 있습니다.
+
+...
+
+“언니, 거기 있지?”
+
+아무 일도 없었던 것처럼 다시 돌아갑니다.
+`
+    },
+
+    {
+        title: "[???] 이상한 일이 발생했습니다.",
+        content: `
+단나쟝이 당신을 향해 말합니다.
+
+“언니, 오늘은 늦게 왔네.”
+
+마치 화면 너머 당신을 인식하고 있는 것 같았지만,
+아무 일도 없었던 것처럼 다시 돌아갑니다.
+`
+    },
+
+    {
+        title: "[???] 단나쟝이 이상한 말을 합니다.",
+        content: `
+단나쟝이 조용히 웃습니다.
+
+“언니가 있어서 다행이야.”
+
+왜 그런 말을 했는지는 알려주지 않습니다.
+`
+    },
+
+    {
+        title: "[???] 단나쟝이 묻습니다.",
+        content: `
+“언니, 나 여기 오래 있었어?”
+
+대답을 듣기도 전에 웃습니다.
+
+“그렇구나.”
+`
+    },
+
+    {
+        title: "[???] 단나쟝이 묻습니다.",
+        content: `
+“언니가 좋아하는 ‘단나’는 어떤 애야?”
+
+...
+
+“아니야.”
+`
+    },
+
+    {
+        title: "[비밀 이벤트] 머리카락",
+        content: `
+단나쟝이 머리카락을 만졌습니다.
+
+“단나도 머리가 짧아?”
+
+무슨 소리인지 물으니
+
+“맞아, 단나는 나지...”
+
+의미를 알려주지 않습니다.
+`
+    },
+
+    {
+        title: "[???] 단나쟝이 이상한 말을 합니다.",
+        content: `
+“언니가 좋아하는 건 나랑 조금 달라.”
+
+그리고 아무렇지 않게 간식을 먹습니다.
+`
+    },
+
+    {
+        title: "[비밀 이벤트] 고슴도치 인형🦔",
+        content: `
+단나쟝의 가방에 새로운 인형이 달려 있습니다.
+작은 고슴도치입니다.
+
+“요즘 어쩐지 고슴도치가 좋아졌어.”
+
+어쩐지 기시감이 느껴집니다.
+`
+    },
+
+    {
+        title: "[비밀 이벤트] 친구",
+        content: `
+단나쟝이 요즘 혼자 웃는 일이 많아졌습니다.
+
+“왜 웃어?”
+
+“친구가 생겼어!”
+
+누구인지 묻자,
+당신과 닮았다는 대답만 돌아옵니다.
+`
+    },
+
+    {
+        title: "[비밀 이벤트] 쪽지",
+        content: `
+단나쟝에게 작은 쪽지가 하나 생겼습니다.
+
+「다음에 또 놀자!」
+
+누가 썼는지는 적혀 있지 않습니다.
+
+단나쟝은 무척 좋아합니다.
+`
+    }
+
+];
+
+const selectedEventIndex =
+    Math.floor(
+        Math.random() * dannaSecretEvents.length
+    );
+
+const selectedEvent =
+    dannaSecretEvents[selectedEventIndex];
+
+const eventText = selectedEvent.content;
+
+        
+
+
+
+// 👇 그 다음에 일기 개수 확인
+const diarySnapshot =
+    await getDocs(
+        collection(db, "diaries")
+    );
+
 
         const todayKey = getTodayKey();
 
@@ -2923,10 +3067,6 @@ const dannaActionList = [
         text: "책을 읽고 있습니다."
     },
     {
-        icon: "🍙",
-        text: "밥을 기다리고 있습니다."
-    },
-    {
         icon: "🔍",
         text: "무언가를 찾고 있습니다."
     },
@@ -3261,51 +3401,169 @@ async function loadCharacterGrowth(user) {
 
 async function loadDannaGrowth(user) {
 
-    const characterRef = doc(
-        db,
-        "characters",
-        DANNA_CHARACTER_ID
-    );
+    try {
 
-    const characterSnap = await getDoc(characterRef);
+        const characterRef = doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
 
-    let exp = 0;
+        const characterSnap =
+            await getDoc(characterRef);
 
-    if (characterSnap.exists()) {
-        const data = characterSnap.data();
-        exp = data.exp || 0;
+        let exp = 0;
+
+        if (characterSnap.exists()) {
+
+            const data =
+                characterSnap.data();
+
+            exp = Number(data.exp) || 0;
+
+        }
+
+
+        /* ------------------------------
+           단나쟝 EXP
+           = 단나님이 작성한 일기 개수
+        ------------------------------ */
+
+        const diarySnapshot =
+            await getDocs(
+                collection(db, "diaries")
+            );
+
+        let myDiaryCount = 0;
+
+        diarySnapshot.forEach((diaryDoc) => {
+
+            const data =
+                diaryDoc.data();
+
+            if (data.authorUid === user.uid) {
+
+                myDiaryCount++;
+
+            }
+
+        });
+
+
+        /* ------------------------------
+           기존 EXP보다 일기 개수가
+           많으면 EXP 갱신
+        ------------------------------ */
+
+        const newExp =
+            Math.max(
+                exp,
+                myDiaryCount
+            );
+
+
+        if (
+            !characterSnap.exists() ||
+            newExp > exp
+        ) {
+
+            await setDoc(
+                characterRef,
+                {
+                    characterId:
+                        DANNA_CHARACTER_ID,
+
+                    name:
+                        "단나쟝",
+
+                    ownerUid:
+                        user.uid,
+
+                    exp:
+                        newExp
+                },
+                {
+                    merge: true
+                }
+            );
+
+        }
+
+
+        /* ------------------------------
+           레벨 계산
+        ------------------------------ */
+
+        const level =
+            getCharacterLevel(newExp);
+
+        const growthData =
+            dannaGrowthData[level];
+
+
+        /* ------------------------------
+           화면 표시
+        ------------------------------ */
+
+        document
+            .getElementById(
+                "danna-character-level"
+            )
+            .textContent =
+                `Lv.${level}`;
+
+        document
+            .getElementById(
+                "danna-character-exp"
+            )
+            .textContent =
+                `EXP ${newExp}`;
+
+        document
+            .getElementById(
+                "danna-character-growth-text"
+            )
+            .textContent =
+                growthData.growth;
+
+
+        document
+            .getElementById(
+                "danna-character-want-text"
+            )
+            .textContent =
+                growthData.want;
+
+
+        const canList =
+            document
+                .getElementById(
+                    "danna-character-can-list"
+                );
+
+        canList.innerHTML = "";
+
+        growthData.can.forEach((text) => {
+
+            const li =
+                document.createElement("li");
+
+            li.textContent = text;
+
+            canList.appendChild(li);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "단나쟝 성장 정보를 불러오는 중 오류:",
+            error
+        );
+
     }
 
-    const level = getCharacterLevel(exp);
-    const growthData = dannaGrowthData[level];
-
-    document.getElementById("danna-character-level").textContent =
-        `Lv.${level}`;
-
-    document.getElementById("danna-character-exp").textContent =
-        `EXP ${exp}`;
-
-    document.getElementById("danna-character-growth-text").textContent =
-        growthData.growth;
-
-    document.getElementById("danna-character-want-text").textContent =
-        growthData.want;
-
-    const canList = document.getElementById(
-        "danna-character-can-list"
-    );
-
-    canList.innerHTML = "";
-
-    growthData.can.forEach(item => {
-
-        const li = document.createElement("li");
-
-        li.textContent = item;
-
-        canList.appendChild(li);
-
-    });
 }
 
 /* ==================================================
@@ -4484,6 +4742,25 @@ const characterLetterModalDate =
 const characterLetterModalContent =
     document.getElementById("character-letter-modal-content");
 
+const dannaSecretEventButton =
+    document.getElementById("danna-secret-event-button");
+
+const dannaSecretEventTitle =
+    document.getElementById("danna-secret-event-title");
+
+const dannaSecretEventContent =
+    document.getElementById("danna-secret-event-content");
+
+const dannaSecretEventModal =
+    document.getElementById("danna-secret-event-modal");
+
+const dannaSecretEventClose =
+    document.getElementById("danna-secret-event-close");
+
+dannaSecretEventClose.onclick = () => {
+    dannaSecretEventModal.style.display = "none";
+};
+
 
 /* ------------------------------
    편지 날짜
@@ -4906,6 +5183,302 @@ async function loadCharacterSecretEvent(user) {
     }
 }
 
+
+/* ==================================================
+   단나쟝 비밀 이벤트
+================================================== */
+
+async function loadDannaSecretEvent(user) {
+
+    try {
+
+        const characterRef =
+            doc(
+                db,
+                "characters",
+                DANNA_CHARACTER_ID
+            );
+
+        const characterSnap =
+            await getDoc(characterRef);
+
+        let data = {};
+
+        if (characterSnap.exists()) {
+            data = characterSnap.data();
+        }
+
+
+        /* ------------------------------------------
+           단나쟝 비밀 이벤트 목록
+        ------------------------------------------ */
+
+        const dannaSecretEvents = [
+
+            {
+                title: "[???] 이상한 일이 발생했습니다.",
+                content: `
+단나쟝이 갑자기 당신을 바라보고 있습니다.
+
+...
+
+“언니, 거기 있지?”
+
+아무 일도 없었던 것처럼 다시 돌아갑니다.
+`
+            },
+
+            {
+                title: "[???] 이상한 일이 발생했습니다.",
+                content: `
+단나쟝이 당신을 향해 말합니다.
+
+“언니, 오늘은 늦게 왔네.”
+
+마치 화면 너머 당신을 인식하고 있는 것 같았지만,
+아무 일도 없었던 것처럼 다시 돌아갑니다.
+`
+            },
+
+            {
+                title: "[???] 단나쟝이 이상한 말을 합니다.",
+                content: `
+단나쟝이 조용히 웃습니다.
+
+“언니가 있어서 다행이야.”
+
+왜 그런 말을 했는지는 알려주지 않습니다.
+`
+            },
+
+            {
+                title: "[???] 단나쟝이 묻습니다.",
+                content: `
+“언니, 나 여기 오래 있었어?”
+
+대답을 듣기도 전에 웃습니다.
+
+“그렇구나.”
+`
+            },
+
+            {
+                title: "[???] 단나쟝이 묻습니다.",
+                content: `
+“언니가 좋아하는 ‘단나’는 어떤 애야?”
+
+...
+
+“아니야.”
+`
+            },
+
+            {
+                title: "[비밀 이벤트] 머리카락",
+                content: `
+단나쟝이 머리카락을 만졌습니다.
+
+“단나도 머리가 짧아?”
+
+무슨 소리인지 물으니
+
+“맞아, 단나는 나지...”
+
+의미를 알려주지 않습니다.
+`
+            },
+
+            {
+                title: "[???] 단나쟝이 이상한 말을 합니다.",
+                content: `
+“언니가 좋아하는 건 나랑 조금 달라.”
+
+그리고 아무렇지 않게 간식을 먹습니다.
+`
+            },
+
+            {
+                title: "[비밀 이벤트] 고슴도치 인형🦔",
+                content: `
+단나쟝의 가방에 새로운 인형이 달려 있습니다.
+작은 고슴도치입니다.
+
+“요즘 어쩐지 고슴도치가 좋아졌어.”
+
+어쩐지 기시감이 느껴집니다.
+`
+            },
+
+            {
+                title: "[비밀 이벤트] 친구",
+                content: `
+단나쟝이 요즘 혼자 웃는 일이 많아졌습니다.
+
+“왜 웃어?”
+
+“친구가 생겼어!”
+
+누구인지 묻자,
+당신과 닮았다는 대답만 돌아옵니다.
+`
+            },
+
+            {
+                title: "[비밀 이벤트] 쪽지",
+                content: `
+단나쟝에게 작은 쪽지가 하나 생겼습니다.
+
+「다음에 또 놀자!」
+
+누가 썼는지는 적혀 있지 않습니다.
+
+단나쟝은 무척 좋아합니다.
+`
+            }
+
+        ];
+
+
+        /* ------------------------------------------
+           단나님이 작성한 일기 개수 확인
+        ------------------------------------------ */
+
+        const diarySnapshot =
+            await getDocs(
+                collection(db, "diaries")
+            );
+
+        let myDiaryCount = 0;
+
+        diarySnapshot.forEach((diaryDoc) => {
+
+            const diaryData =
+                diaryDoc.data();
+
+            if (
+                diaryData.authorUid === user.uid
+            ) {
+                myDiaryCount++;
+            }
+
+        });
+
+
+        /* ------------------------------------------
+           이벤트 조건
+           일기 10개부터 등장 가능
+        ------------------------------------------ */
+
+        if (myDiaryCount < 10) {
+            return;
+        }
+
+
+        /* ------------------------------------------
+           이미 이벤트가 발생한 경우
+           저장된 이벤트를 다시 표시
+        ------------------------------------------ */
+
+        if (data.secretEventSeen === true) {
+
+    let savedEventIndex =
+        Number(data.secretEventIndex);
+
+    if (
+        !Number.isInteger(savedEventIndex) ||
+        savedEventIndex < 0 ||
+        savedEventIndex >= dannaSecretEvents.length
+    ) {
+
+        savedEventIndex =
+            Math.floor(
+                Math.random() * dannaSecretEvents.length
+            );
+
+        await setDoc(
+            characterRef,
+            {
+                secretEventIndex: savedEventIndex
+            },
+            {
+                merge: true
+            }
+        );
+    }
+
+    const savedEvent =
+        dannaSecretEvents[savedEventIndex];
+
+    renderDannaSecretEvent({
+        title: savedEvent.title,
+        content: savedEvent.content
+    });
+
+    return;
+}
+
+
+        /* ------------------------------------------
+           30% 확률
+        ------------------------------------------ */
+
+        if (Math.random() > 0.3) {
+            return;
+        }
+
+
+        /* ------------------------------------------
+           랜덤 이벤트 선택
+        ------------------------------------------ */
+
+        const selectedEventIndex =
+            Math.floor(
+                Math.random() * dannaSecretEvents.length
+            );
+
+        const selectedEvent =
+            dannaSecretEvents[selectedEventIndex];
+
+
+        /* ------------------------------------------
+           이벤트 발생 기록
+        ------------------------------------------ */
+
+        await setDoc(
+            characterRef,
+            {
+                secretEventSeen: true,
+                secretEventDate: getTodayKey(),
+                secretEventIndex: selectedEventIndex
+            },
+            {
+                merge: true
+            }
+        );
+
+
+        /* ------------------------------------------
+           이벤트 표시
+        ------------------------------------------ */
+
+        renderDannaSecretEvent({
+            title: selectedEvent.title,
+            content: selectedEvent.content
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "단나쟝 비밀 이벤트를 불러오는 중 오류:",
+            error
+        );
+
+    }
+
+}
+
+
 // ==========================================
 // 비밀 이벤트 화면 표시
 // ==========================================
@@ -4930,6 +5503,29 @@ function renderCharacterSecretEvent(secretEvent) {
             secretEvent.content;
 
         characterSecretEventModal.style.display = "flex";
+    };
+}
+
+function renderDannaSecretEvent(secretEvent) {
+
+    if (!secretEvent) {
+        dannaSecretEventButton.style.display = "none";
+        return;
+    }
+
+    // 비밀 이벤트 아이콘 표시
+    dannaSecretEventButton.style.display = "block";
+
+    // ✨ 버튼을 눌렀을 때
+    dannaSecretEventButton.onclick = () => {
+
+        dannaSecretEventTitle.textContent =
+            secretEvent.title;
+
+        dannaSecretEventContent.textContent =
+            secretEvent.content;
+
+        dannaSecretEventModal.style.display = "flex";
     };
 }
 
@@ -5124,6 +5720,7 @@ onAuthStateChanged(auth, async (user) => {
 
         await loadCharacterLetters(user);
         await loadCharacterSecretEvent(user);
+        await loadDannaSecretEvent(user);
 
         await loadCharacterAction();
         await loadDannaAction();
