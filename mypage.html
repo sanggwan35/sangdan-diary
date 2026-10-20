@@ -2558,6 +2558,39 @@ const selectedEventIndex =
 const selectedEvent =
     dannaSecretEvents[selectedEventIndex];
 
+    // 비밀 이벤트에서 발견한 물건이 있다면 가방에 추가
+let explorationItems =
+    Array.isArray(data.explorationItems)
+        ? data.explorationItems
+        : [];
+
+if (selectedEvent.item) {
+
+    const alreadyHaveItem =
+        explorationItems.some(
+            (item) =>
+                item.name === selectedEvent.item.name
+        );
+
+    if (!alreadyHaveItem) {
+
+        explorationItems.push({
+            name: selectedEvent.item.name,
+            icon: selectedEvent.item.icon
+        });
+
+        await setDoc(
+            characterRef,
+            {
+                explorationItems: explorationItems
+            },
+            {
+                merge: true
+            }
+        );
+    }
+}
+
 const eventText = selectedEvent.content;
 
         
@@ -3953,10 +3986,10 @@ async function finishSangkwanExploration() {
     );
 
     sangkwanExplorationMainButton.textContent =
-        "🗺️ 탐험 완료!";
+    "🗺️ 오늘의 탐험 완료!";
 
-    sangkwanExplorationMainButton.disabled =
-        false;
+sangkwanExplorationMainButton.disabled =
+    true;
 
     sangkwanExplorationResult.style.display =
         "block";
@@ -4018,32 +4051,32 @@ async function loadSangkwanExploration() {
         Number(data.explorationEndTime || 0);
 
     /* 탐험 완료 상태 */
-    if (data.explorationReady === true) {
+if (data.explorationReady === true) {
 
-        sangkwanExplorationMainButton.textContent =
-            "🗺️ 탐험 완료!";
+    sangkwanExplorationMainButton.textContent =
+        "🗺️ 오늘의 탐험 완료!";
 
-        sangkwanExplorationMainButton.disabled =
-            false;
+    sangkwanExplorationMainButton.disabled =
+        true;
 
-        sangkwanExplorationResult.style.display =
-            "block";
+    sangkwanExplorationResult.style.display =
+        "block";
 
-        sangkwanExplorationResult.innerHTML = `
-            <strong>🎁 탐험 결과</strong><br><br>
+    sangkwanExplorationResult.innerHTML = `
+        <strong>🎁 탐험 결과</strong><br><br>
 
-            상관쟝이 탐험에서 돌아왔어요!<br><br>
+        상관쟝이 탐험에서 돌아왔어요!<br><br>
 
-            📍 ${data.explorationLocationName || "어딘가"}<br><br>
+        📍 ${data.explorationLocationName || "어딘가"}<br><br>
 
-            ${data.explorationLastItemIcon || "🎁"}
-            <strong>
-                ${data.explorationLastItem || "무언가"}
-            </strong>을(를) 발견했어요!
-        `;
+        ${data.explorationLastItemIcon || "🎁"}
+        <strong>
+            ${data.explorationLastItem || "무언가"}
+        </strong>을(를) 발견했어요!
+    `;
 
-        return;
-    }
+    return;
+}
 
     /* 시간이 이미 끝났다면 바로 보상 처리 */
     if (endTime <= Date.now()) {
@@ -4347,7 +4380,7 @@ async function loadDannaExploration() {
     if (data.explorationReady === true) {
 
         dannaExplorationMainButton.textContent =
-            "🗺️ 탐험 완료!";
+            "🗺️ 오늘의 탐험 완료!";
 
         dannaExplorationMainButton.disabled =
             true;
@@ -6449,32 +6482,47 @@ const characterSecretEventList = [
     },
 
     {
-        id: "secret_5",
-        title: "[비밀 이벤트] 옥수수",
-        content:
+    id: "secret_5",
+    title: "[비밀 이벤트] 옥수수",
+    content:
 `상관쟝이 옥수수를 발견했습니다.
 
-네.`
-    },
+네.`,
+
+    item: {
+        name: "옥수수",
+        icon: "🌽"
+    }
+},
 
     {
-        id: "secret_6",
-        title: "[???] 돌멩이",
-        content:
+    id: "secret_6",
+    title: "[???] 돌멩이",
+    content:
 `상관쟝이 돌멩이를 주웠습니다.
 한참 바라봅니다.
 
-다시 내려놓았습니다.`
-    },
+마음에 들었는지 가방에 넣었습니다.`,
+
+    item: {
+        name: "돌멩이",
+        icon: "🪨"
+    }
+},
 
     {
-        id: "secret_7",
-        title: "[???] 나뭇잎",
-        content:
+    id: "secret_7",
+    title: "[???] 나뭇잎",
+    content:
 `상관쟝의 머리 위에 나뭇잎이 떨어졌습니다. 🍃
 
-상관쟝은 눈치채지 못했습니다.`
-    },
+상관쟝은 눈치채지 못했습니다.`,
+
+    item: {
+        name: "나뭇잎",
+        icon: "🍃"
+    }
+},
 
     {
         id: "secret_8",
@@ -6965,6 +7013,39 @@ async function loadCharacterSecretEvent(user) {
             content: selectedEvent.content
         };
 
+        // 비밀 이벤트에서 발견한 물건이 있다면 가방에 추가
+let explorationItems =
+    Array.isArray(data.explorationItems)
+        ? data.explorationItems
+        : [];
+
+if (selectedEvent.item) {
+
+    const alreadyHaveItem =
+        explorationItems.some(
+            (item) =>
+                item.name === selectedEvent.item.name
+        );
+
+    if (!alreadyHaveItem) {
+
+        explorationItems.push({
+            name: selectedEvent.item.name,
+            icon: selectedEvent.item.icon
+        });
+
+        await setDoc(
+            characterRef,
+            {
+                explorationItems: explorationItems
+            },
+            {
+                merge: true
+            }
+        );
+    }
+}
+
         // 이벤트 저장
         await setDoc(
             characterRef,
@@ -7102,16 +7183,20 @@ async function loadDannaSecretEvent(user) {
             },
 
             {
-                title: "[비밀 이벤트] 고슴도치 인형🦔",
-                content: `
+    title: "[비밀 이벤트] 고슴도치 인형🦔",
+    content: `
 단나쟝의 가방에 새로운 인형이 달려 있습니다.
 작은 고슴도치입니다.
 
 “요즘 어쩐지 고슴도치가 좋아졌어.”
 
 어쩐지 기시감이 느껴집니다.
-`
-            },
+`,
+    item: {
+        name: "고슴도치 인형",
+        icon: "🦔"
+    }
+},
 
             {
                 title: "[비밀 이벤트] 친구",
@@ -7128,8 +7213,8 @@ async function loadDannaSecretEvent(user) {
             },
 
             {
-                title: "[비밀 이벤트] 쪽지",
-                content: `
+    title: "[비밀 이벤트] 쪽지",
+    content: `
 단나쟝에게 작은 쪽지가 하나 생겼습니다.
 
 「다음에 또 놀자!」
@@ -7137,9 +7222,12 @@ async function loadDannaSecretEvent(user) {
 누가 썼는지는 적혀 있지 않습니다.
 
 단나쟝은 무척 좋아합니다.
-`
-            }
-
+`,
+    item: {
+        name: "작은 쪽지",
+        icon: "📝"
+    }
+}
         ];
 
 
