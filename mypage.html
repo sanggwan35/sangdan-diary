@@ -1687,6 +1687,110 @@
         EXP 0
     </p>
 
+
+
+<div class="character-exploration">
+
+    <button
+        id="sangkwan-exploration-main-button"
+        type="button"
+    >
+        🗺️ 탐험 보내기
+    </button>
+
+    <div
+        id="sangkwan-exploration-locations"
+        class="sangkwan-exploration-locations"
+        style="display: none;"
+    >
+
+        <button
+            type="button"
+            class="sangkwan-exploration-location"
+            data-location="park"
+        >
+            🌳 공원
+        </button>
+
+        <button
+            type="button"
+            class="sangkwan-exploration-location"
+            data-location="goods"
+        >
+            🛍️ 애니메이트
+        </button>
+
+        <button
+            type="button"
+            class="sangkwan-exploration-location"
+            data-location="library"
+        >
+            📚 도서관
+        </button>
+
+        <button
+            type="button"
+            class="sangkwan-exploration-location"
+            data-location="school"
+        >
+            🏫 학교
+        </button>
+
+        <button
+            type="button"
+            class="sangkwan-exploration-location"
+            data-location="convenience"
+        >
+            🏪 편의점
+        </button>
+
+    </div>
+
+    <div
+        id="sangkwan-exploration-result"
+        class="exploration-result"
+        style="display: none;"
+    >
+    </div>
+
+    <button
+        id="sangkwan-inventory-button"
+        type="button"
+    >
+        🎒 상관쟝의 가방
+    </button>
+
+    <div
+    id="sangkwan-inventory-popup"
+    class="sangkwan-inventory-popup"
+    style="display: none;"
+>
+    <div class="sangkwan-inventory-window">
+
+        <button
+            id="sangkwan-inventory-close"
+            type="button"
+            class="sangkwan-inventory-close"
+        >
+            ✕
+        </button>
+
+        <h3>🎒 상관쟝의 가방</h3>
+
+        <div
+            id="sangkwan-inventory-list"
+            class="sangkwan-inventory-list"
+        >
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+    </div>
+
+
 </div>
 
 
@@ -1767,7 +1871,8 @@
 </div>
 
 
-    </div>
+<!-- 상관쟝 탐험 -->
+
 
 <!-- ==================================================
      음식 도감
@@ -1921,6 +2026,105 @@
                 EXP 0
             </p>
 
+
+            <button
+    id="danna-exploration-main-button"
+    class="exploration-main-button"
+    type="button"
+>
+    🗺️ 탐험 보내기
+</button>
+
+<div
+    id="danna-exploration-locations"
+    class="exploration-locations"
+    style="display: none;"
+>
+
+    <button
+        type="button"
+        class="exploration-location"
+        data-location="park"
+    >
+        🌳 공원
+    </button>
+
+    <button
+        type="button"
+    class="exploration-location"
+        data-location="goods"
+    >
+        🛍️ 애니메이트
+    </button>
+
+    <button
+        type="button"
+        class="exploration-location"
+        data-location="library"
+    >
+        📚 도서관
+    </button>
+
+    <button
+        type="button"
+        class="exploration-location"
+        data-location="school"
+    >
+        🏫 학교
+    </button>
+
+    <button
+        type="button"
+        class="exploration-location"
+        data-location="convenience"
+    >
+        🏪 편의점
+    </button>
+
+</div>
+
+
+<div
+    id="danna-exploration-result"
+    class="exploration-result"
+    style="display: none;"
+>
+</div>
+
+<button
+    id="danna-inventory-button"
+    type="button"
+>
+    🎒 단나쟝의 가방
+</button>
+
+<div
+    id="danna-inventory-popup"
+    class="danna-inventory-popup"
+    style="display: none;"
+>
+    <div class="danna-inventory-window">
+
+        <button
+            id="danna-inventory-close"
+            type="button"
+            class="danna-inventory-close"
+        >
+            ✕
+        </button>
+
+        <h3>🎒 단나쟝의 가방</h3>
+
+        <div
+            id="danna-inventory-list"
+            class="danna-inventory-list"
+        >
+        </div>
+
+    </div>
+</div>
+
+
         </div>
 
 
@@ -2058,56 +2262,8 @@
 </div>
 
 
-</section>
-
-</div>
-
-<!-- 두 사람의 일기 -->
-
-<div class="diary-profiles">
-
-    <!-- 내 일기 -->
-
-    <div class="diary-profile-column">
-
-        <h3 class="my-diary-title">
-            내가 쓴 일기
-        </h3>
-
-        <div
-            id="my-diary-list"
-            class="my-diary-list">
-
-            <div class="empty-message">
-                일기를 불러오는 중...
-            </div>
-
-        </div>
-
-    </div>
 
 
-    <!-- 친구 일기 -->
-
-    <div class="diary-profile-column">
-
-        <h3 class="my-diary-title">
-            친구가 쓴 일기
-        </h3>
-
-        <div
-            id="friend-diary-list"
-            class="my-diary-list">
-
-            <div class="empty-message">
-                일기를 불러오는 중...
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
 
 
 
@@ -2588,9 +2744,22 @@ async function loadMyPage(user) {
    친구 정보
 ------------------------------ */
 
+/* ------------------------------
+   상대방 정보
+------------------------------ */
+
+const YOUR_UID =
+    "ARiFsbrCbzXxUBU57gNd5cPMdXv2";
+
+
+const otherUid =
+    user.uid === FRIEND_UID
+        ? YOUR_UID
+        : FRIEND_UID;
+
 const friendDoc =
     await getDoc(
-        doc(db, "users", FRIEND_UID)
+        doc(db, "users", otherUid)
     );
 
 let friendNickname = "친구";
@@ -2681,92 +2850,7 @@ diaryCount.textContent =
    내 일기
 ============================== */
 
-myDiaryList.innerHTML = "";
 
-
-if (myDiaries.length === 0) {
-
-    myDiaryList.innerHTML = `
-        <div class="empty-message">
-            아직 작성한 일기가 없습니다.
-        </div>
-    `;
-
-} else {
-
-    myDiaries.forEach((diary) => {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "my-diary-item";
-
-        item.innerHTML = `
-            <a href="diary.html">
-                ${escapeHTML(
-                    diary.title || "제목 없음"
-                )}
-            </a>
-
-            <p class="my-diary-date">
-                ${escapeHTML(
-                    diary.date || ""
-                )}
-            </p>
-        `;
-
-        myDiaryList.appendChild(item);
-
-    });
-
-}
-
-
-/* ==============================
-   친구 일기
-============================== */
-
-friendDiaryList.innerHTML = "";
-
-
-if (friendDiaries.length === 0) {
-
-    friendDiaryList.innerHTML = `
-        <div class="empty-message">
-            아직 작성한 일기가 없습니다.
-        </div>
-    `;
-
-} else {
-
-    friendDiaries.forEach((diary) => {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "my-diary-item";
-
-        item.innerHTML = `
-            <a href="diary.html">
-                ${escapeHTML(
-                    diary.title || "제목 없음"
-                )}
-            </a>
-
-            <p class="my-diary-date">
-                ${escapeHTML(
-                    diary.date || ""
-                )}
-            </p>
-        `;
-
-        friendDiaryList.appendChild(item);
-
-    });
-
-}
 
 
 
@@ -2931,9 +3015,1736 @@ const dannaFoodCollectionGrid = document.getElementById(
     "danna-food-collection-grid"
 );
 
+const dannaExplorationButtons =
+    document.querySelectorAll(".exploration-location");
+
+const sangkwanExplorationButtons =
+    document.querySelectorAll(
+        ".sangkwan-exploration-location"
+    );
+
+const sangkwanExplorationResult =
+    document.getElementById(
+        "sangkwan-exploration-result"
+    );
+
+const sangkwanExplorationMainButton =
+    document.getElementById(
+        "sangkwan-exploration-main-button"
+    );
+
+const sangkwanExplorationLocations =
+    document.getElementById(
+        "sangkwan-exploration-locations"
+    );
+
+let sangkwanExplorationCurrentLocationName = "";
+
+const sangkwanInventoryButton =
+    document.getElementById(
+        "sangkwan-inventory-button"
+    );
+
+const sangkwanInventoryPopup =
+    document.getElementById(
+        "sangkwan-inventory-popup"
+    );
+
+const sangkwanInventoryClose =
+    document.getElementById(
+        "sangkwan-inventory-close"
+    );
+
+const sangkwanInventoryList =
+    document.getElementById(
+        "sangkwan-inventory-list"
+    );
+
+
+sangkwanInventoryButton.addEventListener(
+    "click",
+    async () => {
+
+        await loadSangkwanInventory();
+
+        sangkwanInventoryPopup.style.display =
+            "flex";
+    }
+);
+
+
+sangkwanInventoryClose.addEventListener(
+    "click",
+    () => {
+
+        sangkwanInventoryPopup.style.display =
+            "none";
+    }
+);
+
+
+async function loadSangkwanInventory() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const items =
+        Array.isArray(data.explorationItems)
+            ? data.explorationItems
+            : [];
+
+    sangkwanInventoryList.innerHTML =
+        "";
+
+    if (items.length === 0) {
+
+        sangkwanInventoryList.innerHTML = `
+            <div class="inventory-empty">
+                아직 발견한 아이템이 없어요.
+            </div>
+        `;
+
+        return;
+    }
+
+    const itemCounts = {};
+
+    items.forEach((item) => {
+
+        const key =
+            `${item.name}|${item.icon}`;
+
+        if (!itemCounts[key]) {
+
+            itemCounts[key] = {
+                name: item.name,
+                icon: item.icon,
+                count: 0
+            };
+        }
+
+        itemCounts[key].count++;
+    });
+
+    Object.values(itemCounts).forEach(
+        (item) => {
+
+            const itemElement =
+                document.createElement("div");
+
+            itemElement.className =
+                "inventory-item";
+
+            itemElement.innerHTML = `
+                <div class="inventory-item-icon">
+                    ${item.icon}
+                </div>
+
+                <div class="inventory-item-name">
+                    ${item.name}
+                </div>
+
+                <div class="inventory-item-count">
+                    ×${item.count}
+                </div>
+            `;
+
+            sangkwanInventoryList.appendChild(
+                itemElement
+            );
+        }
+    );
+}
+
+
+sangkwanExplorationMainButton.addEventListener(
+    "click",
+    () => {
+
+        sangkwanExplorationLocations.style.display =
+            sangkwanExplorationLocations.style.display === "none"
+                ? "grid"
+                : "none";
+
+    }
+);
+
+const dannaExplorationResult =
+    document.getElementById("danna-exploration-result");
+
+const dannaInventoryList =
+    document.getElementById("danna-inventory-list");
+
+const dannaInventoryButton =
+    document.getElementById("danna-inventory-button");
+
+const dannaInventoryPopup =
+    document.getElementById("danna-inventory-popup");
+
+const dannaInventoryClose =
+    document.getElementById("danna-inventory-close");
+    
+    dannaInventoryButton.addEventListener(
+    "click",
+    async () => {
+
+        await loadDannaInventory();
+
+        dannaInventoryPopup.style.display =
+            "flex";
+    }
+);
+
+dannaInventoryClose.addEventListener(
+    "click",
+    () => {
+        dannaInventoryPopup.style.display =
+            "none";
+    }
+);
+
+const dannaExplorationMainButton =
+    document.getElementById(
+        "danna-exploration-main-button"
+    );
+
+
+const dannaExplorationLocations =
+    document.getElementById(
+        "danna-exploration-locations"
+    );
+
+    dannaExplorationMainButton.addEventListener(
+    "click",
+    () => {
+
+        dannaExplorationLocations.style.display =
+            dannaExplorationLocations.style.display === "none"
+                ? "grid"
+                : "none";
+
+    }
+);
+
 const dannaFoodCollectionToggle = document.getElementById(
     "danna-food-collection-toggle"
 );
+
+
+let dannaExplorationCurrentLocationName = "";
+
+
+/* =========================================
+   탐험 자동 귀환
+========================================= */
+
+async function finishDannaExploration() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+
+    /* 이미 완료 처리됐다면 중복 보상 방지 */
+
+    if (data.explorationReady === true) {
+
+        dannaExplorationMainButton.textContent =
+            "🗺️ 탐험 완료!";
+
+        dannaExplorationMainButton.disabled =
+            true;
+
+        return;
+    }
+
+
+    const items =
+        dannaExplorationItems[
+            data.explorationLocation
+        ];
+
+
+    if (!items || items.length === 0) {
+        return;
+    }
+
+
+    /* 랜덤 아이템 */
+
+    const foundItem =
+        items[
+            Math.floor(
+                Math.random() * items.length
+            )
+        ];
+
+
+    /* 기존 탐험 기록 */
+
+    let explorationItems =
+        Array.isArray(data.explorationItems)
+            ? data.explorationItems
+            : [];
+
+
+    explorationItems.push({
+
+        name:
+            foundItem.name,
+
+        icon:
+            foundItem.icon,
+
+        location:
+            data.explorationLocation,
+
+        locationName:
+            data.explorationLocationName,
+
+        date:
+            data.explorationDate
+
+    });
+
+
+    /* Firestore 저장 */
+
+    await setDoc(
+        characterRef,
+        {
+
+            explorationReady:
+                true,
+
+            explorationItems:
+                explorationItems,
+
+            explorationLastItem:
+                foundItem.name,
+
+            explorationLastItemIcon:
+                foundItem.icon
+
+        },
+        {
+            merge: true
+        }
+    );
+
+
+    /* 화면 변경 */
+
+    dannaExplorationMainButton.textContent =
+        "🗺️ 탐험 완료!";
+
+    dannaExplorationMainButton.disabled =
+        true;
+
+    dannaExplorationLocations.style.display =
+        "none";
+
+
+    dannaExplorationResult.style.display =
+        "block";
+
+
+    dannaExplorationResult.innerHTML = `
+        <strong>🎁 탐험 결과</strong><br><br>
+
+        단나쟝이 탐험에서 돌아왔어요!<br><br>
+
+        📍 ${data.explorationLocationName}<br><br>
+
+        <span style="font-size: 32px;">
+            ${foundItem.icon}
+        </span>
+
+        <br>
+
+        <strong>
+            ${foundItem.name}
+        </strong>
+        을(를) 발견했습니다! ✨
+    `;
+}
+
+
+const dannaExplorationItems = {
+
+    park: [
+        {
+            name: "네잎클로버",
+            icon: "🍀"
+        },
+        {
+            name: "예쁜 나뭇잎",
+            icon: "🍃"
+        },
+        {
+            name: "작은 돌멩이",
+            icon: "🪨"
+        },
+        {
+            name: "도토리",
+            icon: "🌰"
+        },
+        {
+            name: "작은 솔방울",
+            icon: "🌲"
+        },
+        {
+            name: "꽃잎",
+            icon: "🌸"
+        },
+        {
+            name: "새 깃털",
+            icon: "🪶"
+        },
+        {
+            name: "벤치 밑에서 발견한 동전",
+            icon: "🪙"
+        }
+    ],
+
+    goods: [
+        {
+            name: "귀여운 스티커",
+            icon: "✨"
+        },
+        {
+            name: "캐릭터 엽서",
+            icon: "🖼️"
+        },
+        {
+            name: "작은 키링",
+            icon: "🔑"
+        },
+        {
+            name: "랜덤 포토카드",
+            icon: "🃏"
+        },
+        {
+            name: "귀여운 마스킹테이프",
+            icon: "🎀"
+        },
+        {
+            name: "캐릭터 책갈피",
+            icon: "🔖"
+        },
+        {
+            name: "작은 캔뱃지",
+            icon: "📌"
+        },
+        {
+            name: "정체불명의 굿즈",
+            icon: "❓"
+        }
+    ],
+
+    library: [
+        {
+            name: "오래된 책갈피",
+            icon: "🔖"
+        },
+        {
+            name: "읽다 만 책",
+            icon: "📖"
+        },
+        {
+            name: "귀여운 메모지",
+            icon: "📝"
+        },
+        {
+            name: "낡은 도서관 카드",
+            icon: "💳"
+        },
+        {
+            name: "예쁜 책갈피",
+            icon: "🌿"
+        },
+        {
+            name: "작은 연필",
+            icon: "✏️"
+        },
+        {
+            name: "누군가 놓고 간 책",
+            icon: "📚"
+        },
+        {
+            name: "오래된 도서관 안내문",
+            icon: "📜"
+        }
+    ],
+
+    school: [
+        {
+            name: "낡은 연필",
+            icon: "✏️"
+        },
+        {
+            name: "지우개",
+            icon: "🩷"
+        },
+        {
+            name: "오래된 공책",
+            icon: "📓"
+        },
+        {
+            name: "잃어버린 자",
+            icon: "🖊️"
+        },
+        {
+            name: "교실 창가의 작은 돌",
+            icon: "🪨"
+        },
+        {
+            name: "오래된 시간표",
+            icon: "📋"
+        },
+        {
+            name: "누군가 두고 간 쪽지",
+            icon: "💌"
+        },
+        {
+            name: "학교 축제 전단지",
+            icon: "🎫"
+        }
+    ],
+
+    convenience: [
+        {
+            name: "작은 장난감",
+            icon: "🧸"
+        },
+        {
+            name: "스티커",
+            icon: "⭐"
+        },
+        {
+            name: "귀여운 포장지",
+            icon: "🎀"
+        },
+        {
+            name: "동전",
+            icon: "🪙"
+        },
+        {
+            name: "랜덤 캡슐 장난감",
+            icon: "🟣"
+        },
+        {
+            name: "귀여운 영수증",
+            icon: "🧾"
+        },
+        {
+            name: "미니 과자 봉지",
+            icon: "🍬"
+        },
+        {
+            name: "편의점에서 받은 작은 스티커",
+            icon: "🌟"
+        }
+    ]
+
+};
+
+
+const sangkwanExplorationItems = {
+    park: [
+        { name: "예쁜 돌멩이", icon: "🪨" },
+        { name: "네잎클로버", icon: "🍀" },
+        { name: "작은 솔방울", icon: "🌲" },
+        { name: "공원에서 주운 동전", icon: "🪙" },
+        { name: "낙엽", icon: "🍂" },
+        { name: "작은 나뭇가지", icon: "🌿" },
+        { name: "새 깃털", icon: "🪶" },
+        { name: "벤치에 떨어져 있던 단추", icon: "🔘" }
+    ],
+
+    goods: [
+        { name: "작은 키링", icon: "🔑" },
+        { name: "랜덤 스티커", icon: "⭐" },
+        { name: "캐릭터 엽서", icon: "🖼️" },
+        { name: "캔뱃지", icon: "📌" },
+        { name: "귀여운 책갈피", icon: "🔖" },
+        { name: "랜덤 포토카드", icon: "🃏" },
+        { name: "마스킹테이프", icon: "🎀" },
+        { name: "정체불명의 굿즈", icon: "❓" }
+    ],
+
+    library: [
+        { name: "오래된 책갈피", icon: "🔖" },
+        { name: "작은 연필", icon: "✏️" },
+        { name: "누군가 놓고 간 메모", icon: "📝" },
+        { name: "읽다 만 책", icon: "📖" },
+        { name: "낡은 도서관 카드", icon: "💳" },
+        { name: "예쁜 책갈피", icon: "🌿" },
+        { name: "오래된 책", icon: "📚" },
+        { name: "도서관 안내문", icon: "📜" }
+    ],
+
+    school: [
+        { name: "지우개", icon: "🩷" },
+        { name: "낡은 연필", icon: "✏️" },
+        { name: "오래된 공책", icon: "📓" },
+        { name: "잃어버린 펜", icon: "🖊️" },
+        { name: "누군가 두고 간 쪽지", icon: "💌" },
+        { name: "오래된 시간표", icon: "📋" },
+        { name: "교실 창가의 돌멩이", icon: "🪨" },
+        { name: "학교 축제 전단지", icon: "🎫" }
+    ],
+
+    convenience: [
+        { name: "작은 장난감", icon: "🧸" },
+        { name: "랜덤 스티커", icon: "⭐" },
+        { name: "귀여운 포장지", icon: "🎀" },
+        { name: "동전", icon: "🪙" },
+        { name: "랜덤 캡슐", icon: "🟣" },
+        { name: "귀여운 영수증", icon: "🧾" },
+        { name: "미니 과자 봉지", icon: "🍬" },
+        { name: "편의점 스티커", icon: "🌟" }
+    ]
+};
+
+async function startSangkwanExploration(
+    location,
+    locationName
+) {
+
+    const user =
+        auth.currentUser;
+
+    if (!user) {
+        alert("로그인이 필요합니다.");
+        return;
+    }
+
+        if (user.uid !== CHARACTER_OWNER_UID) {
+        alert("상관쟝은 단나님만 탐험을 보낼 수 있어요.");
+        return;
+    }
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    const data =
+        characterSnap.exists()
+            ? characterSnap.data()
+            : {};
+
+    const today =
+        getTodayKey();
+
+    /* 오늘 이미 탐험했는지 확인 */
+    if (data.explorationDate === today) {
+
+        const endTime =
+            Number(data.explorationEndTime || 0);
+
+        /* 아직 탐험 중 */
+        if (
+            !data.explorationReady &&
+            endTime > Date.now()
+        ) {
+
+            sangkwanExplorationCurrentLocationName =
+                data.explorationLocationName ||
+                locationName;
+
+            sangkwanExplorationLocations.style.display =
+                "none";
+
+            sangkwanExplorationMainButton.disabled =
+                true;
+
+            sangkwanExplorationMainButton.textContent =
+                `🗺️ ${sangkwanExplorationCurrentLocationName}에서 탐험 중...`;
+
+            startSangkwanExplorationCountdown(
+                endTime
+            );
+
+            return;
+        }
+
+        /* 탐험 완료 */
+        if (data.explorationReady === true) {
+
+            sangkwanExplorationLocations.style.display =
+                "none";
+
+            sangkwanExplorationResult.style.display =
+                "block";
+
+            sangkwanExplorationResult.innerHTML = `
+                <strong>🎁 탐험 결과</strong><br><br>
+
+                상관쟝이 탐험에서 돌아왔어요!<br><br>
+
+                📍 ${data.explorationLocationName || "어딘가"}<br>
+
+                ${data.explorationLastItemIcon || "🎁"}
+                ${data.explorationLastItem || "무언가를 발견했어요!"}
+            `;
+
+            return;
+        }
+
+        /* 시간이 끝났지만 아직 결과 처리가 안 된 경우 */
+        if (
+            !data.explorationReady &&
+            endTime <= Date.now()
+        ) {
+
+            await finishSangkwanExploration();
+
+            return;
+        }
+
+    }
+
+    /* 새로운 탐험 시작 */
+
+    const endTime =
+        Date.now() + (30 * 60 * 1000);
+
+    sangkwanExplorationCurrentLocationName =
+        locationName;
+
+    sangkwanExplorationMainButton.textContent =
+        `🗺️ ${locationName}에서 탐험 중...`;
+
+    sangkwanExplorationMainButton.disabled =
+        true;
+
+    sangkwanExplorationLocations.style.display =
+        "none";
+
+    sangkwanExplorationResult.style.display =
+        "none";
+
+    sangkwanExplorationResult.innerHTML =
+        "";
+
+    await setDoc(
+        characterRef,
+        {
+            explorationDate: today,
+            explorationLocation: location,
+            explorationLocationName: locationName,
+            explorationStartTime: Date.now(),
+            explorationEndTime: endTime,
+            explorationReady: false,
+            explorationLastItem: "",
+            explorationLastItemIcon: ""
+        },
+        {
+            merge: true
+        }
+    );
+
+    startSangkwanExplorationCountdown(
+        endTime
+    );
+}
+
+sangkwanExplorationButtons.forEach((button) => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const location =
+                button.dataset.location;
+
+            const locationName =
+                button.textContent.trim();
+
+            startSangkwanExploration(
+                location,
+                locationName
+            );
+
+        }
+    );
+
+});
+
+let sangkwanExplorationTimer = null;
+
+function startSangkwanExplorationCountdown(
+    endTime
+) {
+
+    if (sangkwanExplorationTimer) {
+        clearInterval(
+            sangkwanExplorationTimer
+        );
+    }
+
+    function updateCountdown() {
+
+        const remaining =
+            Math.max(
+                0,
+                Number(endTime) - Date.now()
+            );
+
+        if (remaining <= 0) {
+
+            clearInterval(
+                sangkwanExplorationTimer
+            );
+
+            sangkwanExplorationTimer =
+                null;
+
+            finishSangkwanExploration();
+
+            return;
+        }
+
+        const totalSeconds =
+            Math.ceil(
+                remaining / 1000
+            );
+
+        const minutes =
+            Math.floor(
+                totalSeconds / 60
+            );
+
+        const seconds =
+            totalSeconds % 60;
+
+        const timeText =
+            `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+        sangkwanExplorationResult.style.display =
+            "block";
+
+        sangkwanExplorationResult.innerHTML = `
+            <strong>🗺️ 상관쟝이 탐험 중입니다!</strong><br><br>
+
+            📍 ${sangkwanExplorationCurrentLocationName || "어딘가"}<br><br>
+
+            ⏰ 남은 시간<br>
+
+            <strong
+                style="
+                    font-size: 24px;
+                    display: inline-block;
+                    margin-top: 5px;
+                "
+            >
+                ${timeText}
+            </strong>
+        `;
+    }
+
+    updateCountdown();
+
+    sangkwanExplorationTimer =
+        setInterval(
+            updateCountdown,
+            1000
+        );
+}
+
+async function finishSangkwanExploration() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    /* 이미 보상을 받은 경우 */
+    if (data.explorationReady === true) {
+        return;
+    }
+
+    const location =
+        data.explorationLocation;
+
+    const itemList =
+        sangkwanExplorationItems[location];
+
+    if (
+        !itemList ||
+        itemList.length === 0
+    ) {
+        return;
+    }
+
+    /* 랜덤 아이템 */
+    const randomItem =
+        itemList[
+            Math.floor(
+                Math.random() *
+                itemList.length
+            )
+        ];
+
+    /* 기존 가방 */
+    const oldItems =
+        Array.isArray(data.explorationItems)
+            ? data.explorationItems
+            : [];
+
+    const newItems = [
+        ...oldItems,
+        {
+            name: randomItem.name,
+            icon: randomItem.icon
+        }
+    ];
+
+    await setDoc(
+        characterRef,
+        {
+            explorationReady: true,
+            explorationItems: newItems,
+            explorationLastItem: randomItem.name,
+            explorationLastItemIcon: randomItem.icon
+        },
+        {
+            merge: true
+        }
+    );
+
+    sangkwanExplorationMainButton.textContent =
+        "🗺️ 탐험 완료!";
+
+    sangkwanExplorationMainButton.disabled =
+        false;
+
+    sangkwanExplorationResult.style.display =
+        "block";
+
+    sangkwanExplorationResult.innerHTML = `
+        <strong>🎁 탐험 결과</strong><br><br>
+
+        상관쟝이 탐험에서 돌아왔어요!<br><br>
+
+        📍 ${data.explorationLocationName || "어딘가"}<br><br>
+
+        ${randomItem.icon}
+        <strong>${randomItem.name}</strong>을(를) 발견했어요!
+    `;
+}
+
+
+async function loadSangkwanExploration() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const today =
+        getTodayKey();
+
+    /* 오늘 탐험 기록이 아니면 초기 상태 */
+    if (data.explorationDate !== today) {
+
+        sangkwanExplorationMainButton.textContent =
+            "🗺️ 탐험 보내기";
+
+        sangkwanExplorationMainButton.disabled =
+            false;
+
+        sangkwanExplorationResult.style.display =
+            "none";
+
+        sangkwanExplorationResult.innerHTML =
+            "";
+
+        return;
+    }
+
+    const endTime =
+        Number(data.explorationEndTime || 0);
+
+    /* 탐험 완료 상태 */
+    if (data.explorationReady === true) {
+
+        sangkwanExplorationMainButton.textContent =
+            "🗺️ 탐험 완료!";
+
+        sangkwanExplorationMainButton.disabled =
+            false;
+
+        sangkwanExplorationResult.style.display =
+            "block";
+
+        sangkwanExplorationResult.innerHTML = `
+            <strong>🎁 탐험 결과</strong><br><br>
+
+            상관쟝이 탐험에서 돌아왔어요!<br><br>
+
+            📍 ${data.explorationLocationName || "어딘가"}<br><br>
+
+            ${data.explorationLastItemIcon || "🎁"}
+            <strong>
+                ${data.explorationLastItem || "무언가"}
+            </strong>을(를) 발견했어요!
+        `;
+
+        return;
+    }
+
+    /* 시간이 이미 끝났다면 바로 보상 처리 */
+    if (endTime <= Date.now()) {
+
+        await finishSangkwanExploration();
+
+        return;
+    }
+
+    /* 아직 탐험 중 */
+    sangkwanExplorationCurrentLocationName =
+        data.explorationLocationName || "어딘가";
+
+    sangkwanExplorationMainButton.textContent =
+        `🗺️ ${sangkwanExplorationCurrentLocationName}에서 탐험 중...`;
+
+    sangkwanExplorationMainButton.disabled =
+        true;
+
+    sangkwanExplorationLocations.style.display =
+        "none";
+
+    startSangkwanExplorationCountdown(
+        endTime
+    );
+}
+
+
+async function startDannaExploration(location, locationName) {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert("로그인이 필요합니다.");
+        return;
+    }
+
+    if (user.uid !== "ARiFsbrCbzXxUBU57gNd5cPMdXv2") {
+    alert("단나쟝은 상관님만 탐험을 보낼 수 있어요.");
+    return;
+}
+
+    const characterRef =
+        doc(db, "characters", DANNA_CHARACTER_ID);
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    let data = {};
+
+    if (characterSnap.exists()) {
+        data = characterSnap.data();
+    }
+
+    const today = getTodayKey();
+
+    /* =========================================
+       오늘 이미 탐험한 경우
+    ========================================= */
+
+    if (data.explorationDate === today) {
+
+        /* 30분이 지났는지 확인 */
+
+        const endTime =
+            Number(data.explorationEndTime);
+
+        if (
+            data.explorationReady !== true &&
+            endTime <= Date.now()
+        ) {
+
+            const items =
+                dannaExplorationItems[
+                    data.explorationLocation
+                ];
+
+            if (!items || items.length === 0) {
+                return;
+            }
+
+            const foundItem =
+                items[
+                    Math.floor(
+                        Math.random() * items.length
+                    )
+                ];
+
+            /* 기존 아이템 목록 가져오기 */
+
+            let explorationItems =
+                Array.isArray(data.explorationItems)
+                    ? data.explorationItems
+                    : [];
+
+            /* 발견한 아이템 저장 */
+
+            explorationItems.push({
+                name: foundItem.name,
+                icon: foundItem.icon,
+                location: data.explorationLocation,
+                locationName: data.explorationLocationName,
+                date: today
+            });
+
+            await setDoc(
+                characterRef,
+                {
+                    explorationReady: true,
+                    explorationItems: explorationItems,
+                    explorationLastItem: foundItem.name,
+                    explorationLastItemIcon: foundItem.icon
+                },
+                {
+                    merge: true
+                }
+            );
+
+            dannaExplorationResult.style.display =
+                "block";
+
+            dannaExplorationResult.innerHTML = `
+                <strong>🎁 탐험 결과</strong><br><br>
+                단나쟝이 탐험에서 돌아왔어요!<br><br>
+
+                📍 ${data.explorationLocationName}<br>
+                ${foundItem.icon}
+                <strong>${foundItem.name}</strong>을(를) 발견했습니다! ✨
+            `;
+
+            return;
+        }
+
+        /* 이미 아이템을 발견한 상태 */
+
+        if (data.explorationReady === true) {
+
+            dannaExplorationResult.style.display =
+                "block";
+
+            dannaExplorationResult.innerHTML = `
+                <strong>🎁 탐험 결과</strong><br><br>
+                단나쟝이 탐험에서 돌아왔어요!<br><br>
+
+                📍 ${data.explorationLocationName}<br>
+                ${data.explorationLastItemIcon || "🎁"}
+                <strong>${data.explorationLastItem || "아이템"}</strong>을(를) 발견했습니다!
+            `;
+
+            return;
+        }
+
+        /* 아직 탐험 중 */
+
+        const remaining =
+            Math.max(
+                0,
+                endTime - Date.now()
+            );
+
+        const minutes =
+            Math.ceil(
+                remaining / 60000
+            );
+
+        dannaExplorationResult.style.display =
+            "block";
+
+        dannaExplorationResult.innerHTML = `
+            <strong>🗺️ 단나쟝이 탐험 중입니다!</strong><br><br>
+            📍 ${data.explorationLocationName}<br>
+            ⏰ 약 ${minutes}분 후 돌아옵니다.
+        `;
+
+        return;
+    }
+
+    /* =========================================
+       새로운 탐험 시작
+    ========================================= */
+
+    const endTime =
+    Date.now() + (30 * 60 * 1000);
+
+    dannaExplorationCurrentLocationName =
+    locationName;
+
+    dannaExplorationMainButton.textContent =
+    `🗺️ ${locationName}에서 탐험 중...`;
+
+dannaExplorationMainButton.disabled = true;
+
+dannaExplorationLocations.style.display =
+    "none";
+
+dannaExplorationResult.style.display = "none";
+dannaExplorationResult.innerHTML = "";
+
+    await setDoc(
+        characterRef,
+        {
+            explorationDate: today,
+            explorationLocation: location,
+            explorationLocationName: locationName,
+            explorationStartTime: Date.now(),
+            explorationEndTime: endTime,
+            explorationReady: false,
+            explorationLastItem: "",
+            explorationLastItemIcon: ""
+        },
+        {
+            merge: true
+        }
+    );
+
+    startDannaExplorationCountdown(
+    endTime
+);
+
+}
+
+
+/* =========================================
+   탐험 버튼
+========================================= */
+
+dannaExplorationButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        const location =
+            button.dataset.location;
+
+        const locationName =
+            button.textContent.trim();
+
+        startDannaExploration(
+            location,
+            locationName
+        );
+
+    });
+
+});
+
+
+
+/* =========================================
+   탐험 상태 불러오기
+========================================= */
+
+async function loadDannaExploration() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const today =
+        getTodayKey();
+
+
+    /* =========================================
+       오늘 탐험 기록이 없으면
+    ========================================= */
+
+    if (data.explorationDate !== today) {
+
+        dannaExplorationMainButton.textContent =
+            "🗺️ 탐험 보내기";
+
+        dannaExplorationMainButton.disabled =
+            false;
+
+        dannaExplorationLocations.style.display =
+            "none";
+
+        dannaExplorationResult.style.display =
+            "none";
+
+        return;
+    }
+
+
+    /* =========================================
+       탐험 완료
+    ========================================= */
+
+    if (data.explorationReady === true) {
+
+        dannaExplorationMainButton.textContent =
+            "🗺️ 탐험 완료!";
+
+        dannaExplorationMainButton.disabled =
+            true;
+
+        dannaExplorationLocations.style.display =
+            "none";
+
+        dannaExplorationResult.style.display =
+            "block";
+
+        dannaExplorationResult.innerHTML = `
+            <strong>🎁 탐험 결과</strong><br><br>
+
+            단나쟝이 탐험에서 돌아왔어요!<br><br>
+
+            📍 ${data.explorationLocationName}<br>
+
+            ${
+                data.explorationLastItemIcon || "🎁"
+            }
+
+            <strong>
+                ${data.explorationLastItem || "아이템"}
+            </strong>
+            을(를) 발견했습니다! ✨
+        `;
+
+        return;
+    }
+
+
+    /* =========================================
+       아직 탐험 중
+    ========================================= */
+
+    const endTime =
+        Number(data.explorationEndTime);
+
+    const remaining =
+        Math.max(
+            0,
+            endTime - Date.now()
+        );
+
+
+    /* 시간이 끝났다면 결과 처리 */
+
+    if (remaining <= 0) {
+
+        await checkDannaExploration();
+
+        return;
+    }
+
+
+    const minutes =
+        Math.ceil(
+            remaining / 60000
+        );
+
+
+    dannaExplorationMainButton.textContent =
+        `🗺️ ${data.explorationLocationName}에서 탐험 중...`;
+
+    dannaExplorationMainButton.disabled =
+        true;
+
+    dannaExplorationCurrentLocationName =
+    data.explorationLocationName;
+
+    startDannaExplorationCountdown(
+    endTime
+);
+
+    dannaExplorationLocations.style.display =
+        "none";
+
+    dannaExplorationResult.style.display =
+        "block";
+
+    dannaExplorationResult.innerHTML = `
+        <strong>🗺️ 단나쟝이 탐험 중입니다!</strong><br><br>
+
+        📍 ${data.explorationLocationName}<br>
+
+        ⏰ 약 ${minutes}분 후 돌아옵니다.
+    `;
+}
+
+
+async function loadDannaInventory() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const items =
+        Array.isArray(data.explorationItems)
+            ? data.explorationItems
+            : [];
+
+    dannaInventoryList.innerHTML = "";
+
+    if (items.length === 0) {
+        dannaInventoryList.innerHTML = `
+            <div class="inventory-empty">
+                아직 발견한 아이템이 없어요.
+            </div>
+        `;
+        return;
+    }
+
+    const itemCounts = {};
+
+    items.forEach((item) => {
+
+        const key =
+            `${item.name}|${item.icon}`;
+
+        if (!itemCounts[key]) {
+            itemCounts[key] = {
+                name: item.name,
+                icon: item.icon,
+                count: 0
+            };
+        }
+
+        itemCounts[key].count++;
+    });
+
+    Object.values(itemCounts).forEach((item) => {
+
+        const itemElement =
+            document.createElement("div");
+
+        itemElement.className =
+            "inventory-item";
+
+        itemElement.innerHTML = `
+            <div class="inventory-item-icon">
+                ${item.icon}
+            </div>
+
+            <div class="inventory-item-name">
+                ${item.name}
+            </div>
+
+            <div class="inventory-item-count">
+                ×${item.count}
+            </div>
+        `;
+
+        dannaInventoryList.appendChild(
+            itemElement
+        );
+    });
+}
+
+
+
+/* =========================================
+   탐험 완료 여부 확인
+========================================= */
+
+async function checkDannaExploration() {
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const endTime =
+        Number(data.explorationEndTime);
+
+
+    if (
+        data.explorationReady === true ||
+        !endTime ||
+        endTime > Date.now()
+    ) {
+        return;
+    }
+
+
+    const items =
+        dannaExplorationItems[
+            data.explorationLocation
+        ];
+
+
+    if (!items || items.length === 0) {
+        return;
+    }
+
+
+    const foundItem =
+        items[
+            Math.floor(
+                Math.random() * items.length
+            )
+        ];
+
+
+    let explorationItems =
+        Array.isArray(data.explorationItems)
+            ? data.explorationItems
+            : [];
+
+
+    explorationItems.push({
+
+        name: foundItem.name,
+
+        icon: foundItem.icon,
+
+        location:
+            data.explorationLocation,
+
+        locationName:
+            data.explorationLocationName,
+
+        date:
+            data.explorationDate
+
+    });
+
+
+    await setDoc(
+        characterRef,
+        {
+            explorationReady: true,
+
+            explorationItems:
+                explorationItems,
+
+            explorationLastItem:
+                foundItem.name,
+
+            explorationLastItemIcon:
+                foundItem.icon
+
+        },
+        {
+            merge: true
+        }
+    );
+
+
+    dannaExplorationMainButton.textContent =
+        "🗺️ 탐험 완료!";
+
+    dannaExplorationMainButton.disabled =
+        true;
+
+    dannaExplorationLocations.style.display =
+        "none";
+
+    dannaExplorationResult.style.display =
+        "block";
+
+    dannaExplorationResult.innerHTML = `
+        <strong>🎁 탐험 결과</strong><br><br>
+
+        단나쟝이 탐험에서 돌아왔어요!<br><br>
+
+        📍 ${data.explorationLocationName}<br>
+
+        ${foundItem.icon}
+
+        <strong>${foundItem.name}</strong>
+        을(를) 발견했습니다! ✨
+    `;
+}
+
+/* =========================================
+   탐험 카운트다운
+========================================= */
+
+let dannaExplorationTimer = null;
+
+function startDannaExplorationCountdown(endTime) {
+
+    /* 기존 타이머가 있다면 정리 */
+
+    if (dannaExplorationTimer) {
+        clearInterval(dannaExplorationTimer);
+    }
+
+
+    function updateCountdown() {
+
+        const remaining =
+            Math.max(
+                0,
+                Number(endTime) - Date.now()
+            );
+
+
+        /* 시간이 끝남 */
+
+        if (remaining <= 0) {
+
+            clearInterval(
+                dannaExplorationTimer
+            );
+
+            dannaExplorationTimer = null;
+
+            finishDannaExploration();
+
+            return;
+        }
+
+
+        const totalSeconds =
+            Math.ceil(
+                remaining / 1000
+            );
+
+        const minutes =
+            Math.floor(
+                totalSeconds / 60
+            );
+
+        const seconds =
+            totalSeconds % 60;
+
+
+        const timeText =
+            `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+
+        dannaExplorationResult.style.display =
+            "block";
+
+        dannaExplorationResult.innerHTML = `
+            <strong>🗺️ 단나쟝이 탐험 중입니다!</strong><br><br>
+
+            📍 ${dannaExplorationCurrentLocationName || "어딘가"}<br><br>
+
+            ⏰ 남은 시간<br>
+
+            <strong
+                style="
+                    font-size: 24px;
+                    display: inline-block;
+                    margin-top: 5px;
+                "
+            >
+                ${timeText}
+            </strong>
+        `;
+    }
+
+
+    updateCountdown();
+
+    dannaExplorationTimer =
+        setInterval(
+            updateCountdown,
+            1000
+        );
+}
+
+
 
 const dannaFoodCollectionContent = document.getElementById(
     "danna-food-collection-content"
@@ -5724,6 +7535,8 @@ onAuthStateChanged(auth, async (user) => {
 
         await loadCharacterAction();
         await loadDannaAction();
+        await loadDannaExploration();
+        await loadSangkwanExploration();
 
     } catch (error) {
 
