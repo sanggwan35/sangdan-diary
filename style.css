@@ -1605,3 +1605,75 @@ nav a:hover {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
+
+/* ==================================================
+   음식 도감 - 등급별 디자인
+================================================== */
+
+/* 일반 */
+.food-collection-item.rarity-normal {
+    border: 2px solid #b8aaa0;
+    background: #fffdf9;
+}
+
+/* 희귀 */
+.food-collection-item.rarity-rare {
+    border: 2px solid #7c9fc7;
+    background: #f3f8ff;
+    box-shadow: 3px 3px 0 #7c9fc7;
+}
+
+/* 레전드 */
+.food-collection-item.rarity-legend {
+    border: 3px solid #b58ac7;
+    background: #fbf3ff;
+    box-shadow:
+        0 0 8px rgba(181, 138, 199, 0.45),
+        4px 4px 0 #8f6d9e;
+    animation: legendFoodGlow 2s ease-in-out infinite alternate;
+}
+
+/* 레전드 반짝임 */
+@keyframes legendFoodGlow {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-2px);
+    }
+}
+
+/* ==================================================
+   음식 도감 - 등급별 디자인
+================================================== */
+
+.food-collection-item.rarity-normal {
+    border: 2px solid #b8aaa0 !important;
+    background: #fffdf9 !important;
+}
+
+.food-collection-item.rarity-rare {
+    border: 2px solid #7c9fc7 !important;
+    background: #f3f8ff !important;
+    box-shadow: 3px 3px 0 #7c9fc7 !important;
+}
+
+.food-collection-item.rarity-legend {
+    border: 3px solid #b58ac7 !important;
+    background: #fbf3ff !important;
+    box-shadow:
+        0 0 8px rgba(181, 138, 199, 0.45),
+        4px 4px 0 #8f6d9e !important;
+    animation: legendFoodGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes legendFoodGlow {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-2px);
+    }
+}

@@ -5759,7 +5759,7 @@ const dannaFoodList = [
         name: "멍게",
         rarity: "희귀",
         description: "바다 향이 아주 진하고 독특한 풍미가 나는 해산물. 신선할수록 향긋하지만 특유의 맛 때문에 호불호가 크게 갈린다!",
-        rating: "★★★★★"
+        rating: "★"
     }
 ];
 
@@ -5803,9 +5803,25 @@ async function loadDannaFoodCollection() {
         const item = document.createElement("div");
 
         item.className =
-            "food-collection-item" +
-            (isDiscovered ? "" : " undiscovered");
+    "food-collection-item" +
+    (isDiscovered ? "" : " undiscovered");
 
+
+
+if (isDiscovered) {
+
+    if (food.rarity === "일반") {
+        item.classList.add("rarity-normal");
+    }
+
+    if (food.rarity === "희귀") {
+        item.classList.add("rarity-rare");
+    }
+
+    if (food.rarity === "레전드") {
+        item.classList.add("rarity-legend");
+    }
+}
         if (isDiscovered) {
 
             item.innerHTML = `
@@ -7476,8 +7492,25 @@ function loadFoodCollection() {
                 const item = document.createElement("div");
 
                 item.className =
-                    "food-collection-item" +
-                    (isDiscovered ? "" : " undiscovered");
+    "food-collection-item" +
+    (isDiscovered ? "" : " undiscovered");
+
+if (isDiscovered) {
+
+    if (food.rarity === "일반") {
+        item.classList.add("rarity-normal");
+    }
+
+    if (food.rarity === "희귀") {
+        item.classList.add("rarity-rare");
+    }
+
+    if (food.rarity === "레전드") {
+        item.classList.add("rarity-legend");
+    }
+}
+
+
 
                 if (isDiscovered) {
 
