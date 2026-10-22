@@ -1860,6 +1860,7 @@ nav a:hover {
 
     user-select: none;
     -webkit-user-drag: none;
+    touch-action: none;
 }
 
 #danna-character-image img {
@@ -1869,6 +1870,7 @@ nav a:hover {
 
     user-select: none;
     -webkit-user-drag: none;
+    touch-action: none;
     touch-action: none;
 }
 
