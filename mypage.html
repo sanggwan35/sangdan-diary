@@ -9129,6 +9129,436 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
+const sangkwanImage =
+    document.querySelector(
+        "#character-image img"
+    );
+
+const dannaImage =
+    document.querySelector(
+        "#danna-character-image img"
+    );
+
+
+dannaImage.addEventListener(
+    "pointerdown",
+    (event) => {
+
+        dannaPointerDown = true;
+        dannaMoved = false;
+
+        dannaStartX =
+            event.clientX;
+
+        dannaStartY =
+            event.clientY;
+
+        dannaImage.classList.remove(
+            "danna-pet-reaction"
+        );
+
+        event.preventDefault();
+    }
+);
+
+
+dannaImage.addEventListener(
+    "pointermove",
+    (event) => {
+
+        if (!dannaPointerDown) {
+            return;
+        }
+
+        const moveX =
+            Math.abs(
+                event.clientX -
+                dannaStartX
+            );
+
+        const moveY =
+            Math.abs(
+                event.clientY -
+                dannaStartY
+            );
+
+        const distance =
+            Math.sqrt(
+                moveX * moveX +
+                moveY * moveY
+            );
+
+        if (distance > 10) {
+
+    dannaMoved = true;
+
+    if (
+        !dannaImage.classList.contains(
+            "danna-pet-reaction"
+        )
+    ) {
+        dannaImage.classList.add(
+            "danna-pet-reaction"
+        );
+    }
+
+    const now =
+        Date.now();
+
+    if (
+        now - dannaLastHeartTime >
+        250
+    ) {
+
+        createPetHeart(
+            dannaImage
+        );
+
+        dannaLastHeartTime =
+            now;
+    }
+}
+
+        event.preventDefault();
+    }
+);
+
+
+dannaImage.addEventListener(
+    "pointerup",
+    () => {
+
+        if (!dannaPointerDown) {
+            return;
+        }
+
+        if (dannaMoved) {
+
+            const dannaPetReactions = [
+                "히히 왜 그래애~?",
+                "뭐야~ 자꾸 그러면 확 의지해버린다?!",
+                "몰라../////",
+                "부끄럽게..!!",
+                "언니 너무 좋아!",
+                "난 좋은데~?!"
+            ];
+
+            const randomPetReaction =
+                dannaPetReactions[
+                    Math.floor(
+                        Math.random() *
+                        dannaPetReactions.length
+                    )
+                ];
+
+            const actionText =
+                document.getElementById(
+                    "danna-character-action-text"
+                );
+
+            if (actionText) {
+                actionText.textContent =
+                    randomPetReaction;
+            }
+
+        } else {
+
+            const dannaClickReactions = [
+                "웅??",
+                "왜애~?",
+                "모야모야~!!",
+                "히히",
+                "아이~ 참~!!",
+                "흥..!!",
+                "터무니 없어라~"
+            ];
+
+            const randomReaction =
+                dannaClickReactions[
+                    Math.floor(
+                        Math.random() *
+                        dannaClickReactions.length
+                    )
+                ];
+
+            const actionText =
+                document.getElementById(
+                    "danna-character-action-text"
+                );
+
+            if (actionText) {
+                actionText.textContent =
+                    randomReaction;
+            }
+
+            dannaImage.classList.remove(
+                "danna-click-reaction"
+            );
+
+            void dannaImage.offsetWidth;
+
+            dannaImage.classList.add(
+                "danna-click-reaction"
+            );
+        }
+
+        dannaImage.classList.remove(
+            "danna-pet-reaction"
+        );
+
+        dannaPointerDown = false;
+        dannaMoved = false;
+    }
+);
+
+
+dannaImage.addEventListener(
+    "pointercancel",
+    () => {
+
+        dannaImage.classList.remove(
+            "danna-pet-reaction"
+        );
+
+        dannaPointerDown = false;
+        dannaMoved = false;
+    }
+);
+
+
+let dannaPointerDown = false;
+let dannaMoved = false;
+let dannaStartX = 0;
+let dannaStartY = 0;
+let dannaLastHeartTime = 0;   
+
+
+let sangkwanPointerDown = false;
+let sangkwanMoved = false;
+let sangkwanStartX = 0;
+let sangkwanStartY = 0;
+let sangkwanLastHeartTime = 0;
+
+sangkwanImage.addEventListener(
+    "pointerdown",
+    (event) => {
+
+        sangkwanPointerDown = true;
+        sangkwanMoved = false;
+
+        sangkwanStartX =
+            event.clientX;
+
+        sangkwanStartY =
+            event.clientY;
+    }
+);
+
+sangkwanImage.classList.remove(
+    "character-pet-reaction"
+);
+
+sangkwanImage.addEventListener(
+    "pointermove",
+    (event) => {
+
+        if (!sangkwanPointerDown) {
+            return;
+        }
+
+        const moveX =
+            Math.abs(
+                event.clientX -
+                sangkwanStartX
+            );
+
+        const moveY =
+            Math.abs(
+                event.clientY -
+                sangkwanStartY
+            );
+
+        const distance =
+            Math.sqrt(
+            moveX * moveX +
+            moveY * moveY
+        );
+
+  if (distance > 10) {
+
+    sangkwanMoved = true;
+
+    if (
+        !sangkwanImage.classList.contains(
+            "character-pet-reaction"
+        )
+    ) {
+
+        sangkwanImage.classList.add(
+            "character-pet-reaction"
+        );
+
+    }
+
+    const now =
+        Date.now();
+
+    if (
+        now - sangkwanLastHeartTime >
+        250
+    ) {
+
+        createPetHeart(
+            sangkwanImage
+        );
+
+        sangkwanLastHeartTime =
+            now;
+    }
+}
+}
+
+    
+);
+
+sangkwanImage.addEventListener(
+    "pointerup",
+    () => {
+
+        if (!sangkwanPointerDown) {
+            return;
+        }
+
+        if (sangkwanMoved) {
+
+           const sangkwanPetReactions = [
+    "아익..!!",
+    "시,싫은 건 아니고...",
+    "흥흥 좋으면 어쩔건데~!!",
+    "간지럽기만 하구나.",
+    "바보바보..!!!",
+    ".../////"
+];
+
+const randomPetReaction =
+    sangkwanPetReactions[
+        Math.floor(
+            Math.random() *
+            sangkwanPetReactions.length
+        )
+    ];
+
+const actionText =
+    document.getElementById(
+        "character-action-text"
+    );
+
+if (actionText) {
+    actionText.textContent =
+        randomPetReaction;
+}
+
+sangkwanImage.classList.remove(
+    "character-pet-reaction"
+);
+
+void sangkwanImage.offsetWidth;
+
+sangkwanImage.classList.add(
+    "character-pet-reaction"
+); 
+
+        } else {
+
+    const sangkwanClickReactions = [
+        "뭐얏!!",
+        "왜 부르느냐-?!",
+        "흐-음~ 이 몸이랑 놀고 싶은건가?",
+        "아야!!",
+        "몰라!!!",
+        "흥이다 뭐..!",
+        "이이이익"
+    ];
+
+    const randomReaction =
+        sangkwanClickReactions[
+            Math.floor(
+                Math.random() *
+                sangkwanClickReactions.length
+            )
+        ];
+
+    const actionText =
+        document.getElementById(
+            "character-action-text"
+        );
+
+    if (actionText) {
+        actionText.textContent =
+            randomReaction;
+    }
+
+    sangkwanImage.classList.remove(
+        "character-click-reaction"
+    );
+
+    void sangkwanImage.offsetWidth;
+
+    sangkwanImage.classList.add(
+        "character-click-reaction"
+    );
+
+}
+
+sangkwanImage.classList.remove(
+    "character-pet-reaction"
+);
+
+        sangkwanPointerDown = false;
+        sangkwanMoved = false;
+    }
+);
+
+
+
+function createPetHeart(image) {
+
+    const wrapper =
+        image.parentElement;
+
+    const heart =
+        document.createElement("span");
+
+    heart.className =
+        "pet-heart";
+
+    heart.textContent =
+        "♥";
+
+    const x =
+        Math.random() * 100 - 50;
+
+    const y =
+        Math.random() * 40 - 20;
+
+    heart.style.left =
+        `calc(50% + ${x}px)`;
+
+    heart.style.top =
+        `calc(30% + ${y}px)`;
+
+    wrapper.appendChild(heart);
+
+    setTimeout(
+        () => {
+            heart.remove();
+        },
+        800
+    );
+}
+
+
+
 </script>
 
 </body>

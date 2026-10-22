@@ -1857,10 +1857,138 @@ nav a:hover {
     width: 170px;
     height: 170px;
     object-fit: contain;
+
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 #danna-character-image img {
     width: 170px;
     height: 170px;
     object-fit: contain;
+
+    user-select: none;
+    -webkit-user-drag: none;
+    touch-action: none;
+}
+
+.character-click-reaction {
+    animation: characterClickBounce 0.3s ease;
+}
+
+@keyframes characterClickBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.08);
+    }
+
+    70% {
+        transform: scale(0.96);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.character-pet-reaction {
+    animation: characterPet 0.35s ease-in-out infinite;
+}
+
+@keyframes characterPet {
+    0% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(-2deg);
+    }
+}
+
+.danna-click-reaction {
+    animation: dannaClickBounce 0.3s ease;
+}
+
+@keyframes dannaClickBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.08);
+    }
+
+    70% {
+        transform: scale(0.96);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+.danna-pet-reaction {
+    animation: dannaPet 0.35s ease-in-out infinite;
+}
+
+@keyframes dannaPet {
+    0% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(-2deg);
+    }
+}
+
+/* 쓰다듬기 하트 효과 */
+
+/* 쓰다듬기 하트 효과 */
+
+.pet-heart {
+    position: absolute;
+    z-index: 30;
+
+    color: #e6395c;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1;
+
+    pointer-events: none;
+
+    animation: petHeartFloat 0.9s ease-out forwards;
+}
+
+@keyframes petHeartFloat {
+    0% {
+        opacity: 0;
+        transform: translate(0, 5px) scale(0.5);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+
+    55% {
+        opacity: 0.9;
+        transform: translate(-4px, -18px) scale(0.95);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(5px, -42px) scale(0.8);
+    }
 }
