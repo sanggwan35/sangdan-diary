@@ -1752,33 +1752,74 @@
 
         <!-- 통계 -->
 
-        <div class="stats-area">
+        <!-- 통계 -->
 
-            <div class="stat-box">
-                <span
-                    id="diary-count"
-                    class="stat-number">
-                    0
-                </span>
+<div class="stats-area">
 
-                <span class="stat-label">
-                    내가 쓴 일기
-                </span>
-            </div>
+    <!-- 현재 로그인한 사용자 -->
+    <div class="stat-box">
 
-            <div class="stat-box">
-                <span
-                    id="comment-count"
-                    class="stat-number">
-                    0
-                </span>
+        <div class="stat-item">
+            <span
+                id="diary-count"
+                class="stat-number">
+                0
+            </span>
 
-                <span class="stat-label">
-                    내가 쓴 댓글
-                </span>
-            </div>
-
+            <span class="stat-label">
+                일기
+            </span>
         </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+            <span
+                id="comment-count"
+                class="stat-number">
+                0
+            </span>
+
+            <span class="stat-label">
+                댓글
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- 친구 -->
+    <div class="stat-box">
+
+        <div class="stat-item">
+            <span
+                id="friend-diary-count"
+                class="stat-number">
+                0
+            </span>
+
+            <span class="stat-label">
+                일기
+            </span>
+        </div>
+
+        <div class="stat-divider"></div>
+
+        <div class="stat-item">
+            <span
+                id="friend-comment-count"
+                class="stat-number">
+                0
+            </span>
+
+            <span class="stat-label">
+                댓글
+            </span>
+        </div>
+
+    </div>
+
+</div>
 
 
         <!-- 내 일기 -->
@@ -2270,7 +2311,7 @@
                 FOOD COLLECTION
             </div>
 
-            <h3>상관쟝의 음식 도감</h3>
+            <h3 class="food-collection-title">상관쟝의 음식 도감</h3>
 
             <p
                 id="food-collection-progress"
@@ -2749,7 +2790,7 @@
                 FOOD COLLECTION
             </div>
 
-            <h3>단나쟝의 음식 도감</h3>
+            <h3 class="food-collection-title">단나쟝의 음식 도감</h3>
 
             <p
                 id="danna-food-collection-progress"
@@ -2849,6 +2890,12 @@ const diaryCount =
 
 const commentCount =
     document.getElementById("comment-count");
+
+const friendDiaryCount =
+    document.getElementById("friend-diary-count");
+
+const friendCommentCount =
+    document.getElementById("friend-comment-count");
 
 const myDiaryList =
     document.getElementById("my-diary-list");
@@ -3383,6 +3430,8 @@ friendDiaries.sort((a, b) => {
 diaryCount.textContent =
     myDiaries.length;
 
+friendDiaryCount.textContent =
+    friendDiaries.length;
       
 /* ------------------------------
    일기 목록
@@ -3403,6 +3452,8 @@ diaryCount.textContent =
 
         let myCommentCount = 0;
 
+        let friendCommentCountValue = 0;
+
 
         for (const diary of diarySnapshot.docs) {
 
@@ -3415,13 +3466,22 @@ diaryCount.textContent =
             comments.forEach((comment) => {
 
                 if (
-                    comment.uid === user.uid ||
-                    comment.authorUid === user.uid
-                ) {
+    comment.uid === user.uid ||
+    comment.authorUid === user.uid
+) {
 
-                    myCommentCount++;
+    myCommentCount++;
 
-                }
+}
+
+if (
+    comment.uid === FRIEND_UID ||
+    comment.authorUid === FRIEND_UID
+) {
+
+    friendCommentCountValue++;
+
+}
 
             });
 
@@ -3430,6 +3490,12 @@ diaryCount.textContent =
 
         commentCount.textContent =
             myCommentCount;
+
+        friendCommentCount.textContent =
+           friendCommentCountValue;
+
+        friendDiaryCount.textContent =
+             friendDiaries.length;
 
 
     } catch (error) {
@@ -6840,21 +6906,21 @@ const characterFoodList = [
         name: "오므라이스",
         rarity: "일반",
         description: "폭신한 달걀 아래에 맛있는 밥이 숨어 있다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍛",
         name: "카레",
         rarity: "일반",
         description: "냄새부터 맛있다!",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🥪",
         name: "샌드위치",
         rarity: "일반",
         description: "이것저것 들어 있어서 만들기에 따라 다양한 맛을 낼 수 있다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍮",
@@ -6868,7 +6934,7 @@ const characterFoodList = [
         name: "핫도그",
         rarity: "희귀",
         description: "한 손에 들고 먹기 좋지만 자주 먹지 않는 음식.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍓",
@@ -6882,42 +6948,42 @@ const characterFoodList = [
         name: "연근",
         rarity: "일반",
         description: "구멍이 숭숭 뚫린 동그란 뿌리채소.",
-        rating: "★★"
+        rating: "★★☆☆☆"
     },
     {
         icon: "🐰",
         name: "치이카와",
         rarity: "레전드",
         description: "의태형이면 먹을 수 있지만 상관쟝은 그냥 인간이라 먹지 못한다.",
-        rating: "★"
+        rating: "★☆☆☆☆"
     },
     {
         icon: "🌈",
         name: "마카롱",
         rarity: "희귀",
         description: "알록달록 달콤한 디저트. 귀엽게도 생겼다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍜",
         name: "라멘",
         rarity: "희귀",
         description: "따끈한 국물에 면이 듬뿍. 후루룩 먹으면 왠지 힘이 나는 것 같다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🥩",
         name: "돈까스",
         rarity: "희귀",
         description: "바삭하게 튀긴 돼지고기에 소스를 듬뿍 뿌린 음식.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🫘",
         name: "낫또",
         rarity: "일반",
         description: "끈적끈적 냄새도 특이한 음식. 건강에는 아주 좋다고 한다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🐙",
@@ -6938,7 +7004,7 @@ const characterFoodList = [
         name: "치킨너겟",
         rarity: "일반",
         description: "작고 바삭한 닭고기 튀김. 밥 반찬으로도 좋다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍦",
@@ -6952,7 +7018,7 @@ const characterFoodList = [
         name: "삶은 계란",
         rarity: "일반",
         description: "껍질을 까면 하얀 계란이 나온다. 단백질 충전!",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🧀",
@@ -6966,14 +7032,14 @@ const characterFoodList = [
         name: "파인애플 피자",
         rarity: "희귀",
         description: "달콤한 파인애플이 올라간 피자.",
-        rating: "★★"
+        rating: "★★☆☆☆"
     },
     {
         icon: "🍫🌿",
         name: "민트초코라떼",
         rarity: "희귀",
         description: "시원한 민트와 달콤한 초콜릿이 어우러진 음료.",
-        rating: "★★★"
+        rating: "★★★☆☆"
     },
     {
         icon: "🌿🥛",
@@ -7025,14 +7091,14 @@ const dannaFoodList = [
         name: "컵밥",
         rarity: "일반",
         description: "따뜻한 밥 위에 여러 가지 맛있는 재료가 듬뿍 올라간 간편한 한 끼. 컵 하나에 맛있는 게 잔뜩 들어 있다!",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🌽",
         name: "콘치즈",
         rarity: "일반",
         description: "달콤한 옥수수 위에 치즈를 듬뿍 올려 녹인 음식.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🫐",
@@ -7046,7 +7112,7 @@ const dannaFoodList = [
         name: "치이카와",
         rarity: "레전드",
         description: "작고 귀여운 모습이 단나쟝의 마음에 쏙 든다! 보기만 해도 괜히 기분이 좋아지고 꼭 안아주고 싶어진다. 하지만 먹을 수는 없다.",
-        rating: "★"
+        rating: "★☆☆☆☆"
     },
     {
         icon: "🍪",
@@ -7081,7 +7147,7 @@ const dannaFoodList = [
         name: "고수",
         rarity: "일반",
         description: "향이 아주 강한 허브. 좋아하는 사람도 많지만 처음 먹으면 당황할 수 있다!",
-        rating: "★"
+        rating: "★☆☆☆☆"
     },
     {
         icon: "🌶",
@@ -7116,63 +7182,63 @@ const dannaFoodList = [
         name: "안 익은 당근",
         rarity: "일반",
         description: "아삭하고 은은하게 달콤한 주황색 채소. 건강에는 좋다지만 단나쟝은 다른 맛있는 걸 먼저 찾을 것 같다!",
-        rating: "★"
+        rating: "★☆☆☆☆"
     },
     {
         icon: "🍺",
         name: "맥주",
         rarity: "일반",
         description: "보리의 씁쓸한 맛과 특유의 향이 나는 음료.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "☕",
         name: "블랙커피",
         rarity: "일반",
         description: "씁쓸하고 진한 향이 나는 커피. 단나쟝은 단 게 더 좋다.",
-        rating: "★★"
+        rating: "★★☆☆☆"
     },
     {
         icon: "🍗",
         name: "닭볶음탕",
         rarity: "일반",
         description: "닭고기와 감자, 채소를 매콤한 양념에 푹 끓인 음식. 국물에 밥을 비벼 먹어도 맛있다!",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍱",
         name: "유부초밥",
         rarity: "일반",
         description: "달콤짭짤한 유부 속에 새콤한 밥을 가득 채운 음식. 한입에 먹기 좋은 크기다!",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍚",
         name: "볶음밥",
         rarity: "일반",
         description: "밥과 여러 가지 재료를 함께 볶아 만든 간단한 음식. 냉장고에 있는 재료로도 만들 수 있다!",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🍖",
         name: "장조림",
         rarity: "일반",
         description: "고기를 간장 양념에 푹 조려 만든 반찬. 짭짤하고 달콤해서 밥과 함께 먹기 좋다.",
-        rating: "★★★★"
+        rating: "★★★★☆"
     },
     {
         icon: "🫘",
         name: "번데기",
         rarity: "일반",
         description: "누에의 번데기를 삶아 양념한 길거리 간식. 고소하고 짭짤하지만 독특한 향과 식감 때문에 호불호가 크게 갈린다!",
-        rating: "★"
+        rating: "★☆☆☆☆"
     },
     {
         icon: "🪸",
         name: "멍게",
         rarity: "희귀",
         description: "바다 향이 아주 진하고 독특한 풍미가 나는 해산물. 신선할수록 향긋하지만 특유의 맛 때문에 호불호가 크게 갈린다!",
-        rating: "★"
+        rating: "★☆☆☆☆"
     }
 ];
 

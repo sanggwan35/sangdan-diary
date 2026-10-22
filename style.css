@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css');
+
 /* =========================
    전체 기본 디자인
 ========================= */
@@ -1277,12 +1279,25 @@ nav a:hover {
     font-family: inherit;
     font-weight: bold;
     cursor: pointer;
+
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        background 0.1s ease;
+
     box-shadow: 3px 3px 0 #625044;
 }
 
 #danna-inventory-button:hover {
+    background: #ffe7ad;
+
     transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0 #625044;
+    box-shadow: 3px 3px 0 #625044;
+}
+
+#danna-inventory-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #625044;
 }
 
 .danna-inventory-popup {
@@ -1636,12 +1651,25 @@ nav a:hover {
 
 /* 레전드 반짝임 */
 @keyframes legendFoodGlow {
-    from {
-        transform: translateY(0);
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow:
+            0 0 8px rgba(181, 138, 199, 0.45),
+            4px 4px 0 #8f6d9e;
     }
 
-    to {
-        transform: translateY(-2px);
+    50% {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow:
+            0 0 18px rgba(181, 138, 199, 0.8),
+            4px 4px 0 #8f6d9e;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        box-shadow:
+            0 0 8px rgba(181, 138, 199, 0.45),
+            4px 4px 0 #8f6d9e;
     }
 }
 
@@ -1670,14 +1698,28 @@ nav a:hover {
 }
 
 @keyframes legendFoodGlow {
-    from {
-        transform: translateY(0);
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow:
+            0 0 8px rgba(181, 138, 199, 0.45),
+            4px 4px 0 #8f6d9e;
     }
 
-    to {
-        transform: translateY(-2px);
+    50% {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow:
+            0 0 18px rgba(181, 138, 199, 0.8),
+            4px 4px 0 #8f6d9e;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        box-shadow:
+            0 0 8px rgba(181, 138, 199, 0.45),
+            4px 4px 0 #8f6d9e;
     }
 }
+
 
 /* =========================================
    캐릭터 능력치
@@ -1993,4 +2035,48 @@ nav a:hover {
         opacity: 0;
         transform: translate(5px, -42px) scale(0.8);
     }
+}
+
+/* 음식 도감 - 이름 / 설명 글씨체 */
+.food-collection-name {
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.food-collection-description {
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.2px;
+}
+
+.food-collection-title {
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+    color: #5a504d;
+}
+
+/* =================================
+   마이페이지 통계 가로 배치
+================================= */
+
+.stat-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 45px;
+    background: rgba(61, 53, 66, 0.3);
+    flex-shrink: 0;
 }
