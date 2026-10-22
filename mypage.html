@@ -839,6 +839,30 @@
     margin: 0;
 }
 
+
+.character-points {
+    position: absolute;
+    z-index: 15;
+
+    left: -65px;
+    top: 5px;
+
+    padding: 5px 9px;
+
+    border: 1px solid #3d3542;
+    border-radius: 12px;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    box-shadow: 2px 2px 0 rgba(61, 53, 66, 0.15);
+
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+
 .character-action-bubble {
     position: absolute;
     z-index: 20;
@@ -1105,6 +1129,8 @@
 .character-two-column .character-growth {
     margin-top: 0;
 }
+
+
 
 
     
@@ -1388,6 +1414,220 @@
     }
 }
 
+/* =========================================
+   상관쟝 취미 배우기
+========================================= */
+
+#sangkwan-hobby-main-button {
+    margin-left: 8px;
+}
+
+#sangkwan-hobby-list {
+    margin-top: 10px;
+}
+
+.sangkwan-hobby-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+
+    border: 1px solid rgba(98, 80, 68, 0.25);
+    border-radius: 8px;
+
+    background: #fff;
+    color: #3d3542;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.sangkwan-hobby-item span {
+    color: #8a6f5c;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.sangkwan-hobby-item:hover {
+    background: #f5eee7;
+}
+
+
+/* 탐험 / 취미 메인 버튼 나란히 */
+.character-exploration {
+    position: relative;
+}
+
+#sangkwan-exploration-main-button,
+#sangkwan-hobby-main-button {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+#sangkwan-hobby-main-button {
+    margin-left: 8px;
+}
+
+#sangkwan-exploration-main-button,
+#sangkwan-hobby-main-button {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    padding: 8px 16px;
+
+    border: 2px solid #625044;
+    border-radius: 8px;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    font-family: monospace;
+    font-size: 13px;
+
+    cursor: pointer;
+
+    box-shadow: 2px 2px 0 #625044;
+}
+
+#sangkwan-hobby-main-button {
+    margin-left: 8px;
+    position: relative;
+    top: 5px;
+}
+
+#sangkwan-hobby-main-button {
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        background 0.1s ease;
+}
+
+#sangkwan-hobby-main-button:hover {
+    background: #ffe7ad;
+
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #625044;
+}
+
+#sangkwan-hobby-main-button:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 #625044;
+}
+
+/* =========================================
+   단나쟝 취미 배우기
+========================================= */
+
+#danna-hobby-main-button {
+    margin-left: 8px;
+}
+
+#danna-hobby-list {
+    margin-top: 10px;
+}
+
+.danna-hobby-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+
+    border: 1px solid rgba(98, 80, 68, 0.25);
+    border-radius: 8px;
+
+    background: #fff;
+    color: #3d3542;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.danna-hobby-item span {
+    color: #8a6f5c;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.danna-hobby-item:hover {
+    background: #f5eee7;
+}
+
+
+/* 탐험 / 취미 메인 버튼 나란히 */
+
+#danna-exploration-main-button,
+#danna-hobby-main-button {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    padding: 8px 16px;
+
+    border: 2px solid #625044;
+    border-radius: 8px;
+
+    background: #fffaf3;
+    color: #3d3542;
+
+    font-family: monospace;
+    font-size: 13px;
+
+    cursor: pointer;
+
+    box-shadow: 2px 2px 0 #625044;
+}
+
+#danna-hobby-main-button {
+    margin-left: 8px;
+    position: relative;
+    top: 5px;
+}
+
+#danna-hobby-main-button {
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        background 0.1s ease;
+}
+
+#danna-hobby-main-button:hover {
+    background: #ffe7ad;
+
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #625044;
+}
+
+#danna-hobby-main-button:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 #625044;
+}
+
+/* 단나쟝 탐험 / 취미 버튼 나란히 */
+#danna-exploration-main-button,
+#danna-hobby-main-button {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+#danna-hobby-main-button {
+    margin-left: 8px;
+    position: relative;
+    top: 5px;
+}
+
     </style>
 </head>
 
@@ -1576,98 +1816,107 @@
         </div>
 
         <div
-    id="character-image"
-    class="character-image-box"
->
-    🧸
-</div>
-
-<!-- 비밀 이벤트가 발생했을 때 나타나는 아이콘 -->
-<button
-    id="character-secret-event-button"
-    class="character-letter-button"
-    style="display: none;"
-    type="button"
->
-    ✨
-</button>
-
-<!-- 비밀 이벤트 팝업 -->
-<div
-    id="character-secret-event-modal"
-    class="character-letter-modal"
-    style="display: none;"
->
-    <div class="character-letter-modal-box">
-        <button
-            id="character-secret-event-close"
-            class="character-letter-close"
-            type="button"
+            id="character-points"
+            class="character-points"
         >
-            ×
-        </button>
-
-        <p
-            id="character-secret-event-title"
-            class="character-letter-modal-title"
-        ></p>
+            💰 0P
+        </div>
 
         <div
-            id="character-secret-event-content"
-            class="character-letter-modal-content"
-        ></div>
-    </div>
-</div>
+            id="character-image"
+            class="character-image-box"
+        >
+            🧸
+        </div>
 
-<!-- 편지가 도착했을 때 나타나는 아이콘 -->
-<button
-    id="character-letter-button"
-    class="character-letter-button"
-    style="display: none;"
-    type="button"
->
-    ✉️
-    <span
-        id="character-letter-new"
-        class="character-letter-new-badge"
-    >
-        NEW
-    </span>
-</button>
-
-<!-- 편지 팝업 -->
-<div
-    id="character-letter-modal"
-    class="character-letter-modal"
-    style="display: none;"
->
-    <div class="character-letter-modal-box">
-
+        <!-- 비밀 이벤트가 발생했을 때 나타나는 아이콘 -->
         <button
-            id="character-letter-close"
-            class="character-letter-close"
+            id="character-secret-event-button"
+            class="character-letter-button"
+            style="display: none;"
             type="button"
         >
-            ×
+            ✨
         </button>
 
-        <p
-            id="character-letter-modal-title"
-            class="character-letter-modal-title"
-        ></p>
-
-        <p
-            id="character-letter-modal-date"
-            class="character-letter-modal-date"
-        ></p>
-
+        <!-- 비밀 이벤트 팝업 -->
         <div
-            id="character-letter-modal-content"
-            class="character-letter-modal-content"
-        ></div>
+            id="character-secret-event-modal"
+            class="character-letter-modal"
+            style="display: none;"
+        >
+            <div class="character-letter-modal-box">
 
-    </div>
-</div>
+                <button
+                    id="character-secret-event-close"
+                    class="character-letter-close"
+                    type="button"
+                >
+                    ×
+                </button>
+
+                <p
+                    id="character-secret-event-title"
+                    class="character-letter-modal-title"
+                ></p>
+
+                <div
+                    id="character-secret-event-content"
+                    class="character-letter-modal-content"
+                ></div>
+
+            </div>
+        </div>
+
+        <!-- 편지가 도착했을 때 나타나는 아이콘 -->
+        <button
+            id="character-letter-button"
+            class="character-letter-button"
+            style="display: none;"
+            type="button"
+        >
+            ✉️
+            <span
+                id="character-letter-new"
+                class="character-letter-new-badge"
+            >
+                NEW
+            </span>
+        </button>
+
+        <!-- 편지 팝업 -->
+        <div
+            id="character-letter-modal"
+            class="character-letter-modal"
+            style="display: none;"
+        >
+            <div class="character-letter-modal-box">
+
+                <button
+                    id="character-letter-close"
+                    class="character-letter-close"
+                    type="button"
+                >
+                    ×
+                </button>
+
+                <p
+                    id="character-letter-modal-title"
+                    class="character-letter-modal-title"
+                ></p>
+
+                <p
+                    id="character-letter-modal-date"
+                    class="character-letter-modal-date"
+                ></p>
+
+                <div
+                    id="character-letter-modal-content"
+                    class="character-letter-modal-content"
+                ></div>
+
+            </div>
+        </div>
 
     </div>
 
@@ -1691,8 +1940,122 @@
         id="sangkwan-exploration-main-button"
         type="button"
     >
-        🗺️ 탐험 보내기
+        🗺️ 탐험 
     </button>
+
+    <button
+    id="sangkwan-hobby-main-button"
+    type="button"
+>
+    🎨 취미 
+</button>
+
+
+<div
+    id="sangkwan-stats"
+    class="character-stats"
+>
+    <div class="character-stat">
+        <span>🔎 탐구력</span>
+        <strong id="sangkwan-exploration">0</strong>
+    </div>
+
+    <div class="character-stat">
+        <span>🎨 창작력</span>
+        <strong id="sangkwan-creativity">0</strong>
+    </div>
+
+    <div class="character-stat">
+        <span>🥾 활동력</span>
+        <strong id="sangkwan-activity">0</strong>
+    </div>
+
+    <div class="character-stat">
+        <span>🧠 사고력</span>
+        <strong id="sangkwan-thinking">0</strong>
+    </div>
+</div>
+
+
+<div
+    id="sangkwan-hobby-list"
+    class="sangkwan-hobby-list"
+    style="display: none;"
+>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="reading"
+    >
+        📚 독서
+        <span>30P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="experiment"
+    >
+        🧪 실험
+        <span>80P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="drawing"
+    >
+        🎨 그림
+        <span>50P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="composition"
+    >
+        🎵 작곡
+        <span>100P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="hiking"
+    >
+        🥾 등산
+        <span>60P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="travel"
+    >
+        ✈️ 여행
+        <span>150P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="writing"
+    >
+        ✍️ 글쓰기
+        <span>40P</span>
+    </button>
+
+    <button
+        type="button"
+        class="sangkwan-hobby-item"
+        data-hobby="chess"
+    >
+        ♟️ 체스
+        <span>70P</span>
+    </button>
+
+</div>
 
     <div
         id="sangkwan-exploration-locations"
@@ -1924,6 +2287,10 @@
 
 </section>
 
+
+
+
+
 <!-- ==================================================
      단나쟝 성장
 ================================================== -->
@@ -1956,6 +2323,14 @@
                         class="character-action-text"
                     >불러오는 중...</span>
                 </div>
+
+                <p
+    id="danna-character-points"
+    class="character-points"
+>
+    💰 0P
+</p>
+
 
                 <div
                     id="danna-character-image"
@@ -2028,13 +2403,128 @@
             </p>
 
 
+
             <button
     id="danna-exploration-main-button"
     class="exploration-main-button"
     type="button"
 >
-    🗺️ 탐험 보내기
+    🗺️ 탐험 
 </button>
+
+
+<button
+    id="danna-hobby-main-button"
+    type="button"
+>
+    🎨 취미
+</button>
+
+<div
+    id="danna-stats"
+    class="character-stats"
+>
+    <div class="character-stat">
+        <span>🔎 탐구력</span>
+        <strong id="danna-exploration">0</strong>
+    </div>
+
+    <div class="character-stat">
+        <span>🎨 창작력</span>
+        <strong id="danna-creativity">0</strong>
+    </div>
+
+    <div class="character-stat">
+        <span>🥾 활동력</span>
+        <strong id="danna-activity">0</strong>
+    </div>
+
+    <div class="character-stat">
+        <span>🧠 사고력</span>
+        <strong id="danna-thinking">0</strong>
+    </div>
+</div>
+
+<div
+    id="danna-hobby-list"
+    class="danna-hobby-list"
+    style="display: none;"
+>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="reading"
+    >
+        📚 독서
+        <span>30P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="experiment"
+    >
+        🧪 실험
+        <span>80P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="drawing"
+    >
+        🎨 그림
+        <span>50P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="composition"
+    >
+        🎵 작곡
+        <span>100P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="hiking"
+    >
+        🥾 등산
+        <span>60P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="travel"
+    >
+        ✈️ 여행
+        <span>150P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="writing"
+    >
+        ✍️ 글쓰기
+        <span>40P</span>
+    </button>
+
+    <button
+        type="button"
+        class="danna-hobby-item"
+        data-hobby="chess"
+    >
+        ♟️ 체스
+        <span>70P</span>
+    </button>
+
+</div>
+
 
 <div
     id="danna-exploration-locations"
@@ -3226,6 +3716,434 @@ sangkwanExplorationMainButton.addEventListener(
     }
 );
 
+const sangkwanHobbyMainButton =
+    document.getElementById(
+        "sangkwan-hobby-main-button"
+    );
+    
+
+const sangkwanHobbyList =
+    document.getElementById(
+        "sangkwan-hobby-list"
+    );
+
+sangkwanHobbyMainButton.addEventListener(
+    "click",
+    () => {
+
+        if (auth.currentUser.uid !== FRIEND_UID) {
+    return;
+}
+
+        sangkwanHobbyList.style.display =
+            sangkwanHobbyList.style.display === "none"
+                ? "grid"
+                : "none";
+
+    }
+);
+
+const sangkwanHobbyItems =
+    document.querySelectorAll(
+        ".sangkwan-hobby-item"
+    );
+
+sangkwanHobbyItems.forEach(
+    (hobbyItem) => {
+
+        hobbyItem.addEventListener(
+            "click",
+            async () => {
+
+                const hobby =
+                    hobbyItem.dataset.hobby;
+
+                const hobbyNames = {
+    reading: "📚 독서",
+    experiment: "🧪 실험",
+    drawing: "🎨 그림",
+    composition: "🎵 작곡",
+    hiking: "🥾 등산",
+    travel: "✈️ 여행",
+    writing: "✍️ 글쓰기",
+    chess: "♟️ 체스"
+};
+
+const hobbyName =
+    hobbyNames[hobby];
+
+const confirmed =
+    confirm(
+        `${hobbyName}을(를) 배우시겠습니까?`
+    );
+
+if (!confirmed) {
+    return;
+}
+
+const characterRef =
+    doc(
+        db,
+        "characters",
+        CHARACTER_ID
+    );
+
+const characterSnap =
+    await getDoc(characterRef);
+
+if (!characterSnap.exists()) {
+    alert("상관쟝 정보를 찾을 수 없습니다.");
+    return;
+}
+
+const characterData =
+    characterSnap.data();
+
+const currentPoints =
+    Number(characterData.points) || 0;
+
+    const currentStats = {
+    exploration: Number(characterData.exploration) || 0,
+    creativity: Number(characterData.creativity) || 0,
+    activity: Number(characterData.activity) || 0,
+    thinking: Number(characterData.thinking) || 0
+};
+
+const hobbyStats = {
+    reading: "exploration",
+    experiment: "exploration",
+
+    drawing: "creativity",
+    composition: "creativity",
+
+    hiking: "activity",
+    travel: "activity",
+
+    writing: "thinking",
+    chess: "thinking"
+};
+
+const statKey =
+    hobbyStats[hobby];
+
+    const hobbyCosts = {
+    reading: 30,
+    experiment: 80,
+    drawing: 50,
+    composition: 100,
+    hiking: 60,
+    travel: 150,
+    writing: 40,
+    chess: 70
+};
+
+const hobbyCost =
+    hobbyCosts[hobby];
+
+    const newStats = {
+    ...currentStats,
+    [statKey]:
+        currentStats[statKey] + 1
+};
+
+    if (currentPoints < hobbyCost) {
+    alert(
+        `포인트가 부족합니다.\n\n` +
+        `필요 포인트: ${hobbyCost}P\n` +
+        `현재 포인트: ${currentPoints}P`
+    );
+    return;
+}
+
+const newPoints =
+    currentPoints - hobbyCost;
+
+await setDoc(
+    characterRef,
+    {
+        points: newPoints,
+
+        exploration: newStats.exploration,
+        creativity: newStats.creativity,
+        activity: newStats.activity,
+        thinking: newStats.thinking
+    },
+    {
+        merge: true
+    }
+);
+
+
+/* 화면 즉시 갱신 */
+
+document
+    .getElementById("sangkwan-exploration")
+    .textContent =
+        newStats.exploration;
+
+document
+    .getElementById("sangkwan-creativity")
+    .textContent =
+        newStats.creativity;
+
+document
+    .getElementById("sangkwan-activity")
+    .textContent =
+        newStats.activity;
+
+document
+    .getElementById("sangkwan-thinking")
+    .textContent =
+        newStats.thinking;
+
+document
+    .getElementById("character-points")
+    .textContent =
+        `💰 ${newPoints}P`;
+
+
+
+alert(
+    `${hobbyName}을(를) 배웠습니다!\n\n` +
+    `💰 ${hobbyCost}P 사용\n` +
+    `남은 포인트: ${newPoints}P`
+);
+
+            }
+        );
+
+    }
+);
+
+
+const dannaHobbyMainButton =
+    document.getElementById(
+        "danna-hobby-main-button"
+    );
+
+const dannaHobbyList =
+    document.getElementById(
+        "danna-hobby-list"
+    );
+
+dannaHobbyMainButton.addEventListener(
+    "click",
+    () => {
+
+        if (auth.currentUser.uid === FRIEND_UID) {
+    return;
+}
+
+        dannaHobbyList.style.display =
+            dannaHobbyList.style.display === "none"
+                ? "grid"
+                : "none";
+
+    }
+);
+
+const dannaHobbyItems =
+    document.querySelectorAll(
+        ".danna-hobby-item"
+    );
+
+
+dannaHobbyItems.forEach(
+    (hobbyItem) => {
+
+        hobbyItem.addEventListener(
+            "click",
+            async () => {
+
+                const hobby =
+                    hobbyItem.dataset.hobby;
+
+                const hobbyNames = {
+                    reading: "📚 독서",
+                    experiment: "🧪 실험",
+                    drawing: "🎨 그림",
+                    composition: "🎵 작곡",
+                    hiking: "🥾 등산",
+                    travel: "✈️ 여행",
+                    writing: "✍️ 글쓰기",
+                    chess: "♟️ 체스"
+                };
+
+                const hobbyName =
+                    hobbyNames[hobby];
+
+                const confirmed =
+                    confirm(
+                        `${hobbyName}을(를) 배우시겠습니까?`
+                    );
+
+                if (!confirmed) {
+                    return;
+                }
+
+                const characterRef =
+                    doc(
+                        db,
+                        "characters",
+                        DANNA_CHARACTER_ID
+                    );
+
+                const characterSnap =
+                    await getDoc(characterRef);
+
+                if (!characterSnap.exists()) {
+                    alert(
+                        "단나쟝 정보를 찾을 수 없습니다."
+                    );
+                    return;
+                }
+
+                const characterData =
+                    characterSnap.data();
+
+                const currentPoints =
+                    Number(characterData.points) || 0;
+
+                const currentStats = {
+                    exploration:
+                        Number(
+                            characterData.exploration
+                        ) || 0,
+
+                    creativity:
+                        Number(
+                            characterData.creativity
+                        ) || 0,
+
+                    activity:
+                        Number(
+                            characterData.activity
+                        ) || 0,
+
+                    thinking:
+                        Number(
+                            characterData.thinking
+                        ) || 0
+                };
+
+                const hobbyStats = {
+                    reading: "exploration",
+                    experiment: "exploration",
+
+                    drawing: "creativity",
+                    composition: "creativity",
+
+                    hiking: "activity",
+                    travel: "activity",
+
+                    writing: "thinking",
+                    chess: "thinking"
+                };
+
+                const statKey =
+                    hobbyStats[hobby];
+
+                const hobbyCosts = {
+                    reading: 30,
+                    experiment: 80,
+                    drawing: 50,
+                    composition: 100,
+                    hiking: 60,
+                    travel: 150,
+                    writing: 40,
+                    chess: 70
+                };
+
+                const hobbyCost =
+                    hobbyCosts[hobby];
+
+                const newStats = {
+                    ...currentStats,
+
+                    [statKey]:
+                        currentStats[statKey] + 1
+                };
+
+                if (
+                    currentPoints <
+                    hobbyCost
+                ) {
+                    alert(
+                        `포인트가 부족합니다.\n\n` +
+                        `필요 포인트: ${hobbyCost}P\n` +
+                        `현재 포인트: ${currentPoints}P`
+                    );
+
+                    return;
+                }
+
+                const newPoints =
+                    currentPoints -
+                    hobbyCost;
+
+                await setDoc(
+                    characterRef,
+                    {
+                        points: newPoints,
+
+                        exploration:
+                            newStats.exploration,
+
+                        creativity:
+                            newStats.creativity,
+
+                        activity:
+                            newStats.activity,
+
+                        thinking:
+                            newStats.thinking
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+                /* 화면 즉시 갱신 */
+
+document
+    .getElementById("danna-exploration")
+    .textContent =
+        newStats.exploration;
+
+document
+    .getElementById("danna-creativity")
+    .textContent =
+        newStats.creativity;
+
+document
+    .getElementById("danna-activity")
+    .textContent =
+        newStats.activity;
+
+document
+    .getElementById("danna-thinking")
+    .textContent =
+        newStats.thinking;
+
+document
+    .getElementById("danna-character-points")
+    .textContent =
+        `💰 ${newPoints}P`;
+
+
+                alert(
+                    `${hobbyName}을(를) 배웠습니다!\n\n` +
+                    `💰 ${hobbyCost}P 사용\n` +
+                    `남은 포인트: ${newPoints}P`
+                );
+
+            }
+        );
+
+    }
+);
+
+
 const dannaExplorationResult =
     document.getElementById("danna-exploration-result");
 
@@ -3333,7 +4251,7 @@ if (currentExplorationCount >= 2) {
 } else {
 
     dannaExplorationMainButton.textContent =
-        `🗺️ 탐험 보내기 (${currentExplorationCount}/2)`;
+        `🗺️ 탐험 (${currentExplorationCount}/2)`;
 }
 
         return;
@@ -3349,6 +4267,11 @@ if (currentExplorationCount >= 2) {
     if (!items || items.length === 0) {
         return;
     }
+    console.log(
+    "단나쟝 탐험 결과 함수 실행:",
+    data.explorationLocation,
+    items
+);
 
 
     /* 랜덤 아이템 */
@@ -3430,7 +4353,7 @@ if (currentExplorationCount >= 2) {
 } else {
 
     dannaExplorationMainButton.textContent =
-        `🗺️ 탐험 보내기 (${currentExplorationCount}/2)`;
+        `🗺️ 탐험 (${currentExplorationCount}/2)`;
 }
 
 dannaExplorationLocations.style.display =
@@ -4106,7 +5029,7 @@ async function finishSangkwanExploration() {
 } else {
 
     sangkwanExplorationMainButton.textContent =
-        `🗺️ 탐험 보내기 (${explorationCount}/2)`;
+        `🗺️ 탐험 (${explorationCount}/2)`;
 
     sangkwanExplorationMainButton.disabled =
         false;
@@ -4168,7 +5091,7 @@ async function loadSangkwanExploration() {
     if (data.explorationDate !== today) {
 
         sangkwanExplorationMainButton.textContent =
-           `🗺️ 탐험 보내기 (${explorationCount}/2)`;
+           `🗺️ 탐험 (${explorationCount}/2)`;
 
         sangkwanExplorationMainButton.disabled =
             false;
@@ -4264,7 +5187,7 @@ async function loadSangkwanExploration() {
     ) {
 
         sangkwanExplorationMainButton.textContent =
-            `🗺️ 탐험 보내기 (${explorationCount}/2)`;
+            `🗺️ 탐험 (${explorationCount}/2)`;
 
         sangkwanExplorationMainButton.disabled =
             false;
@@ -4559,7 +5482,7 @@ async function loadDannaExploration() {
     if (data.explorationDate !== today) {
 
         dannaExplorationMainButton.textContent =
-            `🗺️ 탐험 보내기 (${explorationCount}/2)`;
+            `🗺️ 탐험 (${explorationCount}/2)`;
 
         dannaExplorationMainButton.disabled =
             false;
@@ -4588,7 +5511,7 @@ async function loadDannaExploration() {
     ) {
 
         dannaExplorationMainButton.textContent =
-            `🗺️ 탐험 보내기 (${explorationCount}/2)`;
+            `🗺️ 탐험 (${explorationCount}/2)`;
 
         dannaExplorationMainButton.disabled =
             false;
@@ -4879,7 +5802,7 @@ if (currentExplorationCount >= 2) {
 } else {
 
     dannaExplorationMainButton.textContent =
-        `🗺️ 탐험 보내기 (${currentExplorationCount}/2)`;
+        `🗺️ 탐험 (${currentExplorationCount}/2)`;
 }
 
     dannaExplorationLocations.style.display =
@@ -4935,6 +5858,8 @@ function startDannaExplorationCountdown(endTime) {
             );
 
             dannaExplorationTimer = null;
+
+            console.log("단나쟝 탐험 카운트다운 종료!");
 
             finishDannaExploration();
 
@@ -5310,6 +6235,8 @@ async function loadCharacterGrowth(user) {
             await getDoc(characterRef);
 
         let exp = 0;
+        let points = 0;
+        let diaryPointsAwarded = 0;
 
         if (characterDoc.exists()) {
 
@@ -5319,8 +6246,16 @@ async function loadCharacterGrowth(user) {
             exp =
                 Number(data.exp) || 0;
 
+            points =
+            Number(data.points) || 0;
+
+            diaryPointsAwarded =
+            Number(data.diaryPointsAwarded) || 0;
+    
+
         }
 
+        
 
         /*
          * 상관쟝은 단나님이 쓴 일기를 통해
@@ -5336,21 +6271,31 @@ async function loadCharacterGrowth(user) {
             );
 
         let friendDiaryCount = 0;
+        let diaryPoints = 0;
 
-        diarySnapshot.forEach((diaryDoc) => {
+diarySnapshot.forEach((diaryDoc) => {
 
-            const data = diaryDoc.data();
+    const data = diaryDoc.data();
 
-            if (
-                data.authorUid ===
-                CHARACTER_OWNER_UID
-            ) {
+    if (
+        data.authorUid ===
+        CHARACTER_OWNER_UID
+    ) {
 
-                friendDiaryCount++;
+        friendDiaryCount++;
 
-            }
+        diaryPoints +=
+            Number(data.pointReward) || 0;
 
-        });
+    }
+
+});
+
+         const newDiaryPoints =
+    Math.max(
+        0,
+        diaryPoints - diaryPointsAwarded
+    );
 
 
         const newExp =
@@ -5358,6 +6303,12 @@ async function loadCharacterGrowth(user) {
                 exp,
                 friendDiaryCount
             );
+
+        const newPoints =
+            points + newDiaryPoints;
+
+        const newDiaryPointsAwarded =
+            diaryPointsAwarded + newDiaryPoints;
 
 
         /*
@@ -5367,7 +6318,8 @@ async function loadCharacterGrowth(user) {
 
         if (
             !characterDoc.exists() ||
-            newExp > exp
+            newExp > exp ||
+            newDiaryPoints > 0
         ) {
 
             await setDoc(
@@ -5383,7 +6335,13 @@ async function loadCharacterGrowth(user) {
                         CHARACTER_OWNER_UID,
 
                     exp:
-                        newExp
+                        newExp,
+
+                    points:
+                        newPoints,
+
+                    diaryPointsAwarded:
+                        newDiaryPointsAwarded
                 },
                 {
                     merge: true
@@ -5396,8 +6354,59 @@ async function loadCharacterGrowth(user) {
         const level =
             getCharacterLevel(newExp);
 
+
+        const sangkwanExploration =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().exploration
+            : 0
+    ) || 0;
+
+const sangkwanCreativity =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().creativity
+            : 0
+    ) || 0;
+
+const sangkwanActivity =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().activity
+            : 0
+    ) || 0;
+
+const sangkwanThinking =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().thinking
+            : 0
+    ) || 0;
+
+
         const levelData =
             characterGrowthData[level];
+
+
+            document
+    .getElementById("sangkwan-exploration")
+    .textContent =
+        sangkwanExploration;
+
+document
+    .getElementById("sangkwan-creativity")
+    .textContent =
+        sangkwanCreativity;
+
+document
+    .getElementById("sangkwan-activity")
+    .textContent =
+        sangkwanActivity;
+
+document
+    .getElementById("sangkwan-thinking")
+    .textContent =
+        sangkwanThinking;
 
 
         /* ------------------------------
@@ -5413,6 +6422,11 @@ async function loadCharacterGrowth(user) {
             .getElementById("character-exp")
             .textContent =
                 `EXP ${newExp}`;
+
+        document
+            .getElementById("character-points")
+            .textContent =
+                `💰 ${points}P`;
 
 
         document
@@ -5472,15 +6486,24 @@ async function loadDannaGrowth(user) {
             await getDoc(characterRef);
 
         let exp = 0;
+        let points = 0;
+        let diaryPointsAwarded = 0;
 
         if (characterSnap.exists()) {
 
-            const data =
-                characterSnap.data();
+    const data =
+        characterSnap.data();
 
-            exp = Number(data.exp) || 0;
+    exp =
+        Number(data.exp) || 0;
 
-        }
+    points =
+        Number(data.points) || 0;
+
+    diaryPointsAwarded =
+        Number(data.diaryPointsAwarded) || 0;
+
+}
 
 
         /* ------------------------------
@@ -5494,19 +6517,45 @@ async function loadDannaGrowth(user) {
             );
 
         let myDiaryCount = 0;
+        let diaryPoints = 0;
 
         diarySnapshot.forEach((diaryDoc) => {
 
-            const data =
-                diaryDoc.data();
+    const data =
+        diaryDoc.data();
 
-            if (data.authorUid === user.uid) {
+    if (data.authorUid === user.uid) {
 
-                myDiaryCount++;
+        myDiaryCount++;
 
-            }
+        console.log(
+            "상관님 일기 확인:",
+            data.title,
+            data.pointReward
+        );
 
-        });
+        diaryPoints +=
+            Number(data.pointReward) || 0;
+
+    }
+
+});
+
+        const newDiaryPoints =
+    Math.max(
+        0,
+        diaryPoints - diaryPointsAwarded
+    );
+
+    console.log(
+    "단나쟝 포인트 확인:",
+    "내 일기 수 =", myDiaryCount,
+    "일기 포인트 =", diaryPoints,
+    "이미 지급된 포인트 =", diaryPointsAwarded,
+    "이번에 지급할 포인트 =", newDiaryPoints
+);
+
+        
 
 
         /* ------------------------------
@@ -5520,10 +6569,17 @@ async function loadDannaGrowth(user) {
                 myDiaryCount
             );
 
+            const newPoints =
+    points + newDiaryPoints;
+
+const newDiaryPointsAwarded =
+    diaryPointsAwarded + newDiaryPoints;
+
 
         if (
             !characterSnap.exists() ||
-            newExp > exp
+            newExp > exp ||
+            newDiaryPoints > 0
         ) {
 
             await setDoc(
@@ -5539,7 +6595,13 @@ async function loadDannaGrowth(user) {
                         user.uid,
 
                     exp:
-                        newExp
+                        newExp,
+
+                    points:
+                        newPoints,
+
+                    diaryPointsAwarded:
+                        newDiaryPointsAwarded
                 },
                 {
                     merge: true
@@ -5556,8 +6618,64 @@ async function loadDannaGrowth(user) {
         const level =
             getCharacterLevel(newExp);
 
+            
+        
+
+
+        const dannaExploration =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().exploration
+            : 0
+    ) || 0;
+
+const dannaCreativity =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().creativity
+            : 0
+    ) || 0;
+
+const dannaActivity =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().activity
+            : 0
+    ) || 0;
+
+const dannaThinking =
+    Number(
+        characterSnap.exists()
+            ? characterSnap.data().thinking
+            : 0
+    ) || 0;
+
+
+    document
+    .getElementById("danna-exploration")
+    .textContent =
+        dannaExploration;
+
+document
+    .getElementById("danna-creativity")
+    .textContent =
+        dannaCreativity;
+
+document
+    .getElementById("danna-activity")
+    .textContent =
+        dannaActivity;
+
+document
+    .getElementById("danna-thinking")
+    .textContent =
+        dannaThinking;
+
+
         const growthData =
             dannaGrowthData[level];
+
+            
 
 
         /* ------------------------------
@@ -5577,6 +6695,14 @@ async function loadDannaGrowth(user) {
             )
             .textContent =
                 `EXP ${newExp}`;
+
+                document
+    .getElementById(
+        "danna-character-points"
+    )
+    .textContent =
+        `💰 ${newPoints}P`;
+                
 
         document
             .getElementById(

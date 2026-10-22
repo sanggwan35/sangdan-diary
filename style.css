@@ -1677,3 +1677,83 @@ nav a:hover {
         transform: translateY(-2px);
     }
 }
+
+/* =========================================
+   캐릭터 능력치
+========================================= */
+
+.character-stats {
+    width: 100%;
+    max-width: 360px;
+    margin: 18px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.character-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 12px;
+
+    border: 1px solid rgba(98, 80, 68, 0.25);
+    border-radius: 8px;
+
+    background: #fff;
+    color: #3d3542;
+
+    font-size: 12px;
+}
+
+.character-stat span {
+    color: #625044;
+}
+
+.character-stat strong {
+    color: #8a6f5c;
+    font-size: 13px;
+}
+
+/* 상관쟝 탐험 버튼 애니메이션 */
+
+#sangkwan-exploration-main-button {
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        background 0.1s ease;
+}
+
+#sangkwan-exploration-main-button:hover {
+    background: #ffe7ad;
+
+    transform: translate(1px, 1px);
+    box-shadow: 3px 3px 0 #625044;
+}
+
+#sangkwan-exploration-main-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #625044;
+}
+
+/* 상관쟝 가방 버튼 애니메이션 */
+
+#sangkwan-inventory-button {
+    transition:
+        transform 0.1s ease,
+        box-shadow 0.1s ease,
+        background 0.1s ease;
+}
+
+#sangkwan-inventory-button:hover {
+    background: #ffe7ad;
+
+    transform: translate(1px, 1px);
+    box-shadow: 3px 3px 0 #625044;
+}
+
+#sangkwan-inventory-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #625044;
+}

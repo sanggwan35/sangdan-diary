@@ -81,6 +81,7 @@ import {
     addDoc,
     doc,
     getDoc,
+    setDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
@@ -479,6 +480,27 @@ saveBtn.addEventListener("click", async () => {
     const content =
         diaryContent.value.trim();
 
+    let diaryPoint = 0;
+
+const contentLength =
+    content.length;
+
+if (contentLength >= 1000) {
+
+    diaryPoint = 25;
+
+} else if (contentLength >= 500) {
+
+    diaryPoint = 15;
+
+} else {
+
+    diaryPoint = 7;
+
+}    
+
+
+
 
     /* =========================
        기본 확인
@@ -571,9 +593,15 @@ saveBtn.addEventListener("click", async () => {
 
                 imageDataUrls: imageDataUrls,
 
+                pointReward: diaryPoint,
+
                 createdAt: serverTimestamp()
             }
         );
+
+        
+
+        
 
 
         /* =========================
@@ -584,7 +612,10 @@ saveBtn.addEventListener("click", async () => {
         localStorage.removeItem(DRAFT_KEY);
 
 
-        alert("일기가 저장되었습니다!");
+        alert(
+             `일기가 저장되었습니다! 🎉\n\n` +
+            `💰 ${diaryPoint}P를 획득했습니다!`
+        );
 
 
         location.href =
