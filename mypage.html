@@ -5444,35 +5444,83 @@ async function loadDannaExploration() {
     dannaExplorationMainButton.textContent =
         "🗺️ 오늘의 탐험 완료! (2/2)";
 
-        dannaExplorationMainButton.disabled =
-            true;
+    dannaExplorationMainButton.disabled =
+        true;
 
-        dannaExplorationLocations.style.display =
-            "none";
+    dannaExplorationLocations.style.display =
+        "none";
+
+
+    /* 탐험 결과가 이미 만들어져 있다면 표시 */
+
+    if (data.explorationReady === true) {
 
         dannaExplorationResult.style.display =
             "block";
 
-        if (data.explorationReady === true) {
+        dannaExplorationResult.innerHTML = `
+            <strong>🎁 탐험 결과</strong><br><br>
 
-            dannaExplorationResult.innerHTML = `
-                <strong>🎁 탐험 결과</strong><br><br>
+            단나쟝이 탐험에서 돌아왔어요!<br><br>
 
-                단나쟝이 탐험에서 돌아왔어요!<br><br>
+            📍 ${data.explorationLocationName || "어딘가"}<br><br>
 
-                📍 ${data.explorationLocationName || "어딘가"}<br><br>
+            ${data.explorationLastItemIcon || "🎁"}
 
-                ${data.explorationLastItemIcon || "🎁"}
-
-                <strong>
-                    ${data.explorationLastItem || "아이템"}
-                </strong>
-                을(를) 발견했습니다! ✨
-            `;
-        }
+            <strong>
+                ${data.explorationLastItem || "아이템"}
+            </strong>
+            을(를) 발견했습니다! ✨
+        `;
 
         return;
     }
+
+
+    /* 2번째 탐험 시간이 끝났는데
+       아직 결과 처리가 안 됐다면 처리 */
+
+    const endTime =
+        Number(data.explorationEndTime || 0);
+
+    if (
+        data.explorationReady !== true &&
+        endTime > 0 &&
+        endTime <= Date.now()
+    ) {
+
+        await checkDannaExploration();
+
+        return;
+    }
+
+
+    /* 아직 2번째 탐험 중이라면
+       카운트다운 표시 */
+
+    if (
+        data.explorationReady !== true &&
+        endTime > Date.now()
+    ) {
+
+        dannaExplorationCurrentLocationName =
+            data.explorationLocationName || "어딘가";
+
+        dannaExplorationResult.style.display =
+            "block";
+
+        dannaExplorationMainButton.disabled =
+            true;
+
+        startDannaExplorationCountdown(
+            endTime
+        );
+
+        return;
+    }
+
+    return;
+}
 
 
     /* =========================================
@@ -5917,6 +5965,8 @@ function startDannaExplorationCountdown(endTime) {
         );
 }
 
+loadDannaExploration();
+
 
 
 const dannaFoodCollectionContent = document.getElementById(
@@ -6357,35 +6407,40 @@ diarySnapshot.forEach((diaryDoc) => {
 
         const sangkwanExploration =
     Number(
-        characterSnap.exists()
-            ? characterSnap.data().exploration
+        characterDoc.exists()
+            ? characterDoc.data().exploration
             : 0
     ) || 0;
 
 const sangkwanCreativity =
     Number(
-        characterSnap.exists()
-            ? characterSnap.data().creativity
+        characterDoc.exists()
+            ? characterDoc.data().creativity
             : 0
     ) || 0;
 
 const sangkwanActivity =
     Number(
-        characterSnap.exists()
-            ? characterSnap.data().activity
+        characterDoc.exists()
+            ? characterDoc.data().activity
             : 0
     ) || 0;
 
 const sangkwanThinking =
     Number(
-        characterSnap.exists()
-            ? characterSnap.data().thinking
+        characterDoc.exists()
+            ? characterDoc.data().thinking
             : 0
     ) || 0;
 
 
         const levelData =
             characterGrowthData[level];
+
+            document
+    .getElementById("character-points")
+    .textContent =
+        `💰 ${newPoints}P`;
 
 
             document

@@ -66,6 +66,36 @@
         휴지통에 있는 일기입니다.
     </p>
 
+    <div
+    id="trash-controls"
+    style="margin: 20px 0;"
+>
+    <label>
+        <input
+            type="checkbox"
+            id="trash-select-all"
+        >
+        전체 선택
+    </label>
+
+    <button
+        id="trash-restore-selected"
+        type="button"
+        class="save-button"
+        style="margin-left: 10px;"
+    >
+        ↩️ 선택 복구
+    </button>
+
+    <button
+        id="trash-delete-selected"
+        type="button"
+        class="save-button"
+        style="margin-left: 5px;"
+    >
+        ❌ 선택 삭제
+    </button>
+</div>
 
     <div id="trash-list">
 
@@ -147,6 +177,176 @@ const trashList =
         "trash-list"
     );
 
+
+const trashSelectAll =
+    document.getElementById(
+        "trash-select-all"
+    );
+
+const trashRestoreSelected =
+    document.getElementById(
+        "trash-restore-selected"
+    );
+
+const trashDeleteSelected =
+    document.getElementById(
+        "trash-delete-selected"
+    );
+
+    trashSelectAll.addEventListener(
+    "change",
+    () => {
+
+        const checkboxes =
+            document.querySelectorAll(
+                ".trash-item-checkbox"
+            );
+
+        checkboxes.forEach(
+            (checkbox) => {
+                checkbox.checked =
+                    trashSelectAll.checked;
+            }
+        );
+    }
+);
+
+trashRestoreSelected.addEventListener(
+    "click",
+    async () => {
+
+        const checkboxes =
+            document.querySelectorAll(
+                ".trash-item-checkbox:checked"
+            );
+
+        const selectedIds =
+            Array.from(checkboxes).map(
+                (checkbox) =>
+                    checkbox.dataset.diaryId
+            );
+
+        if (selectedIds.length === 0) {
+            alert(
+                "복구할 일기를 선택해주세요."
+            );
+            return;
+        }
+
+        const answer =
+            confirm(
+                `선택한 ${selectedIds.length}개의 일기를 DIARY로 복구할까요?`
+            );
+
+        if (!answer) {
+            return;
+        }
+
+        try {
+
+            await Promise.all(
+                selectedIds.map(
+                    (diaryId) =>
+                        updateDoc(
+                            doc(
+                                db,
+                                "diaries",
+                                diaryId
+                            ),
+                            {
+                                isTrashed: false
+                            }
+                        )
+                )
+            );
+
+            alert(
+                "선택한 일기가 복구되었습니다!"
+            );
+
+            location.reload();
+
+        } catch (error) {
+
+            console.error(
+                "선택 복구 오류:",
+                error
+            );
+
+            alert(
+                "일기를 복구하는 중 문제가 생겼어요."
+            );
+        }
+    }
+);
+
+
+trashDeleteSelected.addEventListener(
+    "click",
+    async () => {
+
+        const checkboxes =
+            document.querySelectorAll(
+                ".trash-item-checkbox:checked"
+            );
+
+        const selectedIds =
+            Array.from(checkboxes).map(
+                (checkbox) =>
+                    checkbox.dataset.diaryId
+            );
+
+        if (selectedIds.length === 0) {
+            alert(
+                "삭제할 일기를 선택해주세요."
+            );
+            return;
+        }
+
+        const answer =
+            confirm(
+                `선택한 ${selectedIds.length}개의 일기를 완전히 삭제할까요?\n\n` +
+                "완전히 삭제하면 다시 복구할 수 없습니다."
+            );
+
+        if (!answer) {
+            return;
+        }
+
+        try {
+
+            await Promise.all(
+                selectedIds.map(
+                    (diaryId) =>
+                        deleteDoc(
+                            doc(
+                                db,
+                                "diaries",
+                                diaryId
+                            )
+                        )
+                )
+            );
+
+            alert(
+                "선택한 일기가 완전히 삭제되었습니다!"
+            );
+
+            location.reload();
+
+        } catch (error) {
+
+            console.error(
+                "선택 삭제 오류:",
+                error
+            );
+
+            alert(
+                "일기를 완전히 삭제하는 중 문제가 생겼어요."
+            );
+        }
+    }
+);
 
 
 /* =========================
@@ -277,6 +477,23 @@ function createTrashPost(
 
     post.className =
         "diary-post";
+
+        const checkbox =
+    document.createElement("input");
+
+checkbox.type = "checkbox";
+checkbox.className =
+    "trash-item-checkbox";
+
+checkbox.dataset.diaryId =
+    diaryId;
+
+checkbox.style.marginRight =
+    "8px";
+
+post.prepend(
+    checkbox
+);
 
 
     // 날짜

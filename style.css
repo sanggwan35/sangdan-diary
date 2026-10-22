@@ -990,6 +990,7 @@ nav a:hover {
     margin: 0;
     font-size: 32px;
     letter-spacing: 3px;
+    font-family: 'Gowun Batang', serif;
 }
 
 .site-subtitle {
@@ -1756,4 +1757,98 @@ nav a:hover {
 #sangkwan-inventory-button:active {
     transform: translate(4px, 4px);
     box-shadow: 0 0 0 #625044;
+}
+
+/* =========================================
+   휴지통 버튼 - 스탬프 느낌
+========================================= */
+
+#trash-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 12px;
+
+    border-top: 1px dashed #b8aaa0;
+    border-bottom: 1px dashed #b8aaa0;
+
+    background: rgba(255, 250, 243, 0.7);
+}
+
+#trash-controls label {
+    margin-right: auto;
+
+    color: #625044;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#trash-controls button {
+    padding: 7px 12px;
+
+    border: 1px solid #8d7b6d;
+    border-radius: 3px;
+
+    background: #fffdf8;
+    color: #625044;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+#trash-controls button:hover {
+    background: #f3e6d8;
+    transform: translateY(-1px);
+}
+
+#trash-controls button:active {
+    transform: translateY(1px);
+}
+
+/* =========================================
+   휴지통 개별 버튼
+========================================= */
+
+.diary-post button.save-button {
+    padding: 7px 12px;
+
+    border: 1px solid #8d7b6d;
+    border-radius: 3px;
+
+    background: #fffdf8;
+    color: #625044;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+.diary-post button.save-button:hover {
+    background: #f3e6d8;
+    transform: translateY(-1px);
+}
+
+.diary-post button.save-button:active {
+    transform: translateY(1px);
+}
+
+/* 페이지 제목 부제 글씨체 */
+
+.site-header p {
+    font-family: 'Gowun Batang', serif;
 }
