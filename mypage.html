@@ -2744,6 +2744,104 @@
     🎒 단나쟝의 가방
 </button>
 
+
+<button
+    id="danna-wardrobe-button"
+    type="button"
+>
+    👕 단나쟝의 옷장
+</button>
+
+<button
+    id="danna-shop-button"
+    type="button"
+>
+    🛍️ 상점
+</button>
+
+
+<div
+    id="danna-wardrobe-popup"
+    class="danna-wardrobe-popup"
+    style="display: none;"
+>
+    <div class="danna-wardrobe-window">
+
+        <button
+            id="danna-wardrobe-close"
+            type="button"
+            class="danna-wardrobe-close"
+        >
+            ✕
+        </button>
+
+        <h3>👕 단나쟝의 옷장</h3>
+
+        <div
+            id="danna-wardrobe-list"
+            class="danna-wardrobe-list"
+        >
+        </div>
+
+    </div>
+</div>
+
+
+
+<div
+    id="danna-shop-popup"
+    class="danna-shop-popup"
+    style="display: none;"
+>
+    <div class="danna-shop-window">
+
+        <button
+            id="danna-shop-close"
+            type="button"
+            class="danna-shop-close"
+        >
+            ✕
+        </button>
+
+        <h3>🛍️ 단나쟝 상점</h3>
+
+        <div
+            id="danna-shop-list"
+            class="danna-shop-list"
+        >
+        </div>
+
+    </div>
+</div>
+
+
+<div
+    id="shop-image-popup"
+    class="shop-image-popup"
+    style="display: none;"
+>
+    <div class="shop-image-window">
+
+        <button
+            id="shop-image-close"
+            type="button"
+            class="shop-image-close"
+        >
+            ✕
+        </button>
+
+        <img
+            id="shop-image-preview"
+            src=""
+            alt="의상 미리보기"
+        >
+
+    </div>
+</div>
+
+
+
+
 <div
     id="danna-inventory-popup"
     class="danna-inventory-popup"
@@ -3801,6 +3899,75 @@ const sangkwanWardrobeButton =
         "sangkwan-wardrobe-button"
     );
 
+
+const dannaCharacterImage =
+    document.getElementById(
+        "danna-character-image"
+    );
+
+const dannaShopButton =
+    document.getElementById(
+        "danna-shop-button"
+    );
+
+const dannaWardrobeButton =
+    document.getElementById(
+        "danna-wardrobe-button"
+    );
+
+const dannaWardrobePopup =
+    document.getElementById(
+        "danna-wardrobe-popup"
+    );
+
+const dannaWardrobeClose =
+    document.getElementById(
+        "danna-wardrobe-close"
+    );
+
+const dannaWardrobeList =
+    document.getElementById(
+        "danna-wardrobe-list"
+    );
+
+    dannaWardrobeButton.addEventListener(
+    "click",
+    () => {
+
+        loadDannaWardrobe();
+
+        dannaWardrobePopup.style.display =
+            "flex";
+    }
+);
+
+
+dannaWardrobeClose.addEventListener(
+    "click",
+    () => {
+
+        dannaWardrobePopup.style.display =
+            "none";
+    }
+);
+
+
+const dannaShopPopup =
+    document.getElementById(
+        "danna-shop-popup"
+    );
+
+const dannaShopClose =
+    document.getElementById(
+        "danna-shop-close"
+    );
+
+const dannaShopList =
+    document.getElementById(
+        "danna-shop-list"
+    );
+
+
 const sangkwanWardrobePopup =
     document.getElementById(
         "sangkwan-wardrobe-popup"
@@ -4025,6 +4192,190 @@ sangkwanWardrobeList.appendChild(
 }
 
 
+
+async function loadDannaWardrobe() {
+
+    dannaWardrobeList.innerHTML = "";
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const equippedOutfit =
+        data.equippedOutfit || "default";
+
+    if (equippedOutfit === "default") {
+
+        dannaCharacterImage.src =
+            "images/danna.png";
+
+    } else {
+
+        const equippedItem =
+            dannaShopItems.find(
+                (item) =>
+                    item.id === equippedOutfit
+            );
+
+        if (equippedItem) {
+
+            dannaCharacterImage.src =
+                equippedItem.image;
+        }
+    }
+
+    const wardrobe =
+        Array.isArray(data.wardrobe)
+            ? data.wardrobe
+            : [];
+
+    const defaultItem =
+        document.createElement("div");
+
+    defaultItem.className =
+        "danna-wardrobe-item";
+
+    defaultItem.dataset.outfit =
+        "default";
+
+    defaultItem.innerHTML = `
+        <div class="danna-wardrobe-item-image">
+            <img
+                src="images/danna.png"
+                alt="기본 모습"
+            >
+        </div>
+
+        <div class="danna-wardrobe-item-name">
+            기본 모습
+        </div>
+    `;
+
+    defaultItem.addEventListener(
+        "click",
+        async () => {
+
+            const characterRef =
+                doc(
+                    db,
+                    "characters",
+                    DANNA_CHARACTER_ID
+                );
+
+            await setDoc(
+                characterRef,
+                {
+                    equippedOutfit: "default"
+                },
+                {
+                    merge: true
+                }
+            );
+
+            dannaCharacterImage.src =
+                "images/danna.png";
+        }
+    );
+
+    dannaWardrobeList.appendChild(
+        defaultItem
+    );
+
+    wardrobe.forEach((outfitId) => {
+
+        const outfit =
+            dannaShopItems.find(
+                (item) =>
+                    item.id === outfitId
+            );
+
+        if (!outfit) {
+            return;
+        }
+
+        const wardrobeItem =
+            document.createElement("div");
+
+        wardrobeItem.className =
+            "danna-wardrobe-item";
+
+        wardrobeItem.dataset.outfit =
+            outfit.id;
+
+        wardrobeItem.innerHTML = `
+            <div class="danna-wardrobe-item-image">
+                <img
+                    src="${outfit.image}"
+                    alt="${outfit.name}"
+                >
+            </div>
+
+            <div class="danna-wardrobe-item-name">
+                ${outfit.name}
+            </div>
+        `;
+
+        dannaWardrobeList.appendChild(
+            wardrobeItem
+        );
+
+        wardrobeItem.addEventListener(
+            "click",
+            async () => {
+
+                const outfitId =
+                    wardrobeItem.dataset.outfit;
+
+                const characterRef =
+                    doc(
+                        db,
+                        "characters",
+                        DANNA_CHARACTER_ID
+                    );
+
+                await setDoc(
+                    characterRef,
+                    {
+                        equippedOutfit: outfitId
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+                const outfit =
+                    dannaShopItems.find(
+                        (item) =>
+                            item.id === outfitId
+                    );
+
+                if (!outfit) {
+                    return;
+                }
+
+                dannaCharacterImage.src =
+                    outfit.image;
+            }
+        );
+    });
+}
+
+
+
+
 const sangkwanShopPopup =
     document.getElementById(
         "sangkwan-shop-popup"
@@ -4188,6 +4539,492 @@ const sangkwanShopItems = [
         ]
     }
 ];
+
+
+const dannaShopItems = [
+    {
+        id: "maid",
+        name: "메이드",
+        icon: "🧹",
+        image: "images/danna-maid.png",
+        materials: [
+            { name: "마스킹테이프", count: 2 },
+            { name: "귀여운 책갈피", count: 1 },
+            { name: "귀여운 포장지", count: 1 }
+        ]
+    },
+
+    {
+        id: "devil",
+        name: "악마",
+        icon: "😈",
+        image: "images/danna-devil.png",
+        materials: [
+            { name: "정체불명의 굿즈", count: 2 },
+            { name: "공포영화 티켓", count: 1 },
+            { name: "캔뱃지", count: 1 }
+        ]
+    },
+
+    {
+        id: "angel",
+        name: "천사",
+        icon: "😇",
+        image: "images/danna-angel.png",
+        materials: [
+            { name: "새 깃털", count: 2 },
+            { name: "네잎클로버", count: 1 },
+            { name: "예쁜 책갈피", count: 1 }
+        ]
+    },
+
+    {
+        id: "casual",
+        name: "사복",
+        icon: "👕",
+        image: "images/danna-casual.png",
+        materials: [
+            { name: "랜덤 포토카드", count: 1 },
+            { name: "랜덤 스티커", count: 2 }
+        ]
+    },
+
+    {
+        id: "yukata",
+        name: "유카타",
+        icon: "🌸",
+        image: "images/danna-yukata.png",
+        materials: [
+            { name: "네잎클로버", count: 1 },
+            { name: "낙엽", count: 2 },
+            { name: "마스킹테이프", count: 1 }
+        ]
+    },
+
+    {
+        id: "pajamas",
+        name: "잠옷",
+        icon: "🌙",
+        image: "images/danna-pajamas.png",
+        materials: [
+            { name: "미니 과자 봉지", count: 1 },
+            { name: "작은 장난감", count: 1 },
+            { name: "귀여운 포장지", count: 2 }
+        ]
+    },
+
+    {
+        id: "uniform",
+        name: "제복",
+        icon: "🎓",
+        image: "images/danna-uniform.png",
+        materials: [
+            { name: "오래된 공책", count: 1 },
+            { name: "잃어버린 펜", count: 1 },
+            { name: "오래된 시간표", count: 1 }
+        ]
+    },
+
+    {
+        id: "chinese",
+        name: "중국풍",
+        icon: "🐉",
+        image: "images/danna-chinese.png",
+        materials: [
+            { name: "캐릭터 엽서", count: 1 },
+            { name: "낡은 도서관 카드", count: 1 },
+            { name: "마스킹테이프", count: 2 }
+        ]
+    },
+
+    {
+        id: "detective",
+        name: "탐정",
+        icon: "🔎",
+        image: "images/danna-detective.png",
+        materials: [
+            { name: "누군가 놓고 간 메모", count: 1 },
+            { name: "작은 연필", count: 1 },
+            { name: "정체불명의 굿즈", count: 1 },
+            { name: "정체불명의 영화 티켓", count: 1 }
+        ]
+    },
+
+    {
+        id: "hanbok",
+        name: "한복",
+        icon: "🪷",
+        image: "images/danna-hanbok.png",
+        materials: [
+            { name: "네잎클로버", count: 1 },
+            { name: "예쁜 책갈피", count: 1 },
+            { name: "학교 축제 전단지", count: 1 },
+            { name: "마스킹테이프", count: 1 }
+        ]
+    },
+
+    {
+        id: "harrypotter",
+        name: "마법학교",
+        icon: "🪄",
+        image: "images/danna-harrypotter.png",
+        materials: [
+            { name: "오래된 책", count: 1 },
+            { name: "낡은 도서관 카드", count: 1 },
+            { name: "오래된 책갈피", count: 1 },
+            { name: "정체불명의 굿즈", count: 1 }
+        ]
+    },
+
+    {
+        id: "wedding",
+        name: "웨딩",
+        icon: "💍",
+        image: "images/danna-wedding.png",
+        materials: [
+            { name: "새 깃털", count: 2 },
+            { name: "네잎클로버", count: 4 },
+            { name: "예쁜 책갈피", count: 2 },
+            { name: "로맨스영화 티켓", count: 3 }
+        ]
+    }
+];
+
+
+async function loadDannaShop() {
+
+    dannaShopList.innerHTML = "";
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            DANNA_CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    const characterData =
+        characterSnap.exists()
+            ? characterSnap.data()
+            : {};
+
+    const inventory =
+        Array.isArray(characterData.explorationItems)
+            ? characterData.explorationItems
+            : [];
+
+    const itemCounts = {};
+
+    inventory.forEach((inventoryItem) => {
+
+        if (!itemCounts[inventoryItem.name]) {
+            itemCounts[inventoryItem.name] = 0;
+        }
+
+        itemCounts[inventoryItem.name]++;
+    });
+
+
+    dannaShopItems.forEach((item) => {
+
+        const shopItem =
+            document.createElement("div");
+
+        shopItem.className =
+            "danna-shop-item";
+
+
+        const canExchange =
+            item.materials.every(
+                (material) =>
+                    (itemCounts[material.name] || 0)
+                        >= material.count
+            );
+
+
+        const materialsText =
+            item.materials
+                .map(
+                    (material) =>
+                        `${material.name} ×${material.count}` +
+                        ` (보유 ${itemCounts[material.name] || 0})`
+                )
+                .join("<br>");
+
+
+        shopItem.innerHTML = `
+            <div class="danna-shop-item-icon">
+                <img
+                    src="${item.image}"
+                    alt="${item.name}"
+                >
+            </div>
+
+            <div class="danna-shop-item-info">
+
+                <div class="danna-shop-item-name">
+                    ${item.name}
+                </div>
+
+                <div class="danna-shop-item-materials">
+                    ${materialsText}
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="danna-shop-exchange"
+                data-outfit="${item.id}"
+                ${canExchange ? "" : "disabled"}
+            >
+                ${canExchange ? "교환" : "재료 부족"}
+            </button>
+        `;
+
+        dannaShopList.appendChild(
+            shopItem
+        );
+    });
+}
+
+
+
+dannaShopButton.addEventListener(
+    "click",
+    () => {
+
+        loadDannaShop();
+
+        dannaShopPopup.style.display =
+            "flex";
+    }
+);
+
+
+dannaShopClose.addEventListener(
+    "click",
+    () => {
+
+        dannaShopPopup.style.display =
+            "none";
+    }
+);
+
+
+
+dannaShopList.addEventListener(
+    "click",
+    async (event) => {
+
+        const button =
+            event.target.closest(
+                ".danna-shop-exchange"
+            );
+
+            const shopImagePopup =
+    document.getElementById(
+        "shop-image-popup"
+    );
+
+const shopImagePreview =
+    document.getElementById(
+        "shop-image-preview"
+    );
+
+const shopImageClose =
+    document.getElementById(
+        "shop-image-close"
+    );
+
+
+dannaShopList.addEventListener(
+    "click",
+    (event) => {
+
+        const image =
+            event.target.closest(
+                ".danna-shop-item-icon img"
+            );
+
+        if (!image) {
+            return;
+        }
+
+        shopImagePreview.src =
+            image.src;
+
+        shopImagePopup.style.display =
+            "flex";
+    }
+);
+
+
+shopImageClose.addEventListener(
+    "click",
+    () => {
+
+        shopImagePopup.style.display =
+            "none";
+
+        shopImagePreview.src =
+            "";
+    }
+);
+
+
+shopImagePopup.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target ===
+            shopImagePopup
+        ) {
+
+            shopImagePopup.style.display =
+                "none";
+
+            shopImagePreview.src =
+                "";
+        }
+    }
+);
+
+
+shopImagePopup.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target ===
+            shopImagePopup
+        ) {
+
+            shopImagePopup.style.display =
+                "none";
+
+            shopImagePreview.src =
+                "";
+        }
+    }
+);
+
+        if (!button) {
+            return;
+        }
+
+        const outfitId =
+            button.dataset.outfit;
+
+        const item =
+            dannaShopItems.find(
+                (shopItem) =>
+                    shopItem.id === outfitId
+            );
+
+        if (!item) {
+            return;
+        }
+
+        const characterRef =
+            doc(
+                db,
+                "characters",
+                DANNA_CHARACTER_ID
+            );
+
+        const characterSnap =
+            await getDoc(characterRef);
+
+        if (!characterSnap.exists()) {
+            return;
+        }
+
+        const data =
+            characterSnap.data();
+
+        const inventory =
+            Array.isArray(data.explorationItems)
+                ? [...data.explorationItems]
+                : [];
+
+        const wardrobe =
+            Array.isArray(data.wardrobe)
+                ? [...data.wardrobe]
+                : [];
+
+        const itemCounts = {};
+
+        inventory.forEach(
+            (inventoryItem) => {
+
+                itemCounts[inventoryItem.name] =
+                    (itemCounts[inventoryItem.name] || 0) + 1;
+            }
+        );
+
+        const canExchange =
+            item.materials.every(
+                (material) =>
+                    (itemCounts[material.name] || 0)
+                    >= material.count
+            );
+
+        if (!canExchange) {
+            alert("재료가 부족합니다.");
+            return;
+        }
+
+        item.materials.forEach(
+            (material) => {
+
+                let remaining =
+                    material.count;
+
+                for (
+                    let i = inventory.length - 1;
+                    i >= 0 && remaining > 0;
+                    i--
+                ) {
+
+                    if (
+                        inventory[i].name ===
+                        material.name
+                    ) {
+                        inventory.splice(i, 1);
+                        remaining--;
+                    }
+                }
+            }
+        );
+
+        if (!wardrobe.includes(outfitId)) {
+            wardrobe.push(outfitId);
+        }
+
+        await setDoc(
+            characterRef,
+            {
+                explorationItems: inventory,
+                wardrobe: wardrobe
+            },
+            {
+                merge: true
+            }
+        );
+
+        alert(
+            `🎉 ${item.name} 의상을 획득했습니다!`
+        );
+
+        loadDannaShop();
+    }
+);
+
+
 
 async function loadSangkwanShop() {
 
@@ -4448,6 +5285,87 @@ sangkwanShopList.addEventListener(
         loadSangkwanShop();
 
         loadSangkwanInventory();
+    }
+);
+
+
+const sangkwanShopImagePopup =
+    document.getElementById(
+        "shop-image-popup"
+    );
+
+const sangkwanShopImagePreview =
+    document.getElementById(
+        "shop-image-preview"
+    );
+
+const sangkwanShopImageClose =
+    document.getElementById(
+        "shop-image-close"
+    );
+
+    sangkwanShopImageClose.addEventListener(
+    "click",
+    () => {
+
+        sangkwanShopImagePopup.style.display =
+            "none";
+
+        sangkwanShopImagePreview.src =
+            "";
+    }
+);
+
+
+sangkwanShopList.addEventListener(
+    "click",
+    (event) => {
+
+        const image =
+            event.target.closest(
+                ".sangkwan-shop-item-icon img"
+            );
+
+        if (!image) {
+            return;
+        }
+
+        sangkwanShopImagePreview.src =
+            image.src;
+
+        sangkwanShopImagePopup.style.display =
+            "flex";
+    }
+);
+
+
+sangkwanShopImagePopup.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target ===
+            sangkwanShopImagePopup
+        ) {
+
+            sangkwanShopImagePopup.style.display =
+                "none";
+
+            sangkwanShopImagePreview.src =
+                "";
+        }
+    }
+);
+
+shopImageClose.addEventListener(
+    "click",
+    () => {
+
+        sangkwanShopImagePopup.style.display =
+            "none";
+
+        sangkwanShopImagePreview.src =
+            "";
     }
 );
 
