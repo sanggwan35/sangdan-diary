@@ -1882,6 +1882,7 @@
             class="character-image-box"
         >
          <img
+        id="sangkwan-character-image"
         src="images/sangkwan.png"
         alt="상관쟝"
     >
@@ -2192,6 +2193,75 @@
     >
         🎒 상관쟝의 가방
     </button>
+
+    <button
+    id="sangkwan-wardrobe-button"
+    type="button"
+>
+    👕 상관쟝의 옷장
+</button>
+
+
+    <button
+    id="sangkwan-shop-button"
+    type="button"
+    >
+    🛍️ 상점
+    </button>
+
+
+    <div
+    id="sangkwan-shop-popup"
+    class="sangkwan-shop-popup"
+    style="display: none;"
+>
+    <div class="sangkwan-shop-window">
+
+        <button
+            id="sangkwan-shop-close"
+            type="button"
+            class="sangkwan-shop-close"
+        >
+            ✕
+        </button>
+
+        <h3>🛍️ 상관쟝 상점</h3>
+
+        <div
+            id="sangkwan-shop-list"
+            class="sangkwan-shop-list"
+        >
+        </div>
+
+    </div>
+</div>
+
+<div
+    id="sangkwan-wardrobe-popup"
+    class="sangkwan-wardrobe-popup"
+    style="display: none;"
+>
+    <div class="sangkwan-wardrobe-window">
+
+        <button
+            id="sangkwan-wardrobe-close"
+            type="button"
+            class="sangkwan-wardrobe-close"
+        >
+            ✕
+        </button>
+
+        <h3>👕 상관쟝의 옷장</h3>
+
+        <div
+            id="sangkwan-wardrobe-list"
+            class="sangkwan-wardrobe-list"
+        >
+        </div>
+
+    </div>
+</div>
+
 
     <div
     id="sangkwan-inventory-popup"
@@ -3712,6 +3782,672 @@ sangkwanInventoryClose.addEventListener(
 
         sangkwanInventoryPopup.style.display =
             "none";
+    }
+);
+
+
+const sangkwanCharacterImage =
+    document.getElementById(
+        "sangkwan-character-image"
+    );
+
+const sangkwanShopButton =
+    document.getElementById(
+        "sangkwan-shop-button"
+    );
+
+const sangkwanWardrobeButton =
+    document.getElementById(
+        "sangkwan-wardrobe-button"
+    );
+
+const sangkwanWardrobePopup =
+    document.getElementById(
+        "sangkwan-wardrobe-popup"
+    );
+
+const sangkwanWardrobeClose =
+    document.getElementById(
+        "sangkwan-wardrobe-close"
+    );
+
+const sangkwanWardrobeList =
+    document.getElementById(
+        "sangkwan-wardrobe-list"
+    );
+
+sangkwanWardrobeButton.addEventListener(
+    "click",
+    () => {
+
+        loadSangkwanWardrobe();
+
+        sangkwanWardrobePopup.style.display =
+            "flex";
+    }
+);
+
+sangkwanWardrobeClose.addEventListener(
+    "click",
+    () => {
+
+        sangkwanWardrobePopup.style.display =
+            "none";
+    }
+);
+
+
+async function loadSangkwanWardrobe() {
+
+    sangkwanWardrobeList.innerHTML = "";
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+        const equippedOutfit =
+    data.equippedOutfit || "default";
+
+if (equippedOutfit === "default") {
+
+    sangkwanCharacterImage.src =
+        "images/sangkwan.png";
+
+} else {
+
+    const equippedItem =
+        sangkwanShopItems.find(
+            (item) =>
+                item.id === equippedOutfit
+        );
+
+    if (equippedItem) {
+
+        sangkwanCharacterImage.src =
+            equippedItem.image;
+    }
+}
+
+    const wardrobe =
+        Array.isArray(data.wardrobe)
+            ? data.wardrobe
+            : [];
+
+    if (wardrobe.length === 0) {
+
+    sangkwanWardrobeList.innerHTML = "";
+}
+
+
+    const defaultItem =
+    document.createElement("div");
+
+defaultItem.className =
+    "sangkwan-wardrobe-item";
+
+defaultItem.dataset.outfit =
+    "default";
+
+defaultItem.innerHTML = `
+    <div class="sangkwan-wardrobe-item-image">
+        <img
+            src="images/sangkwan.png"
+            alt="기본 모습"
+        >
+    </div>
+
+    <div class="sangkwan-wardrobe-item-name">
+        기본 모습
+    </div>
+`;
+
+defaultItem.addEventListener(
+    "click",
+    async () => {
+
+        const characterRef =
+            doc(
+                db,
+                "characters",
+                CHARACTER_ID
+            );
+
+        await setDoc(
+            characterRef,
+            {
+                equippedOutfit: "default"
+            },
+            {
+                merge: true
+            }
+        );
+
+        sangkwanCharacterImage.src =
+            "images/sangkwan.png";
+    }
+);
+
+sangkwanWardrobeList.appendChild(
+    defaultItem
+);
+
+
+    wardrobe.forEach((outfitId) => {
+
+        const outfit =
+            sangkwanShopItems.find(
+                (item) =>
+                    item.id === outfitId
+            );
+
+        if (!outfit) {
+            return;
+        }
+
+        const wardrobeItem =
+            document.createElement("div");
+
+        wardrobeItem.className =
+            "sangkwan-wardrobe-item";
+
+        wardrobeItem.dataset.outfit =
+            outfit.id;
+
+        wardrobeItem.innerHTML = `
+            <div class="sangkwan-wardrobe-item-image">
+                <img
+                    src="${outfit.image}"
+                    alt="${outfit.name}"
+                >
+            </div>
+
+            <div class="sangkwan-wardrobe-item-name">
+                ${outfit.name}
+            </div>
+        `;
+
+        sangkwanWardrobeList.appendChild(
+            wardrobeItem
+        );
+
+                wardrobeItem.addEventListener(
+            "click",
+            async () => {
+
+                const outfitId =
+                    wardrobeItem.dataset.outfit;
+
+                const characterRef =
+                    doc(
+                        db,
+                        "characters",
+                        CHARACTER_ID
+                    );
+
+                await setDoc(
+                    characterRef,
+                    {
+                        equippedOutfit: outfitId
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+                const outfit =
+                    sangkwanShopItems.find(
+                        (item) =>
+                            item.id === outfitId
+                    );
+
+                if (!outfit) {
+                    return;
+                }
+
+                sangkwanCharacterImage.src =
+                    outfit.image;
+            }
+        );
+    });
+}
+
+
+const sangkwanShopPopup =
+    document.getElementById(
+        "sangkwan-shop-popup"
+    );
+
+const sangkwanShopClose =
+    document.getElementById(
+        "sangkwan-shop-close"
+    );
+
+const sangkwanShopList =
+    document.getElementById(
+        "sangkwan-shop-list"
+    );
+
+const sangkwanShopItems = [
+    {
+        id: "maid",
+        name: "메이드",
+        icon: "🧹",
+        image: "images/sangkwan-maid.png",
+        materials: [
+            { name: "마스킹테이프", count: 2 },
+            { name: "귀여운 책갈피", count: 1 },
+            { name: "귀여운 포장지", count: 1 }
+        ]
+    },
+
+    {
+        id: "devil",
+        name: "악마",
+        icon: "😈",
+        image: "images/sangkwan-devil.png",
+        materials: [
+            { name: "정체불명의 굿즈", count: 2 },
+            { name: "공포영화 티켓", count: 1 },
+            { name: "캔뱃지", count: 1 }
+        ]
+    },
+
+    {
+        id: "angel",
+        name: "천사",
+        icon: "😇",
+        image: "images/sangkwan-angel.png",
+        materials: [
+            { name: "새 깃털", count: 2 },
+            { name: "네잎클로버", count: 1 },
+            { name: "예쁜 책갈피", count: 1 }
+        ]
+    },
+
+    {
+        id: "casual",
+        name: "사복",
+        icon: "👕",
+        image: "images/sangkwan-casual.png",
+        materials: [
+            { name: "랜덤 포토카드", count: 1 },
+            { name: "랜덤 스티커", count: 2 }
+        ]
+    },
+
+    {
+        id: "yukata",
+        name: "유카타",
+        icon: "🌸",
+        image: "images/sangkwan-yukata.png",
+        materials: [
+            { name: "네잎클로버", count: 1 },
+            { name: "낙엽", count: 2 },
+            { name: "마스킹테이프", count: 1 }
+        ]
+    },
+
+    {
+        id: "pajamas",
+        name: "잠옷",
+        icon: "🌙",
+        image: "images/sangkwan-pajamas.png",
+        materials: [
+            { name: "미니 과자 봉지", count: 1 },
+            { name: "작은 장난감", count: 1 },
+            { name: "귀여운 포장지", count: 2 }
+        ]
+    },
+
+    {
+        id: "uniform",
+        name: "제복",
+        icon: "🎓",
+        image: "images/sangkwan-uniform.png",
+        materials: [
+            { name: "오래된 공책", count: 1 },
+            { name: "잃어버린 펜", count: 1 },
+            { name: "오래된 시간표", count: 1 }
+        ]
+    },
+
+    {
+        id: "chinese",
+        name: "중국풍",
+        icon: "🐉",
+        image: "images/sangkwan-chinese.png",
+        materials: [
+            { name: "캐릭터 엽서", count: 1 },
+            { name: "낡은 도서관 카드", count: 1 },
+            { name: "마스킹테이프", count: 2 }
+        ]
+    },
+
+    {
+        id: "detective",
+        name: "탐정",
+        icon: "🔎",
+        image: "images/sangkwan-detective.png",
+        materials: [
+            { name: "누군가 놓고 간 메모", count: 1 },
+            { name: "작은 연필", count: 1 },
+            { name: "정체불명의 굿즈", count: 1 },
+            { name: "정체불명의 영화 티켓", count: 1 }
+        ]
+    },
+
+    {
+        id: "hanbok",
+        name: "한복",
+        icon: "🪷",
+        image: "images/sangkwan-hanbok.png",
+        materials: [
+            { name: "네잎클로버", count: 1 },
+            { name: "예쁜 책갈피", count: 1 },
+            { name: "학교 축제 전단지", count: 1 },
+            { name: "마스킹테이프", count: 1 }
+        ]
+    },
+
+    {
+        id: "harrypotter",
+        name: "마법학교",
+        icon: "🪄",
+        image: "images/sangkwan-harrypotter.png",
+        materials: [
+            { name: "오래된 책", count: 1 },
+            { name: "낡은 도서관 카드", count: 1 },
+            { name: "오래된 책갈피", count: 1 },
+            { name: "정체불명의 굿즈", count: 1 }
+        ]
+    },
+
+    {
+        id: "wedding",
+        name: "웨딩",
+        icon: "💍",
+        image: "images/sangkwan-wedding.png",
+        materials: [
+            { name: "새 깃털", count: 2 },
+            { name: "네잎클로버", count: 4 },
+            { name: "예쁜 책갈피", count: 2 },
+            { name: "로맨스영화 티켓", count: 3 }
+        ]
+    }
+];
+
+async function loadSangkwanShop() {
+
+    sangkwanShopList.innerHTML = "";
+
+    const characterRef =
+        doc(
+            db,
+            "characters",
+            CHARACTER_ID
+        );
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    const characterData =
+        characterSnap.exists()
+            ? characterSnap.data()
+            : {};
+
+    const inventory =
+        Array.isArray(characterData.explorationItems)
+            ? characterData.explorationItems
+            : [];
+
+    const itemCounts = {};
+
+    inventory.forEach((inventoryItem) => {
+
+        if (!itemCounts[inventoryItem.name]) {
+            itemCounts[inventoryItem.name] = 0;
+        }
+
+        itemCounts[inventoryItem.name]++;
+    });
+
+
+    sangkwanShopItems.forEach((item) => {
+
+        const shopItem =
+            document.createElement("div");
+
+        shopItem.className =
+            "sangkwan-shop-item";
+
+
+        const canExchange =
+            item.materials.every(
+                (material) =>
+                    (itemCounts[material.name] || 0)
+                        >= material.count
+            );
+
+
+        const materialsText =
+            item.materials
+                .map(
+                    (material) =>
+                        `${material.name} ×${material.count}` +
+                        ` (보유 ${itemCounts[material.name] || 0})`
+                )
+                .join("<br>");
+
+
+        shopItem.innerHTML = `
+            <div class="sangkwan-shop-item-icon">
+    <img
+        src="${item.image}"
+        alt="${item.name}"
+    >
+</div>
+
+            <div class="sangkwan-shop-item-info">
+
+                <div class="sangkwan-shop-item-name">
+                    ${item.name}
+                </div>
+
+                <div class="sangkwan-shop-item-materials">
+                    ${materialsText}
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="sangkwan-shop-exchange"
+                data-outfit="${item.id}"
+                ${canExchange ? "" : "disabled"}
+            >
+                ${canExchange ? "교환" : "재료 부족"}
+            </button>
+        `;
+
+        sangkwanShopList.appendChild(
+            shopItem
+        );
+    });
+}
+
+
+sangkwanShopButton.addEventListener(
+    "click",
+    () => {
+
+        loadSangkwanShop();
+
+        sangkwanShopPopup.style.display =
+            "flex";
+    }
+);
+
+
+sangkwanShopClose.addEventListener(
+    "click",
+    () => {
+
+        sangkwanShopPopup.style.display =
+            "none";
+    }
+);
+
+
+sangkwanShopList.addEventListener(
+    "click",
+    async (event) => {
+
+        const button =
+            event.target.closest(
+                ".sangkwan-shop-exchange"
+            );
+
+        if (!button) {
+            return;
+        }
+
+        const outfitId =
+            button.dataset.outfit;
+
+        const item =
+            sangkwanShopItems.find(
+                (shopItem) =>
+                    shopItem.id === outfitId
+            );
+
+        if (!item) {
+            return;
+        }
+
+        const characterRef =
+            doc(
+                db,
+                "characters",
+                CHARACTER_ID
+            );
+
+        const characterSnap =
+            await getDoc(characterRef);
+
+        if (!characterSnap.exists()) {
+            return;
+        }
+
+        const data =
+            characterSnap.data();
+
+        const inventory =
+            Array.isArray(data.explorationItems)
+                ? [...data.explorationItems]
+                : [];
+
+        const wardrobe =
+            Array.isArray(data.wardrobe)
+                ? [...data.wardrobe]
+                : [];
+
+        const itemCounts = {};
+
+        inventory.forEach(
+            (inventoryItem) => {
+
+                if (!itemCounts[inventoryItem.name]) {
+                    itemCounts[inventoryItem.name] = 0;
+                }
+
+                itemCounts[inventoryItem.name]++;
+            }
+        );
+
+        const canExchange =
+            item.materials.every(
+                (material) =>
+                    (itemCounts[material.name] || 0)
+                    >= material.count
+            );
+
+        if (!canExchange) {
+
+            alert(
+                "재료가 부족해요!"
+            );
+
+            return;
+        }
+
+        if (wardrobe.includes(item.id)) {
+
+            alert(
+                "이미 가지고 있는 옷이에요!"
+            );
+
+            return;
+        }
+
+        for (const material of item.materials) {
+
+            let removeCount =
+                material.count;
+
+            for (
+                let i = inventory.length - 1;
+                i >= 0 && removeCount > 0;
+                i--
+            ) {
+
+                if (
+                    inventory[i].name ===
+                    material.name
+                ) {
+
+                    inventory.splice(i, 1);
+
+                    removeCount--;
+                }
+            }
+        }
+
+        wardrobe.push(item.id);
+
+        await setDoc(
+            characterRef,
+            {
+                explorationItems:
+                    inventory,
+
+                wardrobe:
+                    wardrobe
+            },
+            {
+                merge: true
+            }
+        );
+
+        alert(
+            `${item.name} 의상을 획득했어요! 🎉`
+        );
+
+        loadSangkwanShop();
+
+        loadSangkwanInventory();
     }
 );
 
