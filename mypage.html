@@ -6382,6 +6382,56 @@ function getCharacterLevel(exp) {
 
 }
 
+async function checkLevelUp(
+    characterRef,
+    oldExp,
+    newExp,
+    characterName
+) {
+    const oldLevel =
+        getCharacterLevel(oldExp);
+
+    const newLevel =
+        getCharacterLevel(newExp);
+
+    if (newLevel <= oldLevel) {
+        return;
+    }
+
+    const characterSnap =
+        await getDoc(characterRef);
+
+    if (!characterSnap.exists()) {
+        return;
+    }
+
+    const data =
+        characterSnap.data();
+
+    const notifiedLevel =
+        Number(data.levelUpNotifiedLevel) || oldLevel;
+
+    if (newLevel <= notifiedLevel) {
+        return;
+    }
+
+    alert(
+        `🎉 ${characterName} 레벨업!\n\n` +
+        `Lv.${oldLevel} → Lv.${newLevel}`
+    );
+
+    await setDoc(
+        characterRef,
+        {
+            levelUpNotifiedLevel:
+                newLevel
+        },
+        {
+            merge: true
+        }
+    );
+}
+
 
 /* ------------------------------
    상관쟝 성장 불러오기
@@ -6402,6 +6452,7 @@ async function loadCharacterGrowth(user) {
             await getDoc(characterRef);
 
         let exp = 0;
+        let oldExp = 0;
         let points = 0;
         let diaryPointsAwarded = 0;
 
@@ -6412,6 +6463,9 @@ async function loadCharacterGrowth(user) {
 
             exp =
                 Number(data.exp) || 0;
+                
+            
+            oldExp = exp;
 
             points =
             Number(data.points) || 0;
@@ -6520,6 +6574,13 @@ diarySnapshot.forEach((diaryDoc) => {
 
         const level =
             getCharacterLevel(newExp);
+
+        await checkLevelUp(
+    characterRef,
+    oldExp,
+    newExp,
+    "상관쟝"
+);
 
 
         const sangkwanExploration =
@@ -6658,6 +6719,7 @@ async function loadDannaGrowth(user) {
             await getDoc(characterRef);
 
         let exp = 0;
+        let oldExp = 0;
         let points = 0;
         let diaryPointsAwarded = 0;
 
@@ -6668,6 +6730,8 @@ async function loadDannaGrowth(user) {
 
     exp =
         Number(data.exp) || 0;
+
+    oldExp = exp;
 
     points =
         Number(data.points) || 0;
@@ -6789,6 +6853,13 @@ const newDiaryPointsAwarded =
 
         const level =
             getCharacterLevel(newExp);
+
+        await checkLevelUp(
+             characterRef,
+            oldExp,
+            newExp,
+            "단나쟝"
+);    
 
             
         
