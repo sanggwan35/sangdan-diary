@@ -1428,6 +1428,10 @@
 
 #sangkwan-hobby-list {
     margin-top: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
 }
 
 .sangkwan-hobby-item {
@@ -1437,7 +1441,6 @@
 
     width: 100%;
     padding: 10px 14px;
-    margin-bottom: 6px;
 
     border: 1px solid rgba(98, 80, 68, 0.25);
     border-radius: 8px;
@@ -1535,6 +1538,10 @@
 
 #danna-hobby-list {
     margin-top: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
 }
 
 .danna-hobby-item {
@@ -1544,7 +1551,6 @@
 
     width: 100%;
     padding: 10px 14px;
-    margin-bottom: 6px;
 
     border: 1px solid rgba(98, 80, 68, 0.25);
     border-radius: 8px;
@@ -1653,10 +1659,10 @@
             <a href="calendar.html">CALENDAR</a>
             <a href="dday.html">D-DAY</a>
             <a href="mypage.html">MY PAGE</a>
-            <a href="trash.html">🗑️ TRASH</a>
         </nav>
     </div>
 
+    <a href="trash.html">🗑️ TRASH</a>
     <a href="search.html" class="site-search">🔍 SEARCH</a>
 
 </header>
@@ -1681,8 +1687,10 @@
 
     <div class="profile-card">
 
-        <div class="profile-icon">
-            ♡
+        <div
+           id="my-profile-icon"
+           class="profile-icon">
+           ♡
         </div>
 
         <div class="profile-info">
@@ -1727,8 +1735,10 @@
 
     <div class="profile-card">
 
-        <div class="profile-icon">
-            ♡
+        <div
+           id="friend-profile-icon"
+           class="profile-icon">
+           ♡
         </div>
 
         <div class="profile-info">
@@ -2032,13 +2042,14 @@
 >
 
     <button
-        type="button"
-        class="sangkwan-hobby-item"
-        data-hobby="reading"
-    >
-        📚 독서
-        <span>30P</span>
-    </button>
+    type="button"
+    class="sangkwan-hobby-item"
+    data-hobby="reading"
+>
+    📚 독서
+    <small>탐구력 +1</small>
+    <span>30P</span>
+</button>
 
     <button
         type="button"
@@ -2046,6 +2057,7 @@
         data-hobby="experiment"
     >
         🧪 실험
+        <small>탐구력 +3</small>
         <span>80P</span>
     </button>
 
@@ -2055,6 +2067,7 @@
         data-hobby="drawing"
     >
         🎨 그림
+        <small>창작력 +2</small>
         <span>50P</span>
     </button>
 
@@ -2064,6 +2077,7 @@
         data-hobby="composition"
     >
         🎵 작곡
+        <small>창작력 +3</small>
         <span>100P</span>
     </button>
 
@@ -2073,6 +2087,7 @@
         data-hobby="hiking"
     >
         🥾 등산
+        <small>활동력 +2</small>
         <span>60P</span>
     </button>
 
@@ -2082,6 +2097,7 @@
         data-hobby="travel"
     >
         ✈️ 여행
+        <small>활동력 +4</small>
         <span>150P</span>
     </button>
 
@@ -2091,6 +2107,7 @@
         data-hobby="writing"
     >
         ✍️ 글쓰기
+        <small>사고력 +1</small>
         <span>40P</span>
     </button>
 
@@ -2100,6 +2117,7 @@
         data-hobby="chess"
     >
         ♟️ 체스
+        <small>사고력 +2</small>
         <span>70P</span>
     </button>
 
@@ -2508,6 +2526,7 @@
         data-hobby="reading"
     >
         📚 독서
+        <small>탐구력 +1</small>
         <span>30P</span>
     </button>
 
@@ -2517,6 +2536,7 @@
         data-hobby="experiment"
     >
         🧪 실험
+        <small>탐구력 +3</small>
         <span>80P</span>
     </button>
 
@@ -2526,6 +2546,7 @@
         data-hobby="drawing"
     >
         🎨 그림
+        <small>창작력 +2</small>
         <span>50P</span>
     </button>
 
@@ -2535,6 +2556,7 @@
         data-hobby="composition"
     >
         🎵 작곡
+        <small>창작력 +3</small>
         <span>100P</span>
     </button>
 
@@ -2544,6 +2566,7 @@
         data-hobby="hiking"
     >
         🥾 등산
+        <small>활동력 +2</small>
         <span>60P</span>
     </button>
 
@@ -2553,6 +2576,7 @@
         data-hobby="travel"
     >
         ✈️ 여행
+        <small>활동력 +4</small>
         <span>150P</span>
     </button>
 
@@ -2562,6 +2586,7 @@
         data-hobby="writing"
     >
         ✍️ 글쓰기
+        <small>사고력 +1</small>
         <span>40P</span>
     </button>
 
@@ -2571,6 +2596,7 @@
         data-hobby="chess"
     >
         ♟️ 체스
+        <small>사고력 +2</small>
         <span>70P</span>
     </button>
 
@@ -3397,7 +3423,7 @@ diarySnapshot.forEach((diaryDoc) => {
 
     /* 친구 일기 */
 
-    if (data.authorUid === FRIEND_UID) {
+    if (data.authorUid === otherUid) {
 
         friendDiaries.push({
             id: diaryDoc.id,
@@ -3475,12 +3501,10 @@ friendDiaryCount.textContent =
 }
 
 if (
-    comment.uid === FRIEND_UID ||
-    comment.authorUid === FRIEND_UID
+    comment.uid === otherUid ||
+    comment.authorUid === otherUid
 ) {
-
     friendCommentCountValue++;
-
 }
 
             });
@@ -3916,10 +3940,27 @@ const statKey =
 const hobbyCost =
     hobbyCosts[hobby];
 
-    const newStats = {
+    const hobbyGains = {
+    reading: 1,
+    experiment: 3,
+
+    drawing: 2,
+    composition: 3,
+
+    hiking: 2,
+    travel: 4,
+
+    writing: 1,
+    chess: 2
+};
+
+const statGain =
+    hobbyGains[hobby];
+
+const newStats = {
     ...currentStats,
     [statKey]:
-        currentStats[statKey] + 1
+        currentStats[statKey] + statGain
 };
 
     if (currentPoints < hobbyCost) {
@@ -9160,6 +9201,27 @@ onAuthStateChanged(auth, async (user) => {
 
         return;
     }
+
+    /* 프로필 아이콘 */
+        const myProfileIcon =
+        document.getElementById("my-profile-icon");
+
+        const friendProfileIcon =
+        document.getElementById("friend-profile-icon");
+
+    if (user.uid === FRIEND_UID) {
+
+    // 단나님 로그인
+    myProfileIcon.textContent = "🐑";
+    friendProfileIcon.textContent = "🦝";
+
+} else {
+
+    // 상관님 로그인
+    myProfileIcon.textContent = "🦝";
+    friendProfileIcon.textContent = "🐑";
+}
+    
 
     try {
 

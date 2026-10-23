@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 /* =========================
    전체 기본 디자인
@@ -1013,14 +1014,21 @@ nav a:hover {
 .site-header nav a {
     display: inline-block;
 
-    margin: 5px;
-    padding: 8px 12px;
+    margin: 3px 2px 0;
+    padding: 6px 11px;
 
     color: #625044;
     text-decoration: none;
 
-    border: 2px solid #625044;
+    border: 1px solid #625044;
+    border-bottom: 3px solid #625044;
+
     background-color: #f7f2e0;
+
+    border-radius: 5px 5px 0 0;
+
+    position: relative;
+    top: 2px;
 
     transition:
         transform 0.15s ease,
@@ -1044,7 +1052,7 @@ nav a:hover {
 .site-search {
     display: inline-block;
 
-    margin-top: 5px;
+    margin-top: 15px;
     margin-left: 5px;
 
     padding: 7px 10px;
@@ -1736,6 +1744,7 @@ nav a:hover {
 
 .character-stat {
     display: flex;
+    font-family: "Pretendard", sans-serif;
     align-items: center;
     justify-content: space-between;
 
@@ -2079,4 +2088,115 @@ nav a:hover {
     height: 45px;
     background: rgba(61, 53, 66, 0.3);
     flex-shrink: 0;
+}
+
+/* =========================================
+   취미 목록 글씨 가독성
+========================================= */
+
+.sangkwan-hobby-item,
+.danna-hobby-item {
+    font-family: "Pretendard", sans-serif;
+}
+
+.sangkwan-hobby-item .hobby-name,
+.danna-hobby-item .hobby-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #3d3542;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.sangkwan-hobby-item .hobby-name small,
+.danna-hobby-item .hobby-name small {
+    color: #a99b91;
+    font-size: 10px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.sangkwan-hobby-item,
+.danna-hobby-item,
+.sangkwan-hobby-item *,
+.danna-hobby-item * {
+    font-family: "Pretendard", sans-serif !important;
+}
+
+/* =========================================
+   캐릭터 성장 영역 전체 Pretendard
+========================================= */
+
+.character-growth,
+.character-growth * {
+    font-family: "Pretendard", sans-serif !important;
+}
+
+/* =========================================
+   나의 기록 전체 Pretendard
+========================================= */
+
+.mypage-paper,
+.mypage-paper * {
+    font-family: "Pretendard", sans-serif !important;
+}
+
+/* 프로필 아이콘 크게 */
+.profile-icon {
+    font-size: 32px;
+}
+
+/* 취미 능력치 글씨 통일 */
+
+.sangkwan-hobby-item small,
+.danna-hobby-item small {
+    color: #a99b91 !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    white-space: nowrap;
+}
+
+/* =========================================
+   홈페이지 상단 메뉴 Pretendard
+========================================= */
+
+nav,
+nav *,
+header nav,
+header nav * {
+    font-family: "Pretendard", sans-serif !important;
+}
+
+/* SEARCH 글씨체 통일 */
+
+.site-search {
+    font-family: "Pretendard", sans-serif !important;
+}
+
+.site-nav-area + a[href="trash.html"] {
+    display: inline-block;
+
+    margin-top: 15px;
+    margin-left: 5px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #625044;
+
+    background: #f7f2e0;
+    color: #625044;
+
+    text-decoration: none;
+
+    font-family: "Pretendard", sans-serif !important;
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+.site-nav-area + a[href="trash.html"]:hover {
+    background: #625044;
+    color: #fffaf3;
 }
