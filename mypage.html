@@ -8415,12 +8415,7 @@ function renderCharacterLetters(letters) {
 async function loadCharacterLetters(user) {
     try {
 
-        if (user.uid === CHARACTER_OWNER_UID) {
-            characterLetterButton.style.display = "none";
-            return;
-        }
-
-        const characterRef =
+         const characterRef =
             doc(db, "characters", CHARACTER_ID);
 
         const characterDoc =
@@ -8532,13 +8527,7 @@ async function loadCharacterLetters(user) {
 
 async function loadCharacterSecretEvent(user) {
     try {
-
-        // 상관쟝 본인은 비밀 이벤트를 받지 않음
-        if (user.uid === CHARACTER_OWNER_UID) {
-            characterSecretEventButton.style.display = "none";
-            return;
-        }
-
+        
         const characterRef =
             doc(db, "characters", CHARACTER_ID);
 
