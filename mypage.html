@@ -4025,13 +4025,18 @@ async function loadSangkwanWardrobe() {
     const data =
         characterSnap.data();
 
-        const equippedOutfit =
+    const equippedOutfit =
     data.equippedOutfit || "default";
 
 if (equippedOutfit === "default") {
 
     sangkwanCharacterImage.src =
         "images/sangkwan.png";
+
+} else if (equippedOutfit === "default2") {
+
+    sangkwanCharacterImage.src =
+        "images/sangkwan2.png";
 
 } else {
 
@@ -4072,14 +4077,61 @@ defaultItem.innerHTML = `
     <div class="sangkwan-wardrobe-item-image">
         <img
             src="images/sangkwan.png"
-            alt="기본 모습"
+            alt="기본(안경O)"
         >
     </div>
 
     <div class="sangkwan-wardrobe-item-name">
-        기본 모습
+        기본(안경O)
     </div>
 `;
+
+
+const defaultItem2 = document.createElement("div");
+
+defaultItem2.className =
+    "sangkwan-wardrobe-item";
+
+defaultItem2.innerHTML = `
+    <div class="sangkwan-wardrobe-item-image">
+        <img
+            src="images/sangkwan2.png"
+            alt="기본(안경X)"
+        >
+    </div>
+
+    <div class="sangkwan-wardrobe-item-name">
+        기본(안경X)
+    </div>
+`;
+
+defaultItem2.addEventListener(
+    "click",
+    async () => {
+
+        const characterRef =
+            doc(
+                db,
+                "characters",
+                CHARACTER_ID
+            );
+
+        await setDoc(
+            characterRef,
+            {
+                equippedOutfit: "default2"
+            },
+            {
+                merge: true
+            }
+        );
+
+        sangkwanCharacterImage.src =
+            "images/sangkwan2.png";
+    }
+);
+
+
 
 defaultItem.addEventListener(
     "click",
@@ -4109,6 +4161,10 @@ defaultItem.addEventListener(
 
 sangkwanWardrobeList.appendChild(
     defaultItem
+);
+
+sangkwanWardrobeList.appendChild(
+    defaultItem2
 );
 
 
@@ -4255,12 +4311,12 @@ async function loadDannaWardrobe() {
         <div class="danna-wardrobe-item-image">
             <img
                 src="images/danna.png"
-                alt="기본 모습"
+                alt="기본"
             >
         </div>
 
         <div class="danna-wardrobe-item-name">
-            기본 모습
+            기본
         </div>
     `;
 
@@ -10854,6 +10910,7 @@ onAuthStateChanged(auth, async (user) => {
         await loadDannaAction();
         await loadDannaExploration();
         await loadSangkwanExploration();
+        await loadSangkwanWardrobe();
 
     } catch (error) {
 
