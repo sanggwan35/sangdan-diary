@@ -3901,8 +3901,8 @@ const sangkwanWardrobeButton =
 
 
 const dannaCharacterImage =
-    document.getElementById(
-        "danna-character-image"
+    document.querySelector(
+        "#danna-character-image img"
     );
 
 const dannaShopButton =
@@ -4391,6 +4391,7 @@ async function loadDannaWardrobe() {
         wardrobeItem.addEventListener(
             "click",
             async () => {
+        
 
                 const outfitId =
                     wardrobeItem.dataset.outfit;
@@ -4417,6 +4418,8 @@ async function loadDannaWardrobe() {
                         (item) =>
                             item.id === outfitId
                     );
+
+                
 
                 if (!outfit) {
                     return;
@@ -5196,21 +5199,23 @@ if (item.free !== true) {
         }
 
         await setDoc(
-            characterRef,
-            {
-                explorationItems: inventory,
-                wardrobe: wardrobe
-            },
-            {
-                merge: true
-            }
-        );
+    characterRef,
+    {
+        explorationItems: inventory,
+        wardrobe: wardrobe,
+        equippedOutfit: outfitId
+    },
+    {
+        merge: true
+    }
+);
 
         alert(
             `🎉 ${item.name} 의상을 획득했습니다!`
         );
 
         loadDannaShop();
+        loadDannaWardrobe();
     }
 );
 
@@ -7843,6 +7848,7 @@ function startDannaExplorationCountdown(endTime) {
 }
 
 loadDannaExploration();
+loadDannaWardrobe();
 
 
 
