@@ -4631,8 +4631,43 @@ const sangkwanShopItems = [
         { name: "공원에서 주운 동전", count: 1 },
         { name: "미니 과자 봉지", count: 1 }
     ]
+},
+{
+    id: "checklolita",
+    name: "체크로리타",
+    icon: "🎀",
+    image: "images/sangkwan-checklolita.png",
+    materials: [],
+    free: true
+},
+{
+    id: "checklolita01",
+    name: "체크로리타 01",
+    icon: "🎀",
+    image: "images/sangkwan-checklolita01.png",
+    materials: [],
+    free: true
+},
+{
+    id: "kid",
+    name: "유치원복",
+    icon: "🧸",
+    image: "images/sangkwan-kid.png",
+    materials: [],
+    free: true
+},
+{
+    id: "samgug",
+    name: "삼국시대",
+    icon: "⚔️",
+    image: "images/sangkwan-samgug.png",
+    materials: [],
+    free: true
 }
+
 ];
+
+
 
 
 const dannaShopItems = [
@@ -4820,6 +4855,30 @@ const dannaShopItems = [
         { name: "공원에서 주운 동전", count: 1 },
         { name: "미니 과자 봉지", count: 1 }
     ]
+},
+{
+    id: "checklolita",
+    name: "체크로리타",
+    icon: "🎀",
+    image: "images/danna-checklolita.png",
+    materials: [],
+    free: true
+},
+{
+    id: "kid",
+    name: "유치원복",
+    icon: "🧸",
+    image: "images/danna-kid.png",
+    materials: [],
+    free: true
+},
+{
+    id: "samgug",
+    name: "삼국시대",
+    icon: "⚔️",
+    image: "images/danna-samgug.png",
+    materials: [],
+    free: true
 }
 ];
 
@@ -4870,21 +4929,25 @@ async function loadDannaShop() {
 
 
         const canExchange =
-            item.materials.every(
+    item.free === true
+        ? true
+        : item.materials.every(
+            (material) =>
+                (itemCounts[material.name] || 0)
+                    >= material.count
+        );
+
+
+const materialsText =
+    item.free === true
+        ? "🎁 무료 의상"
+        : item.materials
+            .map(
                 (material) =>
-                    (itemCounts[material.name] || 0)
-                        >= material.count
-            );
-
-
-        const materialsText =
-            item.materials
-                .map(
-                    (material) =>
-                        `${material.name} ×${material.count}` +
-                        ` (보유 ${itemCounts[material.name] || 0})`
-                )
-                .join("<br>");
+                    `${material.name} ×${material.count}` +
+                    ` (보유 ${itemCounts[material.name] || 0})`
+            )
+            .join("<br>");
 
 
         shopItem.innerHTML = `
@@ -4913,7 +4976,7 @@ async function loadDannaShop() {
                 data-outfit="${item.id}"
                 ${canExchange ? "" : "disabled"}
             >
-                ${canExchange ? "교환" : "재료 부족"}
+                ${item.free === true ? "무료 교환" : (canExchange ? "교환" : "재료 부족")}
             </button>
         `;
 
@@ -5089,39 +5152,44 @@ shopImagePopup.addEventListener(
         );
 
         const canExchange =
-            item.materials.every(
-                (material) =>
-                    (itemCounts[material.name] || 0)
-                    >= material.count
-            );
+    item.free === true
+        ? true
+        : item.materials.every(
+            (material) =>
+                (itemCounts[material.name] || 0)
+                >= material.count
+        );
 
-        if (!canExchange) {
-            alert("재료가 부족합니다.");
-            return;
-        }
+if (!canExchange) {
+    alert("재료가 부족합니다.");
+    return;
+}
 
-        item.materials.forEach(
-            (material) => {
+if (item.free !== true) {
 
-                let remaining =
-                    material.count;
+    item.materials.forEach(
+        (material) => {
 
-                for (
-                    let i = inventory.length - 1;
-                    i >= 0 && remaining > 0;
-                    i--
+            let remaining =
+                material.count;
+
+            for (
+                let i = inventory.length - 1;
+                i >= 0 && remaining > 0;
+                i--
+            ) {
+
+                if (
+                    inventory[i].name ===
+                    material.name
                 ) {
-
-                    if (
-                        inventory[i].name ===
-                        material.name
-                    ) {
-                        inventory.splice(i, 1);
-                        remaining--;
-                    }
+                    inventory.splice(i, 1);
+                    remaining--;
                 }
             }
-        );
+        }
+    );
+}
 
         if (!wardrobe.includes(outfitId)) {
             wardrobe.push(outfitId);
@@ -5194,21 +5262,25 @@ async function loadSangkwanShop() {
 
 
         const canExchange =
-            item.materials.every(
+    item.free === true
+        ? true
+        : item.materials.every(
+            (material) =>
+                (itemCounts[material.name] || 0)
+                    >= material.count
+        );
+
+
+const materialsText =
+    item.free === true
+        ? "🎁 무료 의상"
+        : item.materials
+            .map(
                 (material) =>
-                    (itemCounts[material.name] || 0)
-                        >= material.count
-            );
-
-
-        const materialsText =
-            item.materials
-                .map(
-                    (material) =>
-                        `${material.name} ×${material.count}` +
-                        ` (보유 ${itemCounts[material.name] || 0})`
-                )
-                .join("<br>");
+                    `${material.name} ×${material.count}` +
+                    ` (보유 ${itemCounts[material.name] || 0})`
+            )
+            .join("<br>");
 
 
         shopItem.innerHTML = `
@@ -5237,7 +5309,7 @@ async function loadSangkwanShop() {
                 data-outfit="${item.id}"
                 ${canExchange ? "" : "disabled"}
             >
-                ${canExchange ? "교환" : "재료 부족"}
+                ${item.free === true ? "무료 교환" : (canExchange ? "교환" : "재료 부족")}
             </button>
         `;
 
@@ -5337,52 +5409,57 @@ sangkwanShopList.addEventListener(
         );
 
         const canExchange =
-            item.materials.every(
-                (material) =>
-                    (itemCounts[material.name] || 0)
-                    >= material.count
-            );
+    item.free === true
+        ? true
+        : item.materials.every(
+            (material) =>
+                (itemCounts[material.name] || 0)
+                >= material.count
+        );
 
-        if (!canExchange) {
+if (!canExchange) {
 
-            alert(
-                "재료가 부족해요!"
-            );
+    alert(
+        "재료가 부족해요!"
+    );
 
-            return;
-        }
+    return;
+}
 
-        if (wardrobe.includes(item.id)) {
+if (wardrobe.includes(item.id)) {
 
-            alert(
-                "이미 가지고 있는 옷이에요!"
-            );
+    alert(
+        "이미 가지고 있는 옷이에요!"
+    );
 
-            return;
-        }
+    return;
+}
 
-        for (const material of item.materials) {
+if (item.free !== true) {
 
-            let removeCount =
-                material.count;
+    for (const material of item.materials) {
 
-            for (
-                let i = inventory.length - 1;
-                i >= 0 && removeCount > 0;
-                i--
+        let removeCount =
+            material.count;
+
+        for (
+            let i = inventory.length - 1;
+            i >= 0 && removeCount > 0;
+            i--
+        ) {
+
+            if (
+                inventory[i].name ===
+                material.name
             ) {
 
-                if (
-                    inventory[i].name ===
-                    material.name
-                ) {
+                inventory.splice(i, 1);
 
-                    inventory.splice(i, 1);
-
-                    removeCount--;
-                }
+                removeCount--;
             }
         }
+    }
+}
 
         wardrobe.push(item.id);
 
