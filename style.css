@@ -2853,3 +2853,127 @@ header nav * {
 
     cursor: pointer;
 }
+
+/* =========================================
+   기념일 추가
+========================================= */
+
+#add-anniversary-button {
+    display: block;
+    margin: 16px auto 10px;
+    padding: 9px 18px;
+
+    border: 1px solid #625044;
+    background: #fffaf3;
+    color: #625044;
+
+    font-family: monospace;
+    font-size: 12px;
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+#add-anniversary-button:hover {
+    background: #625044;
+    color: #fffaf3;
+}
+
+.anniversary-form {
+    width: min(520px, 100%);
+    margin: 12px auto 20px;
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    box-sizing: border-box;
+
+    background: #fffaf3;
+    border: 1px solid #d5cec5;
+    box-shadow:
+        3px 3px 0 rgba(98, 80, 68, 0.12);
+
+    flex-wrap: wrap;
+}
+
+.anniversary-form input {
+    height: 36px;
+    padding: 7px 9px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d5cec5;
+    background: #ffffff;
+    color: #3d3542;
+
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+
+    outline: none;
+}
+
+.anniversary-form input:focus {
+    border-color: #625044;
+}
+
+#anniversary-date {
+    width: 145px;
+}
+
+#anniversary-name {
+    flex: 1;
+    min-width: 130px;
+}
+
+#anniversary-icon {
+    width: 120px;
+}
+
+.anniversary-form button {
+    height: 36px;
+    padding: 7px 13px;
+
+    border: 1px solid #625044;
+    background: #625044;
+    color: #fffaf3;
+
+    font-family: monospace;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+#cancel-anniversary-button {
+    background: #fffaf3;
+    color: #625044;
+}
+
+.anniversary-form button:hover {
+    opacity: 0.82;
+}
+
+.anniversary-form button {
+    height: 36px;
+    padding: 7px 18px;
+
+    border: 1px solid #625044;
+    background: #625044;
+    color: #fffaf3;
+
+    font-family: monospace;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+#cancel-anniversary-button {
+    background: #fffaf3;
+    color: #625044;
+}
+
+.anniversary-form button:hover {
+    opacity: 0.82;
+}

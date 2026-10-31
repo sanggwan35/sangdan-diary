@@ -265,6 +265,10 @@
         .calendar-day:hover {
             background-color: #f3ede3;
         }
+        .calendar-day.has-my-diary,
+.calendar-day.has-danna-diary {
+    background-color: #f8efe0;
+}
 
 
         /* 빈 날짜 */
@@ -317,41 +321,233 @@
            날짜 아래 작은 영역
         ================================================== */
 
-        .calendar-day:not(.empty)::after {
-            content: "";
-
-            display: flex;
-
-            width: 100%;
-            height: 37px;
-
-            box-sizing: border-box;
-
-            align-items: center;
-            justify-content: center;
-
-            margin-top: auto;
-
-            border-top: 1px solid #d5cec5;
-
-            color: #b33a2e;
-            font-size: 12px;
-        }
-
+    
 
         /* ==================================================
            일기가 있는 날
         ================================================== */
 
-        .calendar-day.has-diary {
-            background-color: #f8f1e3;
-        }
+        .calendar-day:not(.empty)::after {
+    content: "";
+    display: flex;
+    width: 100%;
+    height: 37px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    border-top: 1px solid #d5cec5;
+    color: #b33a2e;
+    font-size: 12px;
+}
+
+.calendar-diary-dots {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    pointer-events: none;
+}
+
+.calendar-anniversary-marker {
+    position: absolute;
+
+    top: 6px;
+    right: 7px;
+
+    font-size: 16px;
+    line-height: 1;
+
+    pointer-events: none;
+}
 
 
-        .calendar-day.has-diary::after {
-            content: "●";
-        }
+.anniversary-edit-modal {
+    position: fixed;
 
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(47, 43, 42, 0.35);
+
+    z-index: 9999;
+}
+
+.anniversary-edit-box {
+    width: min(420px, 90%);
+
+    padding: 28px 30px;
+
+    background: #fffaf3;
+    border: 1px solid #625044;
+
+    box-shadow:
+        5px 5px 0 rgba(98, 80, 68, 0.18);
+
+    box-sizing: border-box;
+}
+
+.anniversary-edit-title {
+    margin-bottom: 22px;
+
+    color: #625044;
+
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.anniversary-edit-box label {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #625044;
+
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.anniversary-edit-box input {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 6px;
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d5cec5;
+    background: #ffffff;
+
+    color: #3d3542;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+
+    outline: none;
+}
+
+.anniversary-edit-box input:focus {
+    border-color: #625044;
+}
+
+.anniversary-edit-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 22px;
+}
+
+.anniversary-edit-buttons button {
+    padding: 8px 18px;
+
+    border: 1px solid #625044;
+
+    background: #625044;
+    color: #fffaf3;
+
+    font-family: monospace;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.anniversary-edit-buttons button:last-child {
+    background: #fffaf3;
+    color: #625044;
+}
+
+
+#selected-anniversaries {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+
+    background: #fffaf3;
+    border: 1px solid #d5cec5;
+}
+
+.selected-anniversary-title {
+    margin-bottom: 8px;
+
+    color: #625044;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.selected-anniversary-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 5px;
+    padding: 5px 0;
+
+    color: #3d3542;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.edit-anniversary-button,
+.delete-anniversary-button {
+    padding: 3px 7px;
+
+    border: 1px solid #d5cec5;
+    background: #fffaf3;
+
+    color: #625044;
+    font-family: monospace;
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+.edit-anniversary-button {
+    margin-left: auto;
+}
+
+.edit-anniversary-button:hover,
+.delete-anniversary-button:hover {
+    background: #f3ede3;
+}
+
+.calendar-my-dot,
+.calendar-danna-dot {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.calendar-my-dot {
+    color: #c9362b;
+}
+
+.calendar-danna-dot {
+    color: #24549a;
+}
 
         /* ==================================================
            오늘
@@ -623,6 +819,51 @@
             </div>
 
 
+            <button
+    id="add-anniversary-button"
+    type="button"
+>
+    ＋ 기념일 추가
+</button>
+
+<div
+    id="anniversary-form"
+    class="anniversary-form"
+    style="display: none;"
+>
+    <input
+        type="date"
+        id="anniversary-date"
+    >
+
+    <input
+        type="text"
+        id="anniversary-name"
+        placeholder="기념일 이름"
+    >
+
+    <input
+        type="text"
+        id="anniversary-icon"
+        placeholder="아이콘 (예: 💌)"
+    >
+
+    <button
+        id="save-anniversary-button"
+        type="button"
+    >
+        저장
+    </button>
+
+    <button
+        id="cancel-anniversary-button"
+        type="button"
+    >
+        취소
+    </button>
+</div>
+
+
             <div class="calendar-week">
 
                 <div>일</div>
@@ -678,13 +919,16 @@
 
 
         import {
-            getFirestore,
-            collection,
-            getDocs,
-            query,
-            orderBy
-        }
-        from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    addDoc,
+    deleteDoc,
+    doc
+}
+from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
 
         /* =========================
@@ -732,9 +976,188 @@
 
         let allDiaries = [];
 
+        let allAnniversaries = [];
+
+        const addAnniversaryButton =
+    document.getElementById(
+        "add-anniversary-button"
+    );
+
+const anniversaryForm =
+    document.getElementById(
+        "anniversary-form"
+    );
+
+const cancelAnniversaryButton =
+    document.getElementById(
+        "cancel-anniversary-button"
+    );
+
+addAnniversaryButton.addEventListener(
+    "click",
+    () => {
+
+        anniversaryForm.style.display =
+            "flex";
+
+    }
+);
+
+cancelAnniversaryButton.addEventListener(
+    "click",
+    () => {
+
+        anniversaryForm.style.display =
+            "none";
+
+    }
+);
+
+const saveAnniversaryButton =
+    document.getElementById(
+        "save-anniversary-button"
+    );
+
+saveAnniversaryButton.addEventListener(
+    "click",
+    async () => {
+
+        const date =
+            document.getElementById(
+                "anniversary-date"
+            ).value;
+
+        const name =
+            document.getElementById(
+                "anniversary-name"
+            ).value.trim();
+
+        const icon =
+            document.getElementById(
+                "anniversary-icon"
+            ).value.trim();
+
+        if (!date || !name) {
+
+            alert(
+                "날짜와 기념일 이름을 입력해주세요."
+            );
+
+            return;
+
+        }
+
+        try {
+
+            await addDoc(
+                collection(
+                    db,
+                    "anniversaries"
+                ),
+                {
+                    date: date,
+                    name: name,
+                    icon: icon || "💌"
+                }
+            );
+
+            alert(
+                "기념일이 추가되었습니다!"
+            );
+
+            document.getElementById(
+                "anniversary-date"
+            ).value = "";
+
+            document.getElementById(
+                "anniversary-name"
+            ).value = "";
+
+            document.getElementById(
+                "anniversary-icon"
+            ).value = "";
+
+            anniversaryForm.style.display =
+                "none";
+
+            await loadAnniversaries();
+
+            renderCalendar();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "기념일 저장 실패:",
+                error
+            );
+
+            alert(
+                "기념일을 저장하지 못했습니다."
+            );
+
+        }
+
+    }
+);
+
         let currentDate = new Date();
 
         let selectedButton = null;
+
+
+
+async function loadAnniversaries() {
+
+    try {
+
+        const anniversaryQuery =
+            query(
+                collection(
+                    db,
+                    "anniversaries"
+                ),
+                orderBy(
+                    "date",
+                    "asc"
+                )
+            );
+
+        const snapshot =
+            await getDocs(
+                anniversaryQuery
+            );
+
+        allAnniversaries = [];
+
+        snapshot.forEach(
+            (docSnapshot) => {
+
+                allAnniversaries.push({
+
+                    id: docSnapshot.id,
+
+                    ...docSnapshot.data()
+
+                });
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "기념일 불러오기 실패:",
+            error
+        );
+
+    }
+
+}
+
 
 
         /* =========================
@@ -756,6 +1179,8 @@
 
 
                 await loadDiaries();
+                
+                await loadAnniversaries();
 
                 renderCalendar();
 
@@ -1005,16 +1430,84 @@
                             dateString
                     );
 
+            const dayAnniversaries =
+    allAnniversaries.filter(
+        anniversary =>
+            anniversary.date === dateString
+    );
 
-                if (
-                    dayDiaries.length > 0
-                ) {
+if (dayAnniversaries.length > 0) {
 
-                    button.classList.add(
-                        "has-diary"
-                    );
+    const anniversaryMarker =
+        document.createElement("div");
 
-                }
+    anniversaryMarker.className =
+        "calendar-anniversary-marker";
+
+    anniversaryMarker.textContent =
+        dayAnniversaries
+            .map(
+                anniversary =>
+                    anniversary.icon || "💌"
+            )
+            .join(" ");
+
+    button.appendChild(
+        anniversaryMarker
+    );
+
+}
+
+
+            const myDiary =
+    dayDiaries.some(
+        diary => diary.authorUid === auth.currentUser.uid
+    );
+
+const dannaDiary =
+    dayDiaries.some(
+        diary => diary.authorUid === "HUoVSrtgBUUMrCJ6DLT06sHeOlx1"
+    );
+
+if (myDiary) {
+    button.classList.add("has-my-diary");
+}
+
+if (dannaDiary) {
+    button.classList.add("has-danna-diary");
+}
+
+const diaryDots =
+    document.createElement("div");
+
+diaryDots.className =
+    "calendar-diary-dots";
+
+if (myDiary) {
+    const myDot =
+        document.createElement("span");
+
+    myDot.className =
+        "calendar-my-dot";
+
+    myDot.textContent = "●";
+
+    diaryDots.appendChild(myDot);
+}
+
+if (dannaDiary) {
+    const dannaDot =
+        document.createElement("span");
+
+    dannaDot.className =
+        "calendar-danna-dot";
+
+    dannaDot.textContent = "●";
+
+    diaryDots.appendChild(dannaDot);
+}
+
+button.appendChild(diaryDots);
 
 
                 /* =========================
@@ -1052,8 +1545,15 @@
                             dayDiaries
                         );
 
+                        showAnniversariesForDate(
+                          dateString,
+                          dayAnniversaries
+                        );
+
                     }
                 );
+
+                
 
 
                 calendarDays.appendChild(
@@ -1191,6 +1691,354 @@
         }
 
 
+        function showAnniversariesForDate(
+    dateString,
+    dayAnniversaries
+) {
+
+    const selectedDateArea =
+    document.getElementById(
+        "selected-diaries"
+    );
+
+    if (!selectedDateArea) {
+        return;
+    }
+
+    const oldAnniversaryArea =
+        document.getElementById(
+            "selected-anniversaries"
+        );
+
+    if (oldAnniversaryArea) {
+        oldAnniversaryArea.remove();
+    }
+
+    if (dayAnniversaries.length === 0) {
+        return;
+    }
+
+    const anniversaryArea =
+        document.createElement("div");
+
+    anniversaryArea.id =
+        "selected-anniversaries";
+
+    anniversaryArea.innerHTML = `
+        <div class="selected-anniversary-title">
+            🎉 기념일
+        </div>
+    `;
+
+    dayAnniversaries.forEach(
+        anniversary => {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "selected-anniversary-item";
+
+            const anniversaryContent =
+    document.createElement("span");
+
+anniversaryContent.textContent =
+    `${anniversary.icon || "💌"} ${anniversary.name}`;
+
+const deleteButton =
+    document.createElement("button");
+
+deleteButton.type = "button";
+
+const editButton =
+    document.createElement("button");
+
+editButton.type = "button";
+
+editButton.textContent =
+    "수정";
+
+editButton.className =
+    "edit-anniversary-button";
+
+
+editButton.addEventListener(
+    "click",
+    () => {
+
+        const editModal =
+            document.getElementById(
+                "anniversary-edit-modal"
+            );
+
+        const editDateInput =
+            document.getElementById(
+                "edit-anniversary-date"
+            );
+
+        const editNameInput =
+            document.getElementById(
+                "edit-anniversary-name"
+            );
+
+        const editIconInput =
+            document.getElementById(
+                "edit-anniversary-icon"
+            );
+
+        const saveEditAnniversaryButton =
+            document.getElementById(
+                "save-edit-anniversary-button"
+            );
+
+        const cancelEditAnniversaryButton =
+            document.getElementById(
+                "cancel-edit-anniversary-button"
+            );
+
+
+        /* 기존 내용 넣기 */
+
+        editDateInput.value =
+            anniversary.date;
+
+        editNameInput.value =
+            anniversary.name;
+
+        editIconInput.value =
+            anniversary.icon || "💌";
+
+
+        /* 팝업 열기 */
+
+        editModal.style.display =
+            "flex";
+
+        editModal.onclick =
+    (event) => {
+
+        if (
+            event.target === editModal
+        ) {
+
+            editModal.style.display =
+                "none";
+
+        }
+
+    };
+
+
+        /* 취소 버튼 */
+
+        cancelEditAnniversaryButton.onclick =
+            () => {
+
+                editModal.style.display =
+                    "none";
+
+            };
+
+
+        /* 저장 버튼 */
+
+        saveEditAnniversaryButton.onclick =
+            async () => {
+
+                const newDate =
+                    editDateInput.value;
+
+                const newName =
+                    editNameInput.value.trim();
+
+                const newIcon =
+                    editIconInput.value.trim();
+
+
+                if (
+                    !newDate ||
+                    !newName
+                ) {
+
+                    alert(
+                        "날짜와 기념일 이름은 반드시 입력해주세요."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    await deleteDoc(
+                        doc(
+                            db,
+                            "anniversaries",
+                            anniversary.id
+                        )
+                    );
+
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "anniversaries"
+                        ),
+                        {
+                            date: newDate,
+                            name: newName,
+                            icon: newIcon || "💌"
+                        }
+                    );
+
+
+                    /* 팝업 닫기 */
+
+                    editModal.style.display =
+                        "none";
+
+
+                    /* 데이터 다시 불러오기 */
+
+                    await loadAnniversaries();
+
+
+                    /* 수정된 날짜의 기념일 다시 표시 */
+
+                    showAnniversariesForDate(
+                        newDate,
+                        allAnniversaries.filter(
+                            item =>
+                                item.date === newDate
+                        )
+                    );
+
+
+                    /* 달력 다시 그리기 */
+
+                    renderCalendar();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "기념일 수정 실패:",
+                        error
+                    );
+
+                    alert(
+                        "기념일을 수정하지 못했습니다."
+                    );
+
+                }
+
+            };
+
+    }
+);
+
+
+deleteButton.textContent =
+    "삭제";
+
+deleteButton.className =
+    "delete-anniversary-button";
+
+deleteButton.addEventListener(
+    "click",
+    async (event) => {
+
+        event.stopPropagation();
+
+        const confirmed =
+            confirm(
+                "이 기념일을 삭제할까요?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            await deleteDoc(
+                doc(
+                    db,
+                    "anniversaries",
+                    anniversary.id
+                )
+            );
+
+            await loadAnniversaries();
+
+            showAnniversariesForDate(
+                dateString,
+                allAnniversaries.filter(
+                    item =>
+                        item.date === dateString
+                )
+            );
+
+            renderCalendar();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "기념일 삭제 실패:",
+                error
+            );
+
+            alert(
+                "기념일을 삭제하지 못했습니다."
+            );
+
+        }
+
+    }
+);
+
+item.appendChild(
+    anniversaryContent
+);
+
+item.appendChild(
+    editButton
+);
+
+item.appendChild(
+    deleteButton
+);
+
+anniversaryArea.appendChild(
+    item
+);
+
+        }
+    );
+
+    const diaryArea =
+    document.getElementById(
+        "selected-diaries"
+    );
+
+if (
+    diaryArea &&
+    diaryArea.parentNode
+) {
+
+    diaryArea.parentNode.insertBefore(
+        anniversaryArea,
+        diaryArea
+    );
+
+}
+}
+
+
         /* =========================
            이전 달
         ========================= */
@@ -1234,7 +2082,68 @@
                 }
             );
 
-    </script>
+        
+</script>
+
+
+<div
+    id="anniversary-edit-modal"
+    class="anniversary-edit-modal"
+    style="display: none;"
+>
+    <div class="anniversary-edit-box">
+
+        <div class="anniversary-edit-title">
+            ✦ 기념일 수정
+        </div>
+
+        <label>
+            날짜
+            <input
+                type="date"
+                id="edit-anniversary-date"
+            >
+        </label>
+
+        <label>
+            이름
+            <input
+                type="text"
+                id="edit-anniversary-name"
+                placeholder="기념일 이름"
+            >
+        </label>
+
+        <label>
+            이모티콘
+            <input
+                type="text"
+                id="edit-anniversary-icon"
+                placeholder="예: 🎄"
+            >
+        </label>
+
+        <div class="anniversary-edit-buttons">
+
+            <button
+                id="save-edit-anniversary-button"
+                type="button"
+            >
+                저장
+            </button>
+
+            <button
+                id="cancel-edit-anniversary-button"
+                type="button"
+            >
+                취소
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
 
 </body>
 
