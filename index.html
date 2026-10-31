@@ -69,25 +69,21 @@
     <div class="main-image-slider">
     <div class="main-image-track">
 
-        <div class="main-image-slide">
-            <img src="main-image.png" alt="대표 이미지">
-        </div>
+        <div class="main-image-slider">
 
-        <div class="main-image-slide">
-            <img src="main-image-2.png" alt="대표 이미지">
-        </div>
+    <img
+        src="main-image.png"
+        alt="대표 이미지"
+        class="main-image main-image-current"
+    >
 
-        <div class="main-image-slide">
-            <img src="main-image-3.png" alt="대표 이미지">
-        </div>
+    <img
+        src="main-image-2.png"
+        alt="대표 이미지"
+        class="main-image main-image-next"
+    >
 
-        <div class="main-image-slide">
-            <img src="main-image-4.png" alt="대표 이미지">
-        </div>
-
-        <div class="main-image-slide">
-            <img src="main-image-5.png" alt="대표 이미지">
-        </div>
+</div>
 
     </div>
 </div>
@@ -151,15 +147,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const mainImageTrack =
-    document.querySelector(".main-image-track");
+const mainImageCurrent =
+    document.querySelector(".main-image-current");
+
+const mainImageNext =
+    document.querySelector(".main-image-next");
 
 const mainImages = [
     "main-image.png",
     "main-image-2.png",
     "main-image-3.png",
     "main-image-4.png",
-    "main-image-5.png",
+    "main-image-5.png"
 ];
 
 let mainImageIndex = 0;
@@ -167,12 +166,78 @@ let mainImageIndex = 0;
 setInterval(
     () => {
 
-        mainImageIndex =
+        const nextIndex =
             (mainImageIndex + 1)
             % mainImages.length;
 
-        mainImageTrack.style.transform =
-            `translateX(-${mainImageIndex * 100}%)`;
+        /* 다음 이미지 준비 */
+        mainImageNext.src =
+            mainImages[nextIndex];
+
+        mainImageNext.style.transition =
+            "none";
+
+        mainImageCurrent.style.transition =
+            "none";
+
+        mainImageNext.style.opacity =
+            "0";
+
+        mainImageCurrent.style.opacity =
+            "1";
+
+        /* 브라우저가 상태를 적용한 뒤 동시에 전환 */
+        requestAnimationFrame(
+            () => {
+
+                requestAnimationFrame(
+                    () => {
+
+                        /* 다음 그림은 천천히 나타남 */
+                        mainImageNext.style.transition =
+                            "opacity 1s ease-in-out";
+
+                        mainImageNext.style.opacity =
+                            "1";
+
+                        /* 전 그림은 더 빠르게 사라짐 */
+                        mainImageCurrent.style.transition =
+                            "opacity 0.6s ease-in-out";
+
+                        mainImageCurrent.style.opacity =
+                            "0";
+
+                    }
+                );
+
+            }
+        );
+
+        /* 전환이 끝난 뒤 이미지 역할 교체 */
+        setTimeout(
+            () => {
+
+                mainImageCurrent.src =
+                    mainImages[nextIndex];
+
+                mainImageCurrent.style.transition =
+                    "none";
+
+                mainImageCurrent.style.opacity =
+                    "1";
+
+                mainImageNext.style.transition =
+                    "none";
+
+                mainImageNext.style.opacity =
+                    "0";
+
+                mainImageIndex =
+                    nextIndex;
+
+            },
+            1000
+        );
 
     },
     5000
@@ -308,13 +373,12 @@ async function loadRecentDiaries() {
 
 
         item.innerHTML = `
-            <a href="diary.html">
-                <strong>${diary.title}</strong>
-            </a>
+    <a href="diary.html?date=${encodeURIComponent(diary.date)}">
+        <strong>${diary.title}</strong>
+    </a>
 
-            <p>${diary.date} · ${author}</p>
-        `;
-
+    <p>${diary.date} · ${author}</p>
+`;
 
         box.appendChild(item);
 

@@ -37,7 +37,7 @@ p {
     width:850px;
     max-width: 100%;
     margin: 0 auto;
-    padding: 30px;
+    padding: 60px 30px 80px;
     background-color: #f7f2e0;
     border: 2px solid #625044;
     box-shadow: 8px 8px 0 #625044;
@@ -2985,42 +2985,435 @@ header nav * {
 ========================================= */
 
 .main-image {
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 
+    display: block;
     width: 100%;
-    height: 420px;
+    height: 100%;
 
     object-fit: contain;
+}
+
+.main-image-current {
+    opacity: 1;
+    z-index: 1;
+}
+
+.main-image-next {
+    opacity: 0;
+    z-index: 2;
 
     transition:
-        transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        opacity 1s ease-in-out;
 }
+
+/* =========================================
+   대표 이미지 크로스페이드
+========================================= */
 
 .main-image-slider {
-    width: 100%;
-    height: 420px;
-    overflow: hidden;
-    position: relative;
-    margin-top: 35px;
+    position: relative !important;
+
+    width: 100% !important;
+    height: 420px !important;
+
+    margin-top: 15px;
+
+    overflow: hidden !important;
 }
 
-.main-image-track {
-    width: 100%;
-    height: 100%;
-    display: flex;
+.main-image-slider .main-image {
+    position: absolute !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+}
+
+.main-image-slider .main-image-current {
+    z-index: 1;
+    opacity: 1;
+}
+
+.main-image-slider .main-image-next {
+    z-index: 2;
+    opacity: 0;
+
     transition:
-        transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        opacity 1s ease-in-out;
 }
 
-.main-image-slide {
-    flex: 0 0 100%;
+/* =========================================
+   최근 일기 게시판
+========================================= */
+
+.recent-section {
     width: 100%;
-    height: 100%;
+    max-width: 600px;
+    margin: 35px auto 0;
+    box-sizing: border-box;
 }
 
-.main-image-slide img {
-    display: block;
+.recent-section h2 {
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+
+    border-bottom: 2px solid #625044;
+
+    color: #625044;
+    font-family: monospace;
+    font-size: 18px;
+    text-align: left;
+}
+
+#recent-diary-list {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    box-sizing: border-box;
+
+    padding: 5px 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   최근 일기 게시판 내부
+========================================= */
+
+.diary-item {
+    padding: 14px 18px;
+
+    box-sizing: border-box;
+}
+
+.diary-item:last-child {
+    border-bottom: none;
+}
+
+.diary-item a {
+    color: #3d3542;
+    text-decoration: none;
+}
+
+.diary-item a:hover {
+    color: #625044;
+}
+
+.diary-item strong {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.diary-item p {
+    margin: 6px 0 0;
+
+    color: #8a7d73;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+/* =========================================
+   MOBILE - 1차 기본 화면
+========================================= */
+
+@media (max-width: 768px) {
+
+    .container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .site-header {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .site-header h1 {
+        font-size: 24px;
+        word-break: keep-all;
+    }
+
+    .site-nav-area {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .site-nav-area nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 12px;
+        padding-left: 5px;
+        padding-right: 5px;
+        box-sizing: border-box;
+    }
+
+    .site-nav-area nav a {
+        white-space: nowrap;
+    }
+
+    .top-sections {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .top-section {
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    .main-image-slider {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .main-image-track {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .main-image-slider .main-image {
+    width: auto !important;
+    height: 360px !important;
+    max-width: calc(100% - 40px) !important;
+    max-height: 360px !important;
+    box-sizing: border-box !important;
+}
+
+    .advice-section {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .recent-section {
+    width: calc(100% - 30px);
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+    #recent-diary-list {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .top-sections {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.top-section {
+    flex: 1;
+    min-width: 0;
+}
+
+.advice-section {
+    width: calc(100% - 30px);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#advice-text {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+.container.book-cover {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+}
+
+.week-selector {
+    width: 100%;
+    gap: 3px;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.week-dates {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.week-date {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 2px;
+    box-sizing: border-box;
+    font-size: 12px;
+}
+
+.week-date .day-name {
+    font-size: 10px;
+}
+
+.week-date .day-number {
+    font-size: 14px;
+}
+
+.week-arrow {
+    flex: 0 0 26px;
+    width: 26px;
+    height: 30px;
+    padding: 0;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.diary-day-columns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+
+.diary-day-single {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.diary-day-single .diary-post {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.diary-page .container {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+.diary-page #diary-list {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.diary-day-single {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.write-container {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+
+}
+
+@media (max-width: 768px) {
+
+    .mypage-container {
+        width: calc(100% + 60px);
+        max-width: none;
+        margin-left: -30px;
+        box-sizing: border-box;
+    }
+
+    .mypage-paper {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .character-card,
+    .food-collection {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    /* =========================================
+       MY PAGE - 캐릭터 모바일 전용
+    ========================================= */
+
+    .character-two-column {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .character-two-column .character-growth {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        margin-top: 0;
+    }
+
+    .character-two-column .character-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .character-two-column {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 50px !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column > .character-growth {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
 }

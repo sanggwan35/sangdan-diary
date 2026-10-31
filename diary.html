@@ -158,10 +158,38 @@
         // 현재 선택한 날짜
         let selectedDate = new Date();
 
-        // 오늘 날짜의 일기 날짜 형식과 맞추기 위해 시간 제거
-        selectedDate.setHours(0, 0, 0, 0);
+// 오늘 날짜의 일기 날짜 형식과 맞추기 위해 시간 제거
+selectedDate.setHours(0, 0, 0, 0);
 
-        let currentUser = null;
+
+// 홈의 최근 일기에서 전달된 날짜 확인
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const diaryDate =
+    urlParams.get("date");
+
+
+// 전달된 날짜가 있으면 해당 날짜를 선택
+if (diaryDate) {
+
+    const targetDate =
+        new Date(
+            diaryDate + "T00:00:00"
+        );
+
+    if (!isNaN(targetDate.getTime())) {
+
+        selectedDate =
+            targetDate;
+
+    }
+}
+
+
+let currentUser = null;
 
         let currentUserNickname = "";
 
@@ -386,13 +414,24 @@ snapshot.forEach((docSnapshot) => {
                 }
             );
 
-            for (let i = 0; i < 7; i++) {
+            
+            const isMobile =
+    window.matchMedia("(max-width: 768px)").matches;
 
-                const date =
-                    addDays(
-                        selectedDate,
-                        i - 3
-                    );
+const dateCount =
+    isMobile ? 5 : 7;
+
+const dateStart =
+    isMobile ? -2 : -3;
+
+            
+            for (let i = 0; i < dateCount; i++) {
+
+    const date =
+        addDays(
+            selectedDate,
+            i + dateStart
+        );
 
                 const button =
                     document.createElement("button");

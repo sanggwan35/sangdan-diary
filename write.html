@@ -480,25 +480,24 @@ saveBtn.addEventListener("click", async () => {
     const content =
         diaryContent.value.trim();
 
-    let diaryPoint = 0;
+let diaryPoint = 0;
 
 const contentLength =
     content.length;
 
 if (contentLength >= 1000) {
 
-    diaryPoint = 25;
+    diaryPoint = 50;
 
 } else if (contentLength >= 500) {
 
-    diaryPoint = 15;
+    diaryPoint = 30;
 
 } else {
 
-    diaryPoint = 7;
+    diaryPoint = 15;
 
-}    
-
+}
 
 
 
