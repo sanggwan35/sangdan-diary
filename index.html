@@ -66,7 +66,24 @@
 
     </div>
 
-    <img src="main-image.png" alt="대표 이미지" class="main-image">
+    <div class="main-image-slider">
+    <div class="main-image-track">
+
+        <div class="main-image-slide">
+            <img src="main-image.png" alt="대표 이미지">
+        </div>
+
+        <div class="main-image-slide">
+            <img src="main-image-2.png" alt="대표 이미지">
+        </div>
+
+        <div class="main-image-slide">
+            <img src="main-image-3.png" alt="대표 이미지">
+        </div>
+
+    </div>
+</div>
+
 
     <div class="advice-section">
 
@@ -125,6 +142,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+const mainImageTrack =
+    document.querySelector(".main-image-track");
+
+const mainImages = [
+    "main-image.png",
+    "main-image-2.png",
+    "main-image-3.png",
+];
+
+let mainImageIndex = 0;
+
+setInterval(
+    () => {
+
+        mainImageIndex =
+            (mainImageIndex + 1)
+            % mainImages.length;
+
+        mainImageTrack.style.transform =
+            `translateX(-${mainImageIndex * 100}%)`;
+
+    },
+    5000
+);
 
 
 onAuthStateChanged(auth, (user) => {
