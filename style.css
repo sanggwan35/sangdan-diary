@@ -3131,21 +3131,22 @@ header nav * {
 }
 
 /* =========================================
-   MOBILE - 1차 기본 화면
+   MOBILE - 기본 화면
+   PC 디자인에는 영향 없음
 ========================================= */
 
 @media (max-width: 768px) {
 
-    .container {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+    /* -------------------------
+       전체 공통
+    ------------------------- */
 
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
+    .container {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+    }
 
     .site-header {
         width: 100%;
@@ -3167,8 +3168,7 @@ header nav * {
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px 12px;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding: 0 5px;
         box-sizing: border-box;
     }
 
@@ -3176,14 +3176,23 @@ header nav * {
         white-space: nowrap;
     }
 
+
+    /* -------------------------
+       HOME
+    ------------------------- */
+
     .top-sections {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
         width: 100%;
         box-sizing: border-box;
     }
 
     .top-section {
-        box-sizing: border-box;
+        flex: 1;
         min-width: 0;
+        box-sizing: border-box;
     }
 
     .main-image-slider {
@@ -3200,28 +3209,37 @@ header nav * {
     }
 
     .main-image-slider .main-image {
-    width: auto !important;
-    height: 360px !important;
-    max-width: calc(100% - 40px) !important;
-    max-height: 360px !important;
-    box-sizing: border-box !important;
-}
+        width: auto !important;
+        height: 360px !important;
+        max-width: calc(100% - 40px) !important;
+        max-height: 360px !important;
+        box-sizing: border-box !important;
+    }
 
     .advice-section {
-        width: 100%;
-        max-width: 100%;
+        width: calc(100% - 30px);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
         box-sizing: border-box;
         overflow: hidden;
     }
 
+    #advice-text {
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        word-break: keep-all;
+    }
+
     .recent-section {
-    width: calc(100% - 30px);
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
-    box-sizing: border-box;
-    overflow: hidden;
-}
+        width: calc(100% - 30px);
+        max-width: 540px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
 
     #recent-diary-list {
         width: 100%;
@@ -3229,174 +3247,487 @@ header nav * {
         box-sizing: border-box;
     }
 
-    .top-sections {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.top-section {
-    flex: 1;
-    min-width: 0;
-}
-
-.advice-section {
-    width: calc(100% - 30px);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-#advice-text {
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-}
-
-.container.book-cover {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    box-sizing: border-box;
-}
-
-.week-selector {
-    width: 100%;
-    gap: 3px;
-    box-sizing: border-box;
-    min-width: 0;
-}
-
-.week-dates {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 5px;
-    width: 100%;
-    min-width: 0;
-    flex: 1 1 auto;
-}
-
-.week-date {
-    width: 100%;
-    min-width: 0;
-    padding: 11px 2px;
-    box-sizing: border-box;
-    font-size: 12px;
-}
-
-.week-date .day-name {
-    font-size: 10px;
-}
-
-.week-date .day-number {
-    font-size: 14px;
-}
-
-.week-arrow {
-    flex: 0 0 26px;
-    width: 26px;
-    height: 30px;
-    padding: 0;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-.diary-day-columns {
-    grid-template-columns: 1fr;
-    gap: 30px;
-}
+    .container.book-cover {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
 
 
-.diary-day-single {
-    width: 100%;
-    box-sizing: border-box;
-}
+    /* -------------------------
+       DIARY
+    ------------------------- */
 
-.diary-day-single .diary-post {
-    width: 100%;
-    box-sizing: border-box;
-}
+    .week-selector {
+        width: 100%;
+        gap: 3px;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    .week-dates {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 5px;
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    .week-date {
+        width: 100%;
+        min-width: 0;
+        padding: 11px 2px;
+        box-sizing: border-box;
+        font-size: 12px;
+    }
+
+    .week-date .day-name {
+        font-size: 10px;
+    }
+
+    .week-date .day-number {
+        font-size: 14px;
+    }
+
+    .week-arrow {
+        flex: 0 0 26px;
+        width: 26px;
+        height: 30px;
+        padding: 0;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .diary-day-columns {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .diary-page .container {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    .diary-page #diary-list {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .diary-day-single {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .diary-day-single .diary-post {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
 
-.diary-page .container {
-    width: 100%;
-    max-width: none;
-    box-sizing: border-box;
-}
+    /* -------------------------
+       WRITE
+    ------------------------- */
 
-.diary-page #diary-list {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.diary-day-single {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.write-container {
-    width: 100%;
-    max-width: none;
-    box-sizing: border-box;
-}
+    .write-container {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
 
 
-}
-
-@media (max-width: 768px) {
+    /* -------------------------
+       MYPAGE - 전체
+    ------------------------- */
 
     .mypage-container {
-        width: calc(100% + 60px);
-        max-width: none;
-        margin-left: -30px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0 14px;
         box-sizing: border-box;
     }
 
     .mypage-paper {
         width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-
-    .character-card,
-    .food-collection {
         max-width: 100%;
+        margin: 20px 0 0;
+        padding: 28px 18px 35px 28px;
         box-sizing: border-box;
     }
 
-}
-
-@media (max-width: 700px) {
-
-    /* =========================================
-       MY PAGE - 캐릭터 모바일 전용
-    ========================================= */
-
-    .character-two-column {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
+    .profile-area {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
         width: 100%;
         box-sizing: border-box;
     }
 
-    .character-two-column .character-growth {
+    .profile-card {
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
-        margin-top: 0;
     }
 
-    .character-two-column .character-card {
+    .stats-area {
         width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .stat-box {
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+
+    /* -------------------------
+       MYPAGE - 캐릭터 2명
+       모바일에서는 세로 배치
+    ------------------------- */
+
+    .character-two-column {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        gap: 45px !important;
+
+        box-sizing: border-box;
+    }
+
+    .character-two-column > .character-growth {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        margin: 0 !important;
+        padding-top: 25px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* -------------------------
+       캐릭터 카드
+    ------------------------- */
+
+    @media (max-width: 1100px) {
+
+    .character-two-column .character-card {
+        width: 100% !important;
+        min-height: 1000px !important;
+        padding: 45px 30px !important;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .character-two-column .character-image-wrapper {
+        width: 230px !important;
+        height: 230px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 30px !important;
+    }
+
+    .character-two-column .character-image-box {
+        width: 230px !important;
+        height: 230px !important;
+    }
+
+    }
+
+    .character-two-column .character-main {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+
+    /* -------------------------
+       캐릭터 이미지
+    ------------------------- */
+
+    .character-two-column .character-image-wrapper {
+    width: 230px !important;
+    height: 230px !important;
+    margin: 0 auto 30px auto !important;
+    position: relative !important;
+    display: block !important;
+    box-sizing: border-box !important;
+}
+
+.character-two-column .character-image-box {
+    width: 230px !important;
+    height: 230px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
+
+.character-two-column .character-image-box img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+
+    /* -------------------------
+       캐릭터 이름 / 레벨 / EXP
+    ------------------------- */
+
+    .character-two-column .character-name {
+        font-size: 19px;
+        margin: 8px 0 4px;
+    }
+
+    .character-two-column .character-level {
+        font-size: 15px;
+        margin: 4px 0;
+    }
+
+    .character-two-column .character-exp {
+        font-size: 13px;
+        margin: 4px 0 18px;
+    }
+
+
+    /* -------------------------
+       탐험 / 취미
+    ------------------------- */
+
+    .character-two-column .character-exploration {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #sangkwan-exploration-main-button,
+    #sangkwan-hobby-main-button,
+    #danna-exploration-main-button,
+    #danna-hobby-main-button {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+
+
+    /* -------------------------
+       능력치
+    ------------------------- */
+
+    .character-two-column .character-stats {
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+        margin-top: 18px;
+
+        box-sizing: border-box;
+    }
+
+    .character-two-column .character-stat {
+        min-width: 0;
+        padding: 12px 8px;
+
+        text-align: center;
+
+        box-sizing: border-box;
+    }
+
+    .character-two-column .character-stat span {
+        display: block;
+        font-size: 11px;
+        margin-bottom: 5px;
+    }
+
+    .character-two-column .character-stat strong {
+        font-size: 18px;
+    }
+
+
+    /* -------------------------
+       취미 목록
+    ------------------------- */
+
+    #sangkwan-hobby-list,
+    #danna-hobby-list {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 7px;
+
+        box-sizing: border-box;
+    }
+
+    .sangkwan-hobby-item,
+    .danna-hobby-item {
+        width: 100%;
+        min-width: 0;
+
+        padding: 11px 12px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* -------------------------
+       캐릭터 정보
+    ------------------------- */
+
+    .character-two-column .character-info {
+        width: 100%;
+        margin-top: 20px;
+
+        box-sizing: border-box;
+    }
+
+    .character-two-column .character-info-box {
+        width: 100%;
+        padding: 14px;
+
+        box-sizing: border-box;
+    }
+
+    .character-two-column .character-info-text {
+        font-size: 13px;
+        line-height: 1.8;
+        word-break: keep-all;
+    }
+
+
+    /* -------------------------
+       밥 주기
+    ------------------------- */
+
+    .character-two-column .character-feed {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .character-two-column .character-feed-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    /* -------------------------
+       음식 도감
+    ------------------------- */
+
+    .character-two-column .food-collection {
+        width: 100%;
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+    .character-two-column .food-collection-toggle {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .character-two-column .food-collection-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+        width: 100%;
+
         box-sizing: border-box;
     }
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
+    .character-two-column .character-image-box {
+        width: 230px !important;
+        height: 230px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 30px !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .character-two-column .character-image-box img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+}
+
+/* =========================================
+   MYPAGE MOBILE CHARACTER - 실제 모바일 화면
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-card {
+        width: 100% !important;
+        min-height: 1100px !important;
+        padding: 45px 30px !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+    }
+
+    .character-two-column .character-main {
+        width: 100% !important;
+        display: block !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column .character-image-wrapper {
+        width: 300px !important;
+        height: 300px !important;
+        margin: 0 auto 30px auto !important;
+        position: relative !important;
+        display: block !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column .character-image-box {
+        width: 300px !important;
+        height: 300px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column .character-image-box img {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
+    }
+
+    .character-two-column .character-name,
+    .character-two-column .character-level,
+    .character-two-column .character-exp {
+        position: relative !important;
+        display: block !important;
+        clear: both !important;
+    }
+}
+
+@media (max-width: 1100px) {
 
     .character-two-column {
         display: flex !important;
@@ -3408,7 +3739,6 @@ header nav * {
     }
 
     .character-two-column > .character-growth {
-        display: block !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
@@ -3416,4 +3746,525 @@ header nav * {
         box-sizing: border-box !important;
     }
 
+    .character-two-column .character-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-exploration {
+        width: 100% !important;
+        margin-top: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    #sangkwan-exploration-main-button,
+    #sangkwan-hobby-main-button,
+    #danna-exploration-main-button,
+    #danna-hobby-main-button {
+        padding: 12px 20px !important;
+        font-size: 15px !important;
+        min-height: 44px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    #sangkwan-exploration-main-button,
+    #sangkwan-hobby-main-button,
+    #danna-exploration-main-button,
+    #danna-hobby-main-button {
+        font-size: 14px !important;
+        padding: 10px 16px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    #sangkwan-exploration-main-button,
+    #sangkwan-hobby-main-button,
+    #danna-exploration-main-button,
+    #danna-hobby-main-button {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        box-sizing: border-box !important;
+    }
+
+    #sangkwan-hobby-main-button,
+    #danna-hobby-main-button {
+        margin-left: 8px !important;
+        top: 5px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-stats {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column .character-stat {
+        width: 100% !important;
+        min-height: 55px !important;
+        padding: 10px 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column .character-stat span {
+        font-size: 12px !important;
+    }
+
+    .character-two-column .character-stat strong {
+        font-size: 20px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-info {
+        width: 100% !important;
+        margin-top: 25px !important;
+    }
+
+    .character-two-column .character-info-box {
+        width: 100% !important;
+        padding: 18px 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    .character-two-column .character-info-text {
+        font-size: 18px !important;
+        line-height: 2 !important;
+    }
+
+}
+@media (max-width: 1100px) {
+
+    .character-two-column .character-list {
+        font-size: 17px !important;
+        line-height: 2 !important;
+    }
+
+    .character-two-column .character-list li {
+        font-size: 17px !important;
+        line-height: 2 !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-info {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* GROWTH는 한 줄 전체 */
+    .character-two-column .character-info-box:first-child {
+        grid-column: 1 / -1 !important;
+    }
+
+    /* 할 수 있는 것 / 하고 싶은 것 */
+    .character-two-column .character-info-box:nth-child(2),
+    .character-two-column .character-info-box:nth-child(3) {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-info-box:nth-child(3) {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    .character-two-column .character-info-box:nth-child(3) .character-info-text {
+        margin: 0 !important;
+        text-align: center !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-list {
+        padding-left: 18px !important;
+        margin-left: 0 !important;
+    }
+
+    .character-two-column .character-list li {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-list {
+        list-style-position: inside !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    #sangkwan-exploration-main-button,
+    #sangkwan-hobby-main-button,
+    #danna-exploration-main-button,
+    #danna-hobby-main-button {
+        padding: 15px 28px !important;
+        font-size: 17px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-menu {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    .character-two-column .character-menu button {
+        width: 80% !important;
+        min-height: 52px !important;
+        padding: 14px 20px !important;
+        font-size: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    #sangkwan-inventory-button,
+    #sangkwan-wardrobe-button,
+    #sangkwan-shop-button,
+    #danna-inventory-button,
+    #danna-wardrobe-button,
+    #danna-shop-button {
+        display: block !important;
+        width: 65% !important;
+        margin: 12px auto !important;
+        padding: 15px 20px !important;
+        font-size: 17px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+@media (max-width: 1100px) {
+
+    .character-two-column .character-feed-button,
+    .character-two-column .food-collection-toggle {
+        width: 65% !important;
+        min-height: 55px !important;
+        margin: 12px auto !important;
+        padding: 15px 20px !important;
+        font-size: 17px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-stat span {
+        font-size: 15px !important;
+    }
+
+    .character-two-column .character-stat strong {
+        font-size: 23px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .exploration-result {
+        width: 85% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+        border-radius: 14px !important;
+    }
+
+    .character-two-column .exploration-result * {
+        font-size: 20px !important;
+        line-height: 1.8 !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .exploration-locations button,
+    .character-two-column .sangkwan-hobby-item,
+    .character-two-column .danna-hobby-item {
+        min-height: 58px !important;
+        padding: 15px 18px !important;
+        font-size: 17px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    /* 탐험 장소 */
+    .character-two-column .exploration-location {
+        min-height: 58px !important;
+        padding: 15px 18px !important;
+        font-size: 17px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 상관쟝 취미 */
+    .character-two-column .sangkwan-hobby-item {
+        min-height: 58px !important;
+        padding: 15px 18px !important;
+        font-size: 17px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 단나쟝 취미 */
+    .character-two-column .danna-hobby-item {
+        min-height: 58px !important;
+        padding: 15px 18px !important;
+        font-size: 17px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    /* 상관쟝 취미 목록 */
+    .character-two-column .sangkwan-hobby-item {
+        min-height: 58px !important;
+        padding: 15px 18px !important;
+        font-size: 17px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 상관쟝 탐험 장소 목록 */
+    .character-two-column .sangkwan-exploration-location {
+        min-height: 58px !important;
+        padding: 15px 18px !important;
+        font-size: 17px !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    /* 음식 도감 안의 음식 정보 */
+    .character-two-column .food-collection-grid {
+        font-size: 16px !important;
+    }
+
+    .character-two-column .food-collection-grid * {
+        font-size: 16px !important;
+    }
+
+
+    /* 상점 팝업 */
+    .character-two-column .sangkwan-shop-window,
+    .character-two-column .danna-shop-window {
+        width: 90% !important;
+        max-width: 520px !important;
+        min-height: 420px !important;
+        padding: 28px 22px !important;
+        box-sizing: border-box !important;
+        border-radius: 14px !important;
+    }
+
+
+    /* 가방 팝업 */
+    .character-two-column .sangkwan-inventory-window,
+    .character-two-column .danna-inventory-window {
+        width: 90% !important;
+        max-width: 520px !important;
+        min-height: 420px !important;
+        padding: 28px 22px !important;
+        box-sizing: border-box !important;
+        border-radius: 14px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    /* 상점 / 옷장 / 가방 팝업창 */
+    .character-two-column .sangkwan-shop-window,
+    .character-two-column .sangkwan-wardrobe-window,
+    .character-two-column .sangkwan-inventory-window,
+    .character-two-column .danna-shop-window,
+    .character-two-column .danna-wardrobe-window,
+    .character-two-column .danna-inventory-window {
+        width: 94% !important;
+        max-width: 600px !important;
+        min-height: 560px !important;
+        padding: 35px 25px !important;
+        box-sizing: border-box !important;
+        border-radius: 16px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    /* 취미 목록의 능력치 설명 */
+    .character-two-column .sangkwan-hobby-item small,
+    .character-two-column .danna-hobby-item small {
+        font-size: 14px !important;
+    }
+
+    /* 캐릭터 옆 포인트 */
+    .character-two-column .character-points {
+        font-size: 18px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-action-bubble {
+        transform: translateX(40px) !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-action-bubble {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    .character-two-column .character-action-text {
+        font-size: 16px !important;
+        text-align: center !important;
+    }
+
+}
+@media (max-width: 1100px) {
+
+    .character-two-column .character-action-bubble {
+        width: 190px !important;
+        min-height: 58px !important;
+        transform: translate(60px, -1px) !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    /* 캐릭터 성장 문구 */
+    .character-two-column .character-info-text {
+        font-size: 20px !important;
+        line-height: 2 !important;
+    }
+
+    /* 할 수 있는 것 */
+    .character-two-column .character-list,
+    .character-two-column .character-list li {
+        font-size: 19px !important;
+        line-height: 2 !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .site-nav-area nav a {
+    padding: 13px 18px !important;
+    font-size: 17px !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .site-header > a[href="trash.html"],
+    .site-header > a.site-search {
+        display: inline-block !important;
+        padding: 13px 18px !important;
+        font-size: 17px !important;
+        box-sizing: border-box !important;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .character-two-column .character-name {
+        font-size: 24px !important;
+    }
+
+    .character-two-column .character-level {
+        font-size: 19px !important;
+    }
+
+    .character-two-column .character-exp {
+        font-size: 17px !important;
+    }
+
+}
+@media (max-width: 1100px) {
+    #danna-character-exp {
+        margin-bottom: 20px !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .mypage .container {
+        width: 100% !important;
+        max-width: none !important;
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+        box-sizing: border-box !important;
+    }
 }
