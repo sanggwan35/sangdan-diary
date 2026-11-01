@@ -4268,3 +4268,15 @@ header nav * {
         box-sizing: border-box !important;
     }
 }
+
+@media (max-width: 1100px) {
+    .mypage {
+        font-size: 17px !important;
+    }
+
+    .mypage p,
+    .mypage li,
+    .mypage span {
+        font-size: 17px !important;
+    }
+}
