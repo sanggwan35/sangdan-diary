@@ -36,36 +36,47 @@
         }
 
 
-        .site-nav-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        /* =================================
+   HEADER - 통일된 2줄 메뉴
+================================= */
 
+.site-nav-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+}
 
-        .site-header nav {
-            margin: 0;
-        }
+.site-header nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+}
 
+.site-header nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-        .site-header nav a {
-    display: inline-block;
-
-    margin: 3px 2px 0;
-    padding: 6px 11px;
+    margin: 0;
+    padding: 9px 16px;
 
     color: #625044;
     text-decoration: none;
 
     border: 1px solid #625044;
-    border-bottom: 3px solid #625044;
+    border-radius: 8px;
+    background: #f7f2e0;
 
-    background-color: #f7f2e0;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: nowrap;
 
-    border-radius: 5px 5px 0 0;
-
-    position: relative;
-    top: 2px;
+    position: static;
 
     transition:
         transform 0.15s ease,
@@ -74,13 +85,23 @@
 }
 
 .site-header nav a:hover {
-    background-color: #625044;
+    background: #625044;
     color: #fffaf3;
 
     transform: translateY(-2px);
-    box-shadow: 3px 3px 0 rgba(61, 53, 66, 0.25);
+    box-shadow: 0 3px 6px rgba(61, 53, 66, 0.18);
 }
 
+/* 두 줄 사이 구분선 */
+.site-header nav.site-nav-secondary {
+    box-sizing: border-box;
+    width: min(500px, 100%);
+
+    margin-top: 14px;
+    padding-top: 14px;
+
+    border-top: 1px solid rgba(98, 80, 68, 0.3);
+}
 
         /* ==================================================
            SEARCH
@@ -768,29 +789,35 @@
 
     <header class="site-header">
 
-        <h1>SANGWAN-DANNA PRISON</h1>
+    <h1>SANGWAN-DANNA PRISON</h1>
 
-        <p class="site-subtitle">
-    상관단나 기록 저장소
-</p>
+    <p class="site-subtitle">
+        상관단나 기록 저장소
+    </p>
 
-<div class="site-nav-area">
-    <nav>
-        <a href="index.html">HOME</a>
-        <a href="diary.html">DIARY</a>
-        <a href="write.html">WRITE</a>
-        <a href="calendar.html">CALENDAR</a>
-        <a href="dday.html">D-DAY</a>
-        <a href="movie.html">MOVIE</a>
-        <a href="game.html">GAME</a>
-        <a href="mypage.html">MY PAGE</a>
-    </nav>
-</div>
+    <div class="site-nav-area">
 
-<a href="trash.html">🗑️ TRASH</a>
-<a href="search.html" class="site-search">🔍 SEARCH</a>
+        <!-- 첫 번째 줄 -->
+        <nav class="site-nav-primary">
+            <a href="index.html">HOME</a>
+            <a href="diary.html">DIARY</a>
+            <a href="write.html">WRITE</a>
+            <a href="calendar.html">CALENDAR</a>
+            <a href="dday.html">D-DAY</a>
+            <a href="mypage.html">MY PAGE</a>
+        </nav>
 
-    </header>
+        <!-- 두 번째 줄 -->
+        <nav class="site-nav-secondary">
+            <a href="movie.html">MOVIE</a>
+            <a href="game.html">GAME</a>
+            <a href="search.html">🔍 SEARCH</a>
+            <a href="trash.html">🗑️ TRASH</a>
+        </nav>
+
+    </div>
+
+</header>
 
 
     <!-- ==================================================
