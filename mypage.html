@@ -3183,46 +3183,76 @@ friendDiaryCount.textContent =
 
 
 
+/* ------------------------------
+   댓글 개수
+------------------------------ */
+
+let myCommentCount = 0;
+let friendCommentCountValue = 0;
 
 
-        /* ------------------------------
-           댓글 개수
-        ------------------------------ */
+/*
+   모든 일기의 comments 서브컬렉션을 확인
+   실제로 존재하는 댓글만 카운트
+*/
+for (const diaryDoc of diarySnapshot.docs) {
 
-        let myCommentCount = 0;
-
-        let friendCommentCountValue = 0;
-
-
-        for (const diary of diarySnapshot.docs) {
-
-            const diaryData = diary.data();
-
-            const comments =
-                diaryData.comments || [];
+    const commentsSnapshot = await getDocs(
+        collection(
+            db,
+            "diaries",
+            diaryDoc.id,
+            "comments"
+        )
+    );
 
 
-            comments.forEach((comment) => {
+    commentsSnapshot.forEach((commentDoc) => {
 
-                if (
-    comment.uid === user.uid ||
-    comment.authorUid === user.uid
-) {
+        const comment =
+            commentDoc.data();
 
-    myCommentCount++;
 
-}
+        /* 내가 작성한 댓글 */
+        if (
+            comment.authorUid === user.uid
+        ) {
 
-if (
-    comment.uid === otherUid ||
-    comment.authorUid === otherUid
-) {
-    friendCommentCountValue++;
-}
-
-            });
+            myCommentCount++;
 
         }
+
+
+        /* 친구가 작성한 댓글 */
+        if (
+            comment.authorUid === otherUid
+        ) {
+
+            friendCommentCountValue++;
+
+        }
+
+    });
+
+}
+
+
+/* 화면에 표시 */
+commentCount.textContent =
+    myCommentCount;
+
+friendCommentCount.textContent =
+    friendCommentCountValue;
+
+
+        
+
+
+commentCount.textContent =
+    myCommentCount;
+
+friendCommentCount.textContent =
+    friendCommentCountValue;
 
 
         commentCount.textContent =
