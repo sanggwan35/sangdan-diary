@@ -1431,6 +1431,8 @@ async function loadAnniversaries() {
                             dateString
                     );
 
+            
+
             const dayAnniversaries =
     allAnniversaries.filter(
         anniversary =>
@@ -1462,12 +1464,16 @@ if (dayAnniversaries.length > 0) {
 
             const myDiary =
     dayDiaries.some(
-        diary => diary.authorUid === auth.currentUser.uid
+        diary =>
+            diary.authorUid !==
+            "HUoVSrtgBUUMrCJ6DLT06sHeOlx1"
     );
 
 const dannaDiary =
     dayDiaries.some(
-        diary => diary.authorUid === "HUoVSrtgBUUMrCJ6DLT06sHeOlx1"
+        diary =>
+            diary.authorUid ===
+            "HUoVSrtgBUUMrCJ6DLT06sHeOlx1"
     );
 
 if (myDiary) {

@@ -5621,12 +5621,29 @@ dannaHobbyItems.forEach(
                 const hobbyCost =
                     hobbyCosts[hobby];
 
-                const newStats = {
-                    ...currentStats,
+                const hobbyGains = {
+    reading: 1,
+    experiment: 3,
 
-                    [statKey]:
-                        currentStats[statKey] + 1
-                };
+    drawing: 2,
+    composition: 3,
+
+    hiking: 2,
+    travel: 4,
+
+    writing: 1,
+    chess: 2
+};
+
+const statGain =
+    hobbyGains[hobby];
+
+const newStats = {
+    ...currentStats,
+
+    [statKey]:
+        currentStats[statKey] + statGain
+};
 
                 if (
                     currentPoints <
