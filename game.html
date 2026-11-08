@@ -91,6 +91,228 @@
                 grid-template-columns: 1fr;
             }
         }
+
+
+/* =================================
+   NEON RETRO CRT
+================================= */
+
+.game-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    min-height: 225px;
+    padding: 36px 30px;
+
+    background: #d9cbb5;
+    border: 1px solid #b9a68a;
+    border-radius: 19px;
+
+    box-shadow:
+        0 4px 0 #a18d72,
+        0 8px 20px rgba(39, 31, 25, 0.10);
+
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+/* CRT 유리 화면 */
+.game-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    z-index: -1;
+
+    border: 2px solid #4b4651;
+    border-radius: 13px;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,0.025) 4px
+        ),
+        radial-gradient(
+            ellipse at 50% 35%,
+            #34313e 0%,
+            #211f2a 65%,
+            #17161f 100%
+        );
+
+    box-shadow:
+        inset 0 0 25px rgba(0,0,0,0.55),
+        0 0 10px rgba(170, 145, 255, 0.10);
+}
+
+/* 은은한 전원 LED */
+.game-card::after {
+    content: "";
+    position: absolute;
+
+    width: 6px;
+    height: 6px;
+
+    right: 23px;
+    bottom: 6px;
+
+    z-index: 3;
+    pointer-events: none;
+
+    border-radius: 50%;
+    background: #baff70;
+
+    box-shadow:
+        0 0 5px #baff70,
+        0 0 10px rgba(186,255,112,0.5);
+}
+
+/* 카드 내부 요소 */
+.game-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* 게임 제목 */
+.game-card-title {
+    margin-top: 0;
+
+    color: #c8ffcf;
+    font-family: monospace;
+    font-size: 21px;
+    letter-spacing: 0.5px;
+
+    text-shadow:
+        0 0 5px rgba(157,255,177,0.55),
+        0 0 13px rgba(157,255,177,0.18);
+}
+
+/* 게임 설명 */
+.game-card-description {
+    color: #c2bacd;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* 게임 시작 버튼 */
+.game-open-button {
+    display: inline-block;
+    margin-top: 13px;
+    padding: 9px 17px;
+
+    background: #caff80;
+    color: #292b2c;
+
+    border: 1px solid #e0ffb5;
+    border-radius: 5px;
+
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+
+    box-shadow:
+        0 0 7px rgba(202,255,128,0.25);
+
+    transition: all 0.2s ease;
+}
+
+.game-open-button:hover {
+    background: #e0ffb5;
+
+    box-shadow:
+        0 0 8px rgba(202,255,128,0.65),
+        0 0 18px rgba(202,255,128,0.25);
+
+    transform: translateY(-2px);
+}
+
+/* 마우스 올렸을 때 */
+.game-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 5px 0 #a18d72,
+        0 10px 24px rgba(39,31,25,0.13);
+}
+
+/* =================================
+   RETRO TV ANTENNA
+================================= */
+
+.game-card {
+    overflow: visible;
+    margin-top: 32px;
+}
+
+.tv-antenna {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+
+    width: 76px;
+    height: 38px;
+
+    transform: translateX(-50%);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.tv-antenna span {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    width: 3px;
+    height: 37px;
+
+    border-radius: 5px;
+
+    background: linear-gradient(
+        to right,
+        #98866e,
+        #f0dfc2,
+        #98866e
+    );
+
+    transform-origin: bottom center;
+
+    box-shadow: 0 0 3px rgba(255,255,255,0.2);
+}
+
+/* 왼쪽 안테나 */
+.tv-antenna span:first-child {
+    transform: rotate(-38deg);
+}
+
+/* 오른쪽 안테나 */
+.tv-antenna span:last-child {
+    transform: rotate(38deg);
+}
+
+/* 안테나 끝의 작은 LED */
+.tv-antenna span::after {
+    content: "";
+
+    position: absolute;
+    top: -4px;
+    left: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    transform: translateX(-50%);
+    border-radius: 50%;
+
+    background: #caff80;
+
+    box-shadow:
+        0 0 5px #caff80,
+        0 0 10px rgba(202,255,128,0.5);
+}
+
     </style>
 </head>
 
@@ -133,16 +355,25 @@
 
         <h2>🎮 게임 보관함</h2>
 
+
+        
+
         <div class="game-list">
 
             <div class="game-card">
 
+                <div class="tv-antenna" aria-hidden="true">
+    <span></span>
+    <span></span>
+</div>
+
                 <h3 class="game-card-title">
-                    미연시 게임
-                </h3>
+    두근두근 단나쟝과의<br>
+    화끈한 만남
+</h3>
 
                 <p class="game-card-description">
-                    내가 만든 미연시 게임을 보관하는 곳
+                    발랄상냥야사시 아기 양 같은 단나쟝 미연시
                 </p>
 
                 <a
@@ -151,16 +382,44 @@
     rel="noopener noreferrer"
     class="game-open-button"
 >
+
                     ▶ 게임 시작
                 </a>
 
             </div>
+
+<div class="game-card">
+
+<div class="tv-antenna" aria-hidden="true">
+    <span></span>
+    <span></span>
+</div>
+
+    <h3 class="game-card-title">상관쟝 미연시</h3>
+
+    <p class="game-card-description">
+        어딘가 손이 많이 가는 상관쟝 미연시
+    </p>
+
+    <a
+        href="games/상관쟝%20미연시.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="game-open-button"
+    >
+        ▶ 게임 시작
+    </a>
+</div>
+
 
         </div>
 
     </section>
 
 </div>
+
+
+
 
 </body>
 </html>
