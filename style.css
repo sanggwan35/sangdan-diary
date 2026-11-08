@@ -4653,3 +4653,19 @@ font-size: 16px !important;
     border-radius: 8px;
     border-bottom: 1px solid #625044;
 }
+
+/* ==================================================
+   공통 네비게이션 - 줄별 색상
+================================================== */
+
+.site-nav-primary a {
+    background: #625044 !important;
+    color: #fffaf3 !important;
+    border-color: #625044 !important;
+}
+
+.site-nav-secondary a {
+    background: #f7f2e0 !important;
+    color: #625044 !important;
+    border-color: #625044 !important;
+}
