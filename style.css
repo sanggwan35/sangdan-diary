@@ -883,15 +883,28 @@ nav a:hover {
    모바일
 ================================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 700px) and (pointer: coarse) {
 
     body {
         padding: 20px;
     }
 
-    .container {
-        padding: 20px;
-        box-shadow: 5px 5px 0 #625044;
+        .container {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+
+    padding: 20px 14px 40px;
+
+    box-shadow: 5px 5px 0 #625044;
+}
+
+    /* HOME - 모바일에서 화면을 넓게 사용 */
+    .book-cover {
+        width: calc(100vw - 10px);
+        margin-left: calc((100% - 100vw + 10px) / 2);
+        margin-right: 0;
+        box-sizing: border-box;
     }
 
     /* DIARY */
@@ -1139,7 +1152,7 @@ nav a:hover {
    화면이 좁아지면 SEARCH를 아래쪽으로 이동
 ================================================== */
 
-@media (max-width: 850px) {
+@media (max-width: 850px) and (pointer: coarse) {
 
     .site-search {
         position: static;
@@ -2406,7 +2419,7 @@ header nav * {
     gap: 12px;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .danna-shop-list,
     .sangkwan-shop-list {
         gap: 18px !important;
@@ -2668,7 +2681,7 @@ header nav * {
     display: block;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .danna-shop-item-icon img,
     .sangkwan-shop-item-icon img {
         height: 170px !important;
@@ -2685,7 +2698,7 @@ header nav * {
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .danna-shop-list > *,
     .sangkwan-shop-list > * {
         min-height: 245px !important;
@@ -3239,7 +3252,7 @@ header nav * {
    PC 디자인에는 영향 없음
 ========================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 768px) and (pointer: coarse) {
 
     /* -------------------------
        전체 공통
@@ -3312,13 +3325,13 @@ header nav * {
         box-sizing: border-box;
     }
 
-    .main-image-slider .main-image {
-        width: auto !important;
-        height: 360px !important;
-        max-width: calc(100% - 40px) !important;
-        max-height: 360px !important;
-        box-sizing: border-box !important;
-    }
+.main-image-slider .main-image {
+    width: auto !important;
+    height: 420px !important;
+    max-width: 100% !important;
+    max-height: 420px !important;
+    box-sizing: border-box !important;
+}
 
     .advice-section {
         width: calc(100% - 30px);
@@ -3521,7 +3534,7 @@ header nav * {
        캐릭터 카드
     ------------------------- */
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-card {
         width: 100% !important;
@@ -3753,7 +3766,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .character-image-box {
         width: 230px !important;
         height: 230px !important;
@@ -3763,7 +3776,7 @@ header nav * {
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .character-image-box img {
         width: 100% !important;
         height: 100% !important;
@@ -3775,7 +3788,7 @@ header nav * {
    MYPAGE MOBILE CHARACTER - 실제 모바일 화면
 ========================================= */
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-card {
         width: 100% !important;
@@ -3830,7 +3843,7 @@ header nav * {
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column {
         display: flex !important;
@@ -3857,7 +3870,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-exploration {
         width: 100% !important;
@@ -3877,7 +3890,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     #sangkwan-exploration-main-button,
     #sangkwan-hobby-main-button,
@@ -3889,7 +3902,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     #sangkwan-exploration-main-button,
     #sangkwan-hobby-main-button,
@@ -3908,7 +3921,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-stats {
         width: 100% !important;
@@ -3936,7 +3949,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-info {
         width: 100% !important;
@@ -3955,7 +3968,7 @@ header nav * {
     }
 
 }
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-list {
         font-size: 17px !important;
@@ -3969,7 +3982,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-info {
         display: grid !important;
@@ -3994,7 +4007,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-info-box:nth-child(3) {
         display: flex !important;
@@ -4011,7 +4024,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-list {
         padding-left: 18px !important;
@@ -4025,7 +4038,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-list {
         list-style-position: inside !important;
@@ -4035,7 +4048,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     #sangkwan-exploration-main-button,
     #sangkwan-hobby-main-button,
@@ -4047,7 +4060,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-menu {
         display: flex !important;
@@ -4067,7 +4080,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     #sangkwan-inventory-button,
     #sangkwan-wardrobe-button,
@@ -4085,7 +4098,7 @@ header nav * {
     }
 
 }
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-feed-button,
     .character-two-column .food-collection-toggle {
@@ -4100,7 +4113,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-stat span {
         font-size: 15px !important;
@@ -4112,7 +4125,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .exploration-result {
         width: 85% !important;
@@ -4131,7 +4144,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .exploration-locations button,
     .character-two-column .sangkwan-hobby-item,
@@ -4145,7 +4158,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     /* 탐험 장소 */
     .character-two-column .exploration-location {
@@ -4176,7 +4189,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     /* 상관쟝 취미 목록 */
     .character-two-column .sangkwan-hobby-item {
@@ -4198,7 +4211,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     /* 음식 도감 안의 음식 정보 */
     .character-two-column .food-collection-grid {
@@ -4232,7 +4245,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     /* 상점 / 옷장 / 가방 팝업창 */
     .character-two-column .sangkwan-shop-window,
@@ -4251,7 +4264,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     /* 취미 목록의 능력치 설명 */
     .character-two-column .sangkwan-hobby-item small,
@@ -4266,7 +4279,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-action-bubble {
         transform: translateX(40px) !important;
@@ -4274,7 +4287,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-action-bubble {
         display: flex !important;
@@ -4289,7 +4302,7 @@ header nav * {
     }
 
 }
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-action-bubble {
         width: 190px !important;
@@ -4300,7 +4313,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
    .character-two-column .character-info-text {
     font-size: 24px !important;
@@ -4315,7 +4328,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .site-nav-area nav a {
     padding: 13px 18px !important;
@@ -4324,7 +4337,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .site-header > a[href="trash.html"],
     .site-header > a.site-search {
@@ -4336,7 +4349,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-name {
         font-size: 24px !important;
@@ -4351,13 +4364,13 @@ header nav * {
     }
 
 }
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     #danna-character-exp {
         margin-bottom: 20px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .mypage .container {
         width: 100% !important;
         max-width: none !important;
@@ -4367,7 +4380,7 @@ header nav * {
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .mypage {
         font-size: 17px !important;
     }
@@ -4380,7 +4393,7 @@ header nav * {
 }
 
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     #music-player {
         top: 10px;
         right: 10px;
@@ -4403,7 +4416,7 @@ header nav * {
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-image-wrapper,
     .character-two-column .character-image-box {
@@ -4417,7 +4430,7 @@ header nav * {
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-growth button {
         min-height: 70px !important;
@@ -4438,7 +4451,7 @@ font-size: 16px !important;
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
 
     .character-two-column .character-info-title {
         font-size: 12px !important;
@@ -4452,7 +4465,7 @@ font-size: 16px !important;
 
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .character-info-box > .character-info-title {
         font-size: 16px !important;
         line-height: 1.4 !important;
@@ -4460,7 +4473,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .sangkwan-shop-window img,
     .character-two-column .danna-shop-window img {
         max-width: 180px !important;
@@ -4469,7 +4482,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     button.sangkwan-shop-exchange,
     button.danna-shop-exchange {
         width: auto !important;
@@ -4484,19 +4497,19 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .food-collection-description {
         font-size: 9px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .food-collection-grid .food-collection-description {
         font-size:17px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .character-two-column .my-records {
         font-size: 20px !important;
     }
@@ -4507,7 +4520,7 @@ font-size: 16px !important;
 }
 
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .mypage-paper .profile-card .profile-info .profile-name {
         font-size: 24px !important;
         line-height: 1.5 !important;
@@ -4519,7 +4532,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .mypage-paper .profile-name {
         font-size: 34px !important;
     }
@@ -4537,7 +4550,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     #profile-name,
     #friend-profile-name {
         font-size: 34px !important;
@@ -4547,7 +4560,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .mypage-paper .profile-card {
         text-align: center !important;
     }
@@ -4565,7 +4578,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .mypage-paper .profile-card {
         display: flex !important;
         flex-direction: column !important;
@@ -4589,7 +4602,7 @@ font-size: 16px !important;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (pointer: coarse) {
     .site-nav-area nav a,
     .site-header > a[href="trash.html"],
     .site-header > a.site-search {

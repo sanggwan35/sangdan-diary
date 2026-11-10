@@ -522,7 +522,9 @@ showDiaries(
 
             
             const isMobile =
-    window.matchMedia("(max-width: 768px)").matches;
+    window.matchMedia(
+    "(max-width: 768px) and (pointer: coarse)"
+).matches
 
 const dateCount =
     isMobile ? 5 : 7;
