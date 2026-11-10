@@ -73,6 +73,72 @@
     background: #3d3542;
     color: #fffaf3;
 }
+
+
+/* =========================================
+   DIARY PAGE - 깔끔한 외부 글꼴 정리
+========================================= */
+
+/* 일기 페이지 전체 */
+body {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+/* 날짜 선택 영역 */
+.week-selector,
+.week-date,
+.day-name,
+.day-number,
+.selected-date-label {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+/* 날짜 버튼 */
+.week-date {
+    font-weight: 500;
+}
+
+/* 선택된 날짜 */
+.week-date.selected {
+    font-weight: 600;
+}
+
+/* ALL / 나 / 친구 탭 */
+.diary-tabs button {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+    font-weight: 500;
+}
+
+/* 이전 / 다음 날짜 버튼 */
+.week-arrow {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+/* 수정 / 삭제 버튼 */
+.save-button {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+/* 댓글 영역 */
+.comment-area,
+.comment-area button,
+.comment-area input,
+.comment-area textarea {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+/* 댓글 작성자 / 날짜 */
+.comment-author,
+.comment-date {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+/* 댓글 개수 */
+.comment-title {
+    font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+
 </style>
 
         <h2>📖 DIARY</h2>
@@ -120,7 +186,8 @@
             doc,
             updateDoc,
             deleteDoc,
-            addDoc
+            addDoc,
+            setDoc
 
         } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
@@ -177,6 +244,9 @@ const urlParams =
 
 const diaryDate =
     urlParams.get("date");
+
+const diaryId =
+    urlParams.get("diaryId");
 
 
 // 전달된 날짜가 있으면 해당 날짜를 선택
@@ -316,7 +386,36 @@ snapshot.forEach((docSnapshot) => {
 
 
 
-                showDiaries(getFilteredDiaries(), currentFilter);
+                if (diaryId) {
+
+    const targetDiary =
+        allDiaries.find(
+            diary =>
+                diary.id === diaryId
+        );
+
+    if (targetDiary && targetDiary.date) {
+
+        const targetDate =
+            new Date(
+                targetDiary.date + "T00:00:00"
+            );
+
+        if (!isNaN(targetDate.getTime())) {
+
+            selectedDate =
+                targetDate;
+
+        }
+
+    }
+
+}
+
+showDiaries(
+    getFilteredDiaries(),
+    currentFilter
+);
 
 
             } catch (error) {
@@ -1236,6 +1335,405 @@ if (
             commentBox.appendChild(
                 commentText
             );
+
+// =========================
+// 댓글 이모티콘 반응
+// =========================
+
+const reactionArea =
+    document.createElement("div");
+
+reactionArea.style.marginTop =
+    "8px";
+
+reactionArea.style.display =
+    "flex";
+
+reactionArea.style.gap =
+    "5px";
+
+reactionArea.style.flexWrap =
+    "wrap";
+
+const reactions = [
+    "😂",
+    "🥺",
+    "😘",
+    "😣",
+    "😼",    
+    "💗",
+    "✨",
+    "👍",
+    
+];
+
+const reactionData =
+    comment.reactions || {};
+
+
+// 반응 추가 함수
+async function toggleReaction(emoji) {
+
+    try {
+
+        const commentRef =
+            doc(
+                db,
+                "diaries",
+                diaryId,
+                "comments",
+                commentId
+            );
+
+        const currentReactionData =
+            comment.reactions || {};
+
+        const users =
+            currentReactionData[emoji] || [];
+
+        let updatedUsers =
+            [...users];
+
+        const userIndex =
+            updatedUsers.indexOf(
+                currentUser.uid
+            );
+
+        if (userIndex !== -1) {
+
+            // 이미 눌렀으면 취소
+            updatedUsers.splice(
+                userIndex,
+                1
+            );
+
+        } else {
+
+            // 안 눌렀으면 추가
+            updatedUsers.push(
+                currentUser.uid
+            );
+
+        }
+
+        await setDoc(
+            commentRef,
+            {
+                reactions: {
+                    ...currentReactionData,
+                    [emoji]: updatedUsers
+                }
+            },
+            {
+                merge: true
+            }
+        );
+
+
+        // 현재 댓글 데이터만 업데이트
+        comment.reactions = {
+            ...currentReactionData,
+            [emoji]: updatedUsers
+        };
+
+
+        // 반응 버튼 영역만 다시 그리기
+        reactionArea.innerHTML = "";
+
+
+        reactions.forEach(
+            emoji => {
+
+                const reactionUsers =
+                    comment.reactions[emoji] || [];
+
+                if (
+                    reactionUsers.length === 0
+                ) {
+                    return;
+                }
+
+                const reactionButton =
+                    document.createElement("button");
+
+                reactionButton.textContent =
+                    emoji;
+
+                reactionButton.style.border =
+                    "1px solid #c4b3a3";
+
+                reactionButton.style.borderRadius =
+                    "12px";
+
+                reactionButton.style.background =
+                    reactionUsers.includes(
+                        currentUser.uid
+                    )
+                        ? "#e3d5c5"
+                        : "#fffaf3";
+
+                reactionButton.style.cursor =
+                    "pointer";
+
+                reactionButton.style.padding =
+                    "4px 8px";
+
+                reactionButton.style.fontSize =
+                    "16px";
+
+                reactionButton.addEventListener(
+                    "click",
+                    () => {
+                        toggleReaction(emoji);
+                    }
+                );
+
+                reactionArea.appendChild(
+                    reactionButton
+                );
+
+            }
+        );
+
+
+        // + 버튼 다시 추가
+        reactionArea.appendChild(
+            reactionWrapper
+        );
+
+    } catch (error) {
+
+        console.error(
+            "댓글 반응 저장 오류:",
+            error
+        );
+
+        alert(
+            "이모티콘 반응을 저장하지 못했어요."
+        );
+
+    }
+
+}
+
+
+// 이미 사용된 반응만 표시
+reactions.forEach(
+    emoji => {
+
+        const users =
+            reactionData[emoji] || [];
+
+        if (users.length === 0) {
+            return;
+        }
+
+        const reactionButton =
+            document.createElement("button");
+
+        reactionButton.textContent =
+            emoji;
+
+        reactionButton.style.border =
+            "1px solid #c4b3a3";
+
+        reactionButton.style.borderRadius =
+            "12px";
+
+        reactionButton.style.background =
+            users.includes(currentUser.uid)
+                ? "#e3d5c5"
+                : "#fffaf3";
+
+        reactionButton.style.cursor =
+            "pointer";
+
+        reactionButton.style.padding =
+            "4px 8px";
+
+        reactionButton.style.fontSize =
+            "16px";
+
+        reactionButton.addEventListener(
+            "click",
+            () => {
+                toggleReaction(emoji);
+            }
+        );
+
+        reactionArea.appendChild(
+            reactionButton
+        );
+
+    }
+);
+
+
+// + 버튼
+const addReactionButton =
+    document.createElement("button");
+
+addReactionButton.textContent =
+    "＋";
+
+addReactionButton.style.border =
+    "1px solid #c4b3a3";
+
+addReactionButton.style.borderRadius =
+    "12px";
+
+addReactionButton.style.background =
+    "#fffaf3";
+
+addReactionButton.style.cursor =
+    "pointer";
+
+addReactionButton.style.padding =
+    "3px 7px";
+
+addReactionButton.style.fontSize =
+    "12px";
+
+
+// 작은 선택창
+const reactionPicker =
+    document.createElement("div");
+
+reactionPicker.style.position =
+    "absolute";
+
+reactionPicker.style.display =
+    "none";
+
+reactionPicker.style.gridTemplateColumns =
+    "repeat(4, 1fr)";
+
+reactionPicker.style.gap =
+    "4px";
+
+reactionPicker.style.padding =
+    "7px";
+
+reactionPicker.style.background =
+    "#fffaf3";
+
+reactionPicker.style.border =
+    "1px solid #c4b3a3";
+
+reactionPicker.style.borderRadius =
+    "10px";
+
+reactionPicker.style.boxShadow =
+    "0 3px 8px rgba(0,0,0,0.15)";
+
+reactionPicker.style.zIndex =
+    "100";
+
+
+// 선택창 안의 이모티콘
+reactions.forEach(
+    emoji => {
+
+        const pickerButton =
+            document.createElement("button");
+
+        pickerButton.textContent =
+            emoji;
+
+        pickerButton.style.border =
+            "none";
+
+        pickerButton.style.background =
+            "transparent";
+
+        pickerButton.style.cursor =
+            "pointer";
+
+        pickerButton.style.fontSize =
+            "20px";
+
+        pickerButton.style.padding =
+            "3px";
+
+        pickerButton.addEventListener(
+            "click",
+            () => {
+
+                toggleReaction(emoji);
+
+                reactionPicker.style.display =
+                    "none";
+
+            }
+        );
+
+        reactionPicker.appendChild(
+            pickerButton
+        );
+
+    }
+);
+
+
+// + 버튼 클릭
+addReactionButton.addEventListener(
+    "click",
+    (event) => {
+
+        event.stopPropagation();
+
+        if (
+            reactionPicker.style.display ===
+            "grid"
+        ) {
+
+            reactionPicker.style.display =
+                "none";
+
+        } else {
+
+            reactionPicker.style.display =
+                "grid";
+
+        }
+
+    }
+);
+
+
+// 위치 잡기
+const reactionWrapper =
+    document.createElement("div");
+
+reactionWrapper.style.position =
+    "relative";
+
+reactionWrapper.style.display =
+    "inline-flex";
+
+reactionWrapper.appendChild(
+    addReactionButton
+);
+
+reactionWrapper.appendChild(
+    reactionPicker
+);
+
+reactionPicker.style.bottom =
+    "calc(100% + 5px)";
+
+reactionPicker.style.left =
+    "0";
+
+reactionArea.appendChild(
+    reactionWrapper
+);
+
+commentBox.appendChild(
+    reactionArea
+);
+
+
 
 
             // =========================

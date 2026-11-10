@@ -1657,71 +1657,186 @@ button.appendChild(diaryDots);
 
 
             diaries.forEach(
-                diary => {
+    async diary => {
 
-                    const box =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    box.className =
-                        "calendar-diary";
-
-
-                    const author =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    author.textContent =
-                        diary.authorName ||
-                        diary.author ||
-                        "이름 없음";
-
-
-                    const diaryTitle =
-                        document.createElement(
-                            "h4"
-                        );
-
-
-                    diaryTitle.textContent =
-                        diary.title;
-
-
-                    const content =
-                        document.createElement(
-                            "p"
-                        );
-
-
-                    content.textContent =
-                        diary.content;
-
-
-                    box.appendChild(
-                        author
-                    );
-
-
-                    box.appendChild(
-                        diaryTitle
-                    );
-
-
-                    box.appendChild(
-                        content
-                    );
-
-
-                    area.appendChild(
-                        box
-                    );
-
-                }
+        const box =
+            document.createElement(
+                "div"
             );
+
+        box.className =
+            "calendar-diary";
+
+        box.style.position =
+            "relative";
+
+
+        const author =
+            document.createElement(
+                "div"
+            );
+
+        author.textContent =
+            diary.authorName ||
+            diary.author ||
+            "이름 없음";
+
+
+        const diaryTitle =
+            document.createElement(
+                "h4"
+            );
+
+        diaryTitle.textContent =
+            diary.title;
+
+
+        /* 일기 제목 클릭 가능 표시 */
+        diaryTitle.style.cursor =
+            "pointer";
+
+        diaryTitle.addEventListener(
+            "mouseenter",
+            () => {
+                diaryTitle.style.textDecoration =
+                    "underline";
+
+                diaryTitle.style.color =
+                    "#8a6f5a";
+            }
+        );
+
+        diaryTitle.addEventListener(
+            "mouseleave",
+            () => {
+                diaryTitle.style.textDecoration =
+                    "none";
+
+                diaryTitle.style.color =
+                    "";
+            }
+        );
+
+        diaryTitle.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    `diary.html?diaryId=${encodeURIComponent(diary.id)}`;
+
+            }
+        );
+
+
+        const content =
+            document.createElement(
+                "p"
+            );
+
+        content.textContent =
+            diary.content;
+
+
+        box.appendChild(
+            author
+        );
+
+        box.appendChild(
+            diaryTitle
+        );
+
+        box.appendChild(
+            content
+        );
+
+
+        /* =========================
+           댓글 개수 표시
+        ========================= */
+
+        try {
+
+            const commentsSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "diaries",
+                        diary.id,
+                        "comments"
+                    )
+                );
+
+            const commentCount =
+                commentsSnapshot.size;
+
+            if (commentCount > 0) {
+
+                const commentIndicator =
+                    document.createElement(
+                        "div"
+                    );
+
+                commentIndicator.textContent =
+    `💬 ${commentCount}`;
+
+commentIndicator.style.position =
+    "absolute";
+
+commentIndicator.style.top =
+    "22px";
+
+commentIndicator.style.right =
+    "25px";
+
+commentIndicator.style.padding =
+    "4px 8px";
+
+commentIndicator.style.borderRadius =
+    "12px";
+
+commentIndicator.style.background =
+    "#735f52";
+
+commentIndicator.style.border =
+    "1px solid #625044";
+
+commentIndicator.style.color =
+    "#fffaf3";
+
+commentIndicator.style.fontSize =
+    "12px";
+
+commentIndicator.style.fontFamily =
+    "monospace";
+
+commentIndicator.style.fontWeight =
+    "bold";
+
+commentIndicator.style.lineHeight =
+    "1";
+
+                box.appendChild(
+                    commentIndicator
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "댓글 개수 불러오기 오류:",
+                error
+            );
+
+        }
+
+
+        area.appendChild(
+            box
+        );
+
+    }
+);
 
         }
 
