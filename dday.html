@@ -272,13 +272,13 @@
         ================================================== */
 
         .dday-card.main-dday {
-            grid-column: 1 / -1;
+            grid-column: auto;
 
-            max-width: 600px;
+            max-width: none;
 
             width: 100%;
 
-            margin: 0 auto 10px;
+            margin: 0;
 
             padding-top: 38px;
 
@@ -976,46 +976,78 @@ async function loadDDays() {
 
 
             mainButton.addEventListener(
-                "click",
-                async () => {
+    "click",
+    async () => {
 
-                    const allDDays =
-                        await getDocs(
-                            collection(
-                                db,
-                                "ddays"
-                            )
-                        );
-
-
-                    for (
-                        const item
-                        of allDDays.docs
-                    ) {
-
-                        await updateDoc(
-
-                            doc(
-                                db,
-                                "ddays",
-                                item.id
-                            ),
-
-                            {
-                                isMain:
-                                    item.id ===
-                                    ddayDoc.id
-                            }
-
-                        );
-
-                    }
-
-
-                    loadDDays();
-
-                }
+        const allDDays =
+            await getDocs(
+                collection(
+                    db,
+                    "ddays"
+                )
             );
+
+        /* 현재 대표 D-DAY 개수 */
+        const mainCount =
+            allDDays.docs.filter(
+                (item) =>
+                    item.data().isMain === true
+            ).length;
+
+
+        /* 대표 해제 */
+        if (data.isMain === true) {
+
+            await updateDoc(
+
+                doc(
+                    db,
+                    "ddays",
+                    ddayDoc.id
+                ),
+
+                {
+                    isMain: false
+                }
+
+            );
+
+            loadDDays();
+
+            return;
+        }
+
+
+        /* 대표 추가 */
+        if (mainCount >= 3) {
+
+            alert(
+                "대표 D-DAY는 최대 3개까지 설정할 수 있어요."
+            );
+
+            return;
+        }
+
+
+        await updateDoc(
+
+            doc(
+                db,
+                "ddays",
+                ddayDoc.id
+            ),
+
+            {
+                isMain: true
+            }
+
+        );
+
+
+        loadDDays();
+
+    }
+);
 
 
             /* 삭제 버튼 */
