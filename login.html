@@ -36,10 +36,10 @@
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 
-    import {
-        getAuth,
-        signInWithEmailAndPassword
-    } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+   import {
+    getAuth,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
 
 
     const firebaseConfig = {
@@ -70,6 +70,8 @@
 
     loginButton.addEventListener("click", async () => {
 
+        console.log("LOGIN BUTTON CLICKED");
+
         const email =
             document.getElementById("email").value;
 
@@ -82,19 +84,28 @@
 
         try {
 
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
 
+    await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+    );
 
-            message.textContent =
-                "로그인 성공!";
+    console.log("FIREBASE LOGIN SUCCESS");
+console.log("LOGIN USER:", auth.currentUser);
 
+message.textContent = "로그인 성공!";
 
-            window.location.href =
-                "index.html";
+const returnPage = sessionStorage.getItem("loginReturnPage");
+
+console.log("RETURN PAGE =", returnPage);
+
+if (returnPage === "memo.html") {
+    sessionStorage.removeItem("loginReturnPage");
+    window.location.replace("memo.html");
+} else {
+    window.location.replace("index.html");
+}
 
 
         } catch (error) {
