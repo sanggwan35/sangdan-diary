@@ -5637,3 +5637,159 @@ font-size: 16px !important;
 .home-page .site-header nav.site-nav-secondary a:hover {
     background: #f0e8ce !important;
 }
+
+#memo-view-files {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+
+    margin-top: 24px;
+}
+
+.memo-attached-image {
+    display: block;
+
+    width: 100%;
+    height: 220px;
+
+    margin: 0;
+
+    border: 1px solid rgba(98, 80, 68, 0.28);
+    border-radius: 6px;
+
+    box-shadow:
+        0 3px 10px rgba(98, 80, 68, 0.12);
+
+    object-fit: contain;
+
+    background: #fffaf3;
+}
+
+.memo-attached-image {
+    cursor: zoom-in;
+}
+
+.memo-image-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background: rgba(40, 32, 27, 0.72);
+
+    cursor: zoom-out;
+}
+
+.memo-enlarged-image {
+    display: block;
+
+    max-width: 95vw;
+    max-height: 90vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.3);
+
+    background: #fffaf3;
+
+    cursor: zoom-out;
+}
+
+.memo-image-prev,
+.memo-image-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 250, 243, 0.88);
+
+    color: #625044;
+
+    font-family: Arial, sans-serif;
+    font-size: 38px;
+    position: absolute;
+    line-height: 48px;
+    text-align: center;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 1px;
+    box-sizing: border-box;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.18);
+
+    z-index: 2;
+}
+
+.memo-image-prev {
+    left: 24px;
+}
+
+.memo-image-next {
+    right: 24px;
+}
+
+.memo-image-prev:hover,
+.memo-image-next:hover {
+    background: #fffaf3;
+}
+
+.memo-image-prev span,
+.memo-image-next span {
+    display: block;
+    transform: translateY(-2px);
+}
+
+.memo-view-subtitle {
+    margin-top: 12px;
+    margin-bottom: 18px;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    line-height: 1.5;
+    color: #8a7567;
+    font-weight: 400;
+}
+
+.memo-card-preview {
+    margin-top: 14px;
+    line-height: 1.6;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

@@ -1,0 +1,3553 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEMO - 상관단나 기록 저장소</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ==================================================
+           MEMO
+        ================================================== */
+
+        .memo-page {
+            color: #625044;
+        }
+
+        .memo-container {
+            width: 900px;
+            max-width: calc(100% - 40px);
+            margin: 0 auto 60px;
+        }
+
+
+        /* ==================================================
+           프로필
+        ================================================== */
+
+        .memo-profiles {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+
+            margin-bottom: 28px;
+        }
+
+        .memo-profile {
+            position: relative;
+
+            padding: 22px;
+
+            box-sizing: border-box;
+
+            background: #f7f2df;
+
+            border: 1px solid #625044;
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .memo-profile:hover {
+            transform: translateY(-3px);
+            background: #fffaf3;
+        }
+
+        .memo-profile.active {
+            background: #e8e5db;
+        }
+
+        .memo-profile-icon {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .memo-profile-name {
+            font-family: "Gowun Batang", serif;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .memo-profile-count {
+            margin-top: 7px;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 12px;
+
+            color: #8a7769;
+        }
+
+
+        /* ==================================================
+           메모 상단
+        ================================================== */
+
+        .memo-paper {
+            position: relative;
+
+            padding: 35px 40px 45px;
+
+            box-sizing: border-box;
+
+            background: #f7f2df;
+
+            border: 1px solid #625044;
+            border-radius: 10px;
+
+            box-shadow: 6px 6px 0 #625044;
+        }
+
+        .memo-paper::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+            left: 45px;
+
+            width: 1px;
+
+            background: rgba(180, 110, 110, 0.28);
+
+            pointer-events: none;
+        }
+
+        .memo-header {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+            padding-left: 15px;
+        }
+
+        .memo-header h2 {
+            margin: 0;
+
+            font-family: "Gowun Batang", serif;
+            font-size: 22px;
+            color: #625044;
+        }
+
+        .memo-header p {
+            margin: 5px 0 0;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 12px;
+
+            color: #8a7769;
+        }
+
+
+        /* ==================================================
+           새 글 버튼
+        ================================================== */
+
+        .memo-write-button {
+            border: 1px solid #625044;
+            border-radius: 7px;
+
+            padding: 9px 16px;
+
+            background: #625044;
+            color: #fffaf3;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 12px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .memo-write-button:hover {
+            transform: translateY(-3px);
+            background: #735f52;
+        }
+
+
+        /* ==================================================
+           글 목록
+        ================================================== */
+
+        .memo-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+
+        padding-left: 15px;
+        padding-right: 10px;
+        box-sizing: border-box;
+        }
+
+        .memo-card {
+    box-sizing: border-box;
+
+    min-height: 210px;
+
+    padding: 22px;
+
+    background: rgba(255, 250, 243, 0.4);
+
+    border: 1px solid rgba(98, 80, 68, 0.28);
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+}
+
+        .memo-card:hover {
+    background: rgba(255, 250, 243, 0.58);
+         }
+
+        .memo-card-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 6px;
+
+            font-family: "Gowun Batang", serif;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .memo-card-date {
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 10px;
+
+            color: #9a887a;
+        }
+
+        .memo-card-preview {
+            margin-top: 9px;
+
+            color: #75665c;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .memo-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+
+            margin-top: 10px;
+        }
+
+        .memo-tag {
+            padding: 3px 7px;
+
+            border: 1px solid #b8aaa0;
+            border-radius: 10px;
+
+            color: #806e61;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 13px;
+        }
+
+        .memo-lock {
+            font-size: 12px;
+        }
+
+
+        /* ==================================================
+           빈 목록
+        ================================================== */
+
+        .memo-empty {
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #9a887a;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           작성 / 수정 영역
+        ================================================== */
+
+        .memo-editor {
+            display: none;
+
+            position: relative;
+
+            padding-left: 15px;
+        }
+
+        .memo-editor.active {
+            display: block;
+        }
+
+        .memo-field {
+            margin-bottom: 18px;
+        }
+
+        .memo-field label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .memo-title-input,
+        .memo-subtitle-input {
+            width: 100%;
+
+            padding: 11px 12px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #b8aaa0;
+            border-radius: 5px;
+
+            background: #fffaf3;
+            color: #625044;
+
+            font-family: "Gowun Batang", serif;
+            font-size: 18px;
+
+            outline: none;
+
+            .memo-subtitle-input {
+            font-size: 15px; }
+        }
+        
+
+        .memo-title-input:focus {
+            border-color: #625044;
+        }
+
+
+        /* ==================================================
+           리치 텍스트 툴바
+        ================================================== */
+
+        .memo-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 8px;
+
+            border: 1px solid #b8aaa0;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+
+            background: #e8e5db;
+        }
+
+        .memo-toolbar button,
+        .memo-toolbar select,
+        .memo-toolbar input[type="color"] {
+            height: 30px;
+
+            border: 1px solid #a8998e;
+            border-radius: 4px;
+
+            background: #f7f2df;
+            color: #625044;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .memo-toolbar button {
+            min-width: 30px;
+            padding: 0 7px;
+        }
+
+        .memo-toolbar button:hover {
+            background: #fffaf3;
+        }
+
+        .memo-toolbar select {
+            padding: 0 5px;
+        }
+
+        .memo-toolbar input[type="color"] {
+            width: 34px;
+            padding: 2px;
+        }
+
+
+        /* ==================================================
+           본문 편집
+        ================================================== */
+
+        .memo-content-editor {
+            min-height: 400px;
+
+            padding: 22px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #b8aaa0;
+            border-radius: 0 0 6px 6px;
+
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    transparent 0,
+                    transparent 31px,
+                    rgba(90, 130, 160, 0.18) 31px,
+                    rgba(90, 130, 160, 0.18) 32px
+                ),
+                #fffaf3;
+
+            color: #625044;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 15px;
+            line-height: 2;
+
+            outline: none;
+        }
+
+        .memo-content-editor:focus {
+            border-color: #625044;
+        }
+
+        .memo-content-editor:empty::before {
+            content: "생각이나 이야기를 자유롭게 적어주세요...";
+
+            color: #b5a69b;
+        }
+
+
+        /* ==================================================
+           첨부파일
+        ================================================== */
+
+        .memo-file-area {
+            margin-top: 18px;
+        }
+
+        .memo-file-input {
+            display: none;
+        }
+
+        .memo-file-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 8px 12px;
+
+            border: 1px solid #625044;
+            border-radius: 5px;
+
+            background: #e8e5db;
+            color: #625044;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .memo-file-button:hover {
+            background: #fffaf3;
+        }
+
+        .memo-files {
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+
+            margin-top: 10px;
+        }
+
+        .memo-file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding: 8px 10px;
+
+            border: 1px solid #c9beb6;
+            border-radius: 4px;
+
+            background: rgba(255, 250, 243, 0.7);
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+        }
+
+        .memo-file-remove {
+            border: none;
+            background: transparent;
+            color: #9a5f58;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .memo-file-existing-remove {
+            color: #9a5f58;
+        }
+
+
+        /* ==================================================
+           편집 버튼
+        ================================================== */
+
+        .memo-editor-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+
+            margin-top: 20px;
+        }
+
+        .memo-editor-buttons button {
+            padding: 9px 17px;
+
+            border: 1px solid #625044;
+            border-radius: 5px;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .memo-cancel-button {
+            background: #e8e5db;
+            color: #625044;
+        }
+
+        .memo-save-button {
+            background: #625044;
+            color: #fffaf3;
+        }
+
+        .memo-editor-buttons button:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* ==================================================
+           글 보기
+        ================================================== */
+
+        .memo-view {
+            display: none;
+
+            padding-left: 15px;
+        }
+
+        .memo-view.active {
+            display: block;
+        }
+
+        .memo-view-title {
+            margin: 0;
+
+            font-family: "Gowun Batang", serif;
+            font-size: 25px;
+        }
+
+        .memo-view-meta {
+            margin-top: 8px;
+
+            color: #968478;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+        }
+
+        .memo-view-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+
+            margin-top: 12px;
+        }
+
+        .memo-view-content {
+            margin-top: 25px;
+
+            padding: 25px 20px;
+
+            border-top: 1px solid #83add0;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 15px;
+            line-height: 2;
+
+            overflow-wrap: anywhere;
+        }
+
+        .memo-view-content img {
+            max-width: 100%;
+            height: auto;
+
+            margin: 12px 0;
+
+            border-radius: 5px;
+        }
+
+        .memo-view-files {
+            margin-top: 20px;
+            padding-top: 15px;
+
+            border-top: 1px dashed #b8aaa0;
+        }
+
+        .memo-download {
+            display: block;
+
+            margin-top: 7px;
+            padding: 9px 11px;
+
+            border: 1px solid #c9beb6;
+            border-radius: 5px;
+
+            background: #fffaf3;
+
+            color: #625044;
+            text-decoration: none;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+        }
+
+        .memo-download:hover {
+            background: #e8e5db;
+        }
+
+        .memo-view-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 7px;
+
+            margin-top: 20px;
+        }
+
+        .memo-view-buttons button {
+            padding: 7px 12px;
+
+            border: 1px solid #625044;
+            border-radius: 5px;
+
+            background: #e8e5db;
+            color: #625044;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 10px;
+
+            cursor: pointer;
+        }
+
+
+        /* ==================================================
+           저장 설정 모달
+        ================================================== */
+
+        .memo-modal-background {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(48, 39, 33, 0.35);
+        }
+
+        .memo-modal-background.active {
+            display: flex;
+        }
+
+        .memo-modal {
+            width: 400px;
+            max-width: calc(100% - 40px);
+
+            padding: 25px;
+
+            box-sizing: border-box;
+
+            background: #f7f2df;
+
+            border: 1px solid #625044;
+            border-radius: 8px;
+
+            box-shadow: 6px 6px 0 #625044;
+        }
+
+        .memo-modal h3 {
+            margin: 0 0 18px;
+
+            font-family: "Gowun Batang", serif;
+            font-size: 19px;
+        }
+
+        .memo-modal label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .memo-modal input {
+            width: 100%;
+
+            margin-bottom: 15px;
+            padding: 9px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #b8aaa0;
+            border-radius: 5px;
+
+            background: #fffaf3;
+            color: #625044;
+        }
+
+        .memo-modal-help {
+            margin-top: -8px;
+            margin-bottom: 15px;
+
+            color: #968478;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 10px;
+        }
+
+        .memo-modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 7px;
+        }
+
+        .memo-modal-buttons button {
+            padding: 8px 13px;
+
+            border: 1px solid #625044;
+            border-radius: 5px;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+        .memo-modal-cancel {
+            background: #e8e5db;
+            color: #625044;
+        }
+
+        .memo-modal-save {
+            background: #625044;
+            color: #fffaf3;
+        }
+
+
+        /* ==================================================
+           비밀번호 입력
+        ================================================== */
+
+        .memo-password-message {
+            margin-bottom: 15px;
+
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           반응형
+        ================================================== */
+
+        @media (max-width: 768px) and (pointer: coarse) {
+
+            .memo-container {
+                max-width: calc(100% - 25px);
+            }
+
+            .memo-profiles {
+                grid-template-columns: 1fr;
+            }
+
+            .memo-paper {
+                padding: 25px 20px 35px;
+            }
+
+            .memo-paper::before {
+                left: 25px;
+            }
+
+            .memo-header {
+                flex-direction: column;
+                align-items: flex-start;
+
+                padding-left: 8px;
+            }
+
+            .memo-list,
+            .memo-editor,
+            .memo-view {
+                padding-left: 8px;
+            }
+
+            .memo-toolbar {
+                gap: 3px;
+            }
+
+            .memo-content-editor {
+                min-height: 320px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body class="memo-page">
+
+<div class="container">
+
+
+    <!-- ==================================================
+         HEADER
+    ================================================== -->
+
+    <header class="site-header">
+
+        <h1>SANGWAN-DANNA PRISON</h1>
+
+        <p class="site-subtitle">
+            상관단나 기록 저장소
+        </p>
+
+        <div class="site-nav-area">
+
+            <nav class="site-nav-primary">
+                <a href="index.html">HOME</a>
+                <a href="diary.html">DIARY</a>
+                <a href="write.html">WRITE</a>
+                <a href="calendar.html">CALENDAR</a>
+                <a href="dday.html">D-DAY</a>
+                <a href="mypage.html">MY PAGE</a>
+            </nav>
+
+            <nav class="site-nav-secondary">
+                <a href="memo.html">MEMO</a>
+                <a href="movie.html">MOVIE</a>
+                <a href="game.html">GAME</a>
+                <a href="search.html">🔍 SEARCH</a>
+                <a href="trash.html">🗑️ TRASH</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         MEMO
+    ================================================== -->
+
+    <main class="memo-container">
+
+
+        <!-- 프로필 -->
+
+        <div id="memo-profiles" class="memo-profiles">
+            <div class="memo-empty">
+                불러오는 중...
+            </div>
+        </div>
+
+
+        <!-- 종이 -->
+
+        <section class="memo-paper">
+
+
+            <!-- 목록 헤더 -->
+
+            <div id="memo-list-header" class="memo-header">
+
+                <div>
+                    <h2>📝 생각 메모</h2>
+                    <p id="memo-list-description">
+                        모든 생각과 이야기를 기록해보세요.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="new-memo-button"
+                    class="memo-write-button"
+                >
+                    + 새 글
+                </button>
+
+            </div>
+
+
+            <!-- 글 목록 -->
+
+            <div id="memo-list" class="memo-list">
+
+                <div class="memo-empty">
+                    불러오는 중...
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 작성 / 수정
+            ================================================== -->
+
+            <div id="memo-editor" class="memo-editor">
+
+                <div class="memo-field">
+
+                    <label for="memo-title">
+                        제목
+                    </label>
+
+                    <input
+                        id="memo-title"
+                        class="memo-title-input"
+                        type="text"
+                        placeholder="제목을 적어주세요."
+                    >
+
+                </div>
+
+
+                <div class="memo-field">
+
+                    <label for="memo-subtitle">
+                        소제목
+                    </label>
+
+                    <input
+                        id="memo-subtitle"
+                        class="memo-subtitle-input"
+                        type="text"
+                        placeholder="소제목을 적어주세요."
+                    >
+
+                </div>
+
+
+                <div class="memo-field">
+
+                    <label>
+                        본문
+                    </label>
+
+                    <div class="memo-toolbar">
+
+                        <button type="button" data-command="bold">
+                            <b>B</b>
+                        </button>
+
+                        <button type="button" data-command="italic">
+                            <i>I</i>
+                        </button>
+
+                        <button type="button" data-command="underline">
+                            <u>U</u>
+                        </button>
+
+
+                        <select id="memo-font-size">
+
+                            <option value="3">
+                                기본
+                            </option>
+
+                            <option value="1">
+                                작게
+                            </option>
+
+                            <option value="4">
+                                크게
+                            </option>
+
+                            <option value="5">
+                                매우 크게
+                            </option>
+
+                        </select>
+
+
+                        <select id="memo-font-name">
+
+                            <option value="Pretendard">
+                                기본 글씨
+                            </option>
+
+                            <option value="Gowun Batang">
+                                고운 바탕
+                            </option>
+
+                            <option value="serif">
+                                Serif
+                            </option>
+
+                            <option value="monospace">
+                                Monospace
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="button"
+                            data-command="justifyLeft"
+                        >
+                            ←
+                        </button>
+
+                        <button
+                            type="button"
+                            data-command="justifyCenter"
+                        >
+                            ≡
+                        </button>
+
+                        <button
+                            type="button"
+                            data-command="justifyRight"
+                        >
+                            →
+                        </button>
+
+
+                        <input
+                            id="memo-color"
+                            type="color"
+                            value="#625044"
+                            title="글자색"
+                        >
+
+                    </div>
+
+
+                    <div
+                        id="memo-content"
+                        class="memo-content-editor"
+                        contenteditable="true"
+                    ></div>
+
+                </div>
+
+
+                <!-- 첨부파일 -->
+
+                <div class="memo-field memo-file-area">
+
+                    <label>
+                        첨부파일
+                    </label>
+
+                    <label
+                        for="memo-files-input"
+                        class="memo-file-button"
+                    >
+                        📎 파일 첨부
+                    </label>
+
+                    <input
+                        id="memo-files-input"
+                        class="memo-file-input"
+                        type="file"
+                        multiple
+                        accept="image/*,.zip,.rar,.7z,.tar,.gz,.txt,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+                    >
+
+                    <div id="memo-files" class="memo-files"></div>
+
+                </div>
+
+
+                <!-- 버튼 -->
+
+                <div class="memo-editor-buttons">
+
+                    <button
+                        type="button"
+                        id="memo-cancel-button"
+                        class="memo-cancel-button"
+                    >
+                        취소
+                    </button>
+
+                    <button
+                        type="button"
+                        id="memo-save-button"
+                        class="memo-save-button"
+                    >
+                        완료
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 글 보기
+            ================================================== -->
+
+            <div id="memo-view" class="memo-view">
+
+                <h2
+                    id="memo-view-title"
+                    class="memo-view-title"
+                ></h2>
+
+                <div
+    id="memo-view-subtitle"
+    class="memo-view-subtitle"
+></div>
+
+                <div
+                    id="memo-view-meta"
+                    class="memo-view-meta"
+                ></div>
+
+                <div
+                    id="memo-view-tags"
+                    class="memo-view-tags"
+                ></div>
+
+                <div
+                    id="memo-view-content"
+                    class="memo-view-content"
+                ></div>
+
+                <div
+                    id="memo-view-files"
+                    class="memo-view-files"
+                ></div>
+
+                <div
+                    id="memo-view-buttons"
+                    class="memo-view-buttons"
+                ></div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ==================================================
+     저장 설정 모달
+================================================== -->
+
+<div
+    id="memo-save-modal"
+    class="memo-modal-background"
+>
+
+    <div class="memo-modal">
+
+        <h3>
+            💾 저장 설정
+        </h3>
+
+        <label for="memo-password">
+            비밀번호
+        </label>
+
+        <input
+            id="memo-password"
+            type="password"
+            placeholder="비밀번호를 설정하지 않으면 공개글"
+        >
+
+        <p class="memo-modal-help">
+            비밀번호를 설정하면 비밀번호를 아는 사람만 열람할 수 있어요.
+        </p>
+
+
+        <label for="memo-tags">
+            해시태그
+        </label>
+
+        <input
+            id="memo-tags"
+            type="text"
+            placeholder="#소설 #아이디어 #메모"
+        >
+
+
+        <div class="memo-modal-buttons">
+
+            <button
+                type="button"
+                id="memo-modal-cancel"
+                class="memo-modal-cancel"
+            >
+                취소
+            </button>
+
+            <button
+                type="button"
+                id="memo-modal-save"
+                class="memo-modal-save"
+            >
+                저장
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     비밀번호 입력 모달
+================================================== -->
+
+<div
+    id="memo-password-modal"
+    class="memo-modal-background"
+>
+
+    <div class="memo-modal">
+
+        <h3>
+            🔒 비밀글
+        </h3>
+
+        <p class="memo-password-message">
+            이 글은 비밀번호가 설정되어 있어요.
+        </p>
+
+        <input
+            id="memo-password-check"
+            type="password"
+            placeholder="비밀번호 입력"
+        >
+
+        <div class="memo-modal-buttons">
+
+            <button
+                type="button"
+                id="memo-password-cancel"
+                class="memo-modal-cancel"
+            >
+                취소
+            </button>
+
+            <button
+                type="button"
+                id="memo-password-confirm"
+                class="memo-modal-save"
+            >
+                열람
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* ==================================================
+   Firebase
+================================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    query,
+    orderBy,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCaWKzu47seidxH0uc7avUjKpM2v-TvHa0",
+
+    authDomain: "sangdan-diary.firebaseapp.com",
+
+    projectId: "sangdan-diary",
+
+    storageBucket: "sangdan-diary.firebasestorage.app",
+
+    messagingSenderId: "224578307985",
+
+    appId: "1:224578307985:web:18a0728ff83f9cfcc2bc30"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+
+/* ==================================================
+   상태
+================================================== */
+
+let currentUser = null;
+
+let allMemos = [];
+
+let selectedProfileUid = null;
+
+let currentMemoId = null;
+
+let currentMemoData = null;
+
+let pendingFiles = [];
+
+let existingFiles = [];
+
+
+/* ==================================================
+   DOM
+================================================== */
+
+const profiles =
+    document.getElementById("memo-profiles");
+
+const listHeader =
+    document.getElementById("memo-list-header");
+
+const listDescription =
+    document.getElementById("memo-list-description");
+
+const memoList =
+    document.getElementById("memo-list");
+
+const editor =
+    document.getElementById("memo-editor");
+
+const view =
+    document.getElementById("memo-view");
+
+const newMemoButton =
+    document.getElementById("new-memo-button");
+
+const cancelButton =
+    document.getElementById("memo-cancel-button");
+
+const saveButton =
+    document.getElementById("memo-save-button");
+
+const titleInput =
+    document.getElementById("memo-title");
+
+const subtitleInput =
+    document.getElementById("memo-subtitle");
+
+const contentEditor =
+    document.getElementById("memo-content");
+
+const fileInput =
+    document.getElementById("memo-files-input");
+
+const fileList =
+    document.getElementById("memo-files");
+
+const saveModal =
+    document.getElementById("memo-save-modal");
+
+const passwordInput =
+    document.getElementById("memo-password");
+
+const tagsInput =
+    document.getElementById("memo-tags");
+
+const modalCancel =
+    document.getElementById("memo-modal-cancel");
+
+const modalSave =
+    document.getElementById("memo-modal-save");
+
+const passwordModal =
+    document.getElementById("memo-password-modal");
+
+const passwordCheck =
+    document.getElementById("memo-password-check");
+
+const passwordCancel =
+    document.getElementById("memo-password-cancel");
+
+const passwordConfirm =
+    document.getElementById("memo-password-confirm");
+
+
+/* ==================================================
+   비밀번호 해시
+================================================== */
+
+async function hashPassword(password) {
+
+    const encoder =
+        new TextEncoder();
+
+    const data =
+        encoder.encode(password);
+
+    const hash =
+        await crypto.subtle.digest(
+            "SHA-256",
+            data
+        );
+
+    return Array.from(
+        new Uint8Array(hash)
+    )
+        .map(
+            byte =>
+                byte
+                    .toString(16)
+                    .padStart(2, "0")
+        )
+        .join("");
+}
+
+
+
+async function compressImage(file) {
+
+    return new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+
+            const img = new Image();
+
+            img.onload = () => {
+
+                const maxSize = 1600;
+
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxSize || height > maxSize) {
+
+                    if (width > height) {
+
+                        height =
+                            Math.round(
+                                height *
+                                maxSize /
+                                width
+                            );
+
+                        width = maxSize;
+
+                    } else {
+
+                        width =
+                            Math.round(
+                                width *
+                                maxSize /
+                                height
+                            );
+
+                        height = maxSize;
+
+                    }
+
+                }
+
+                const canvas =
+                    document.createElement("canvas");
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx =
+                    canvas.getContext("2d");
+
+                ctx.drawImage(
+                    img,
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+                const dataUrl =
+                    canvas.toDataURL(
+                        "image/jpeg",
+                        0.75
+                    );
+
+                resolve(dataUrl);
+
+            };
+
+            img.onerror = reject;
+
+            img.src = reader.result;
+
+        };
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* ==================================================
+   사용자 이름 / 이모티콘
+================================================== */
+
+function getProfileIcon(userData, uid) {
+
+    if (userData && userData.symbol) {
+        return userData.symbol;
+    }
+
+    const nickname =
+        userData?.nickname || "";
+
+    if (
+        nickname.includes("단나") ||
+        nickname.includes("danna") ||
+        nickname.includes("Danna")
+    ) {
+        return "🐑";
+    }
+
+    if (
+        nickname.includes("상관") ||
+        nickname.includes("sangkwan") ||
+        nickname.includes("Sangkwan")
+    ) {
+        return "🦝";
+    }
+
+    if (uid === currentUser?.uid) {
+        return "🦝";
+    }
+
+    return "🐑";
+}
+
+
+/* ==================================================
+   프로필 불러오기
+================================================== */
+
+async function loadProfiles() {
+
+    profiles.innerHTML = "";
+
+    try {
+
+        const userSnap =
+            await getDocs(
+                collection(db, "users")
+            );
+
+        const users = [];
+
+        userSnap.forEach(item => {
+
+            const data =
+                item.data();
+
+            users.push({
+                uid: item.id,
+                ...data
+            });
+
+        });
+
+
+        /*
+         * 혹시 users 컬렉션에서
+         * 닉네임을 가져오지 못하는 경우를 대비해서
+         * 메모 작성자도 추가
+         */
+
+        allMemos.forEach(memo => {
+
+            if (
+                !users.some(
+                    user =>
+                        user.uid === memo.authorUid
+                )
+            ) {
+
+                users.push({
+
+                    uid: memo.authorUid,
+
+                    nickname:
+                        memo.authorName ||
+                        memo.author ||
+                        "작성자"
+
+                });
+
+            }
+
+        });
+
+
+        /*
+         * 두 사람만 표시
+         */
+
+        const uniqueUsers =
+            users
+                .filter(
+                    (user, index, array) =>
+                        array.findIndex(
+                            item =>
+                                item.uid === user.uid
+                        ) === index
+                )
+                .slice(0, 2);
+
+
+        if (!uniqueUsers.length) {
+
+            profiles.innerHTML = `
+                <div class="memo-empty">
+                    아직 프로필이 없습니다.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        uniqueUsers.forEach(user => {
+
+            const count =
+                allMemos.filter(
+                    memo =>
+                        memo.authorUid === user.uid
+                ).length;
+
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "memo-profile";
+
+
+            if (
+                selectedProfileUid === user.uid
+            ) {
+                card.classList.add("active");
+            }
+
+
+            card.innerHTML = `
+
+                <div class="memo-profile-icon">
+                    ${getProfileIcon(user, user.uid)}
+                </div>
+
+                <div class="memo-profile-name">
+                    ${escapeHtml(
+                        user.nickname ||
+                        user.authorName ||
+                        "닉네임"
+                    )}
+                </div>
+
+                <div class="memo-profile-count">
+                    작성한 글 ${count}개
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    selectedProfileUid =
+                        user.uid;
+
+                    renderProfiles();
+
+                    closeEditor();
+                    closeView();
+
+                    listHeader.style.display = "";
+                    memoList.style.display = "";
+
+                    renderMemoList();
+
+                }
+            );
+
+
+            profiles.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        profiles.innerHTML = `
+            <div class="memo-empty">
+                프로필을 불러오지 못했어요.
+            </div>
+        `;
+    }
+}
+
+
+/* ==================================================
+   프로필 다시 그리기
+================================================== */
+
+function renderProfiles() {
+
+    const cards =
+        profiles.querySelectorAll(
+            ".memo-profile"
+        );
+
+    cards.forEach(card => {
+
+        card.classList.remove("active");
+
+    });
+
+    if (!selectedProfileUid) {
+        return;
+    }
+
+    /*
+     * 현재 프로필 UID를 직접 찾아
+     * 다시 active 처리
+     */
+
+    const target =
+        Array.from(cards).find(
+            card => {
+
+                const name =
+                    card.querySelector(
+                        ".memo-profile-name"
+                    )?.textContent;
+
+                const memo =
+                    allMemos.find(
+                        item =>
+                            item.authorName === name
+                    );
+
+                return memo?.authorUid ===
+                    selectedProfileUid;
+
+            }
+        );
+
+    if (target) {
+        target.classList.add("active");
+    }
+}
+
+
+/* ==================================================
+   메모 불러오기
+================================================== */
+
+async function loadMemos() {
+
+    memoList.innerHTML = `
+        <div class="memo-empty">
+            불러오는 중...
+        </div>
+    `;
+
+    try {
+
+        const memoQuery =
+            query(
+                collection(db, "memos"),
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+            );
+
+        const snap =
+            await getDocs(memoQuery);
+
+
+        allMemos = [];
+
+        snap.forEach(item => {
+
+            allMemos.push({
+                id: item.id,
+                ...item.data()
+            });
+
+        });
+
+
+        await loadProfiles();
+
+        renderMemoList();
+
+    } catch (error) {
+
+        console.error(
+            "MEMO LOAD ERROR:",
+            error
+        );
+
+        memoList.innerHTML = `
+            <div class="memo-empty">
+                글을 불러오지 못했어요.<br>
+                Firestore 규칙이나 인덱스를 확인해주세요.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+   메모 목록
+================================================== */
+
+function renderMemoList() {
+
+    memoList.innerHTML = "";
+
+
+    // 현재 선택한 프로필이 로그인한 사람일 때만 새 글 작성 가능
+    if (newMemoButton) {
+        newMemoButton.style.display =
+            selectedProfileUid === currentUser?.uid
+                ? "inline-block"
+                : "none";
+    }
+
+
+    let memos =
+        selectedProfileUid
+
+            ? allMemos.filter(
+                memo =>
+                    memo.authorUid ===
+                    selectedProfileUid
+            )
+
+            : allMemos;
+
+
+    if (selectedProfileUid) {
+
+        const first =
+            memos[0];
+
+        listDescription.textContent =
+            first
+                ? `${first.authorName || first.author || "작성자"}의 생각과 이야기`
+                : "아직 작성한 글이 없습니다.";
+
+    } else {
+
+        listDescription.textContent =
+            "모든 생각과 이야기를 기록해보세요.";
+
+    }
+
+
+    if (!memos.length) {
+
+        memoList.innerHTML = `
+            <div class="memo-empty">
+                아직 작성한 글이 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    memos.forEach(memo => {
+
+        const card =
+            document.createElement("article");
+
+        card.className =
+            "memo-card";
+
+
+        const lock =
+            memo.isPrivate
+                ? `<span class="memo-lock">🔒</span>`
+                : "";
+
+
+        const tags =
+            Array.isArray(memo.hashtags)
+                ? memo.hashtags
+                : [];
+
+
+        const tagHtml =
+            tags
+                .map(
+                    tag =>
+                        `<span class="memo-tag">
+                            ${escapeHtml(tag)}
+                        </span>`
+                )
+                .join("");
+
+
+        const preview =
+    memo.subtitle ||
+    "소제목이 없습니다.";
+
+
+        card.innerHTML = `
+
+            <div class="memo-card-title">
+                ${lock}
+                ${escapeHtml(
+                    memo.title ||
+                    "제목 없음"
+                )}
+            </div>
+
+            <div class="memo-card-date">
+                ${formatDate(
+                    memo.createdAt
+                )}
+                ·
+                ${escapeHtml(
+                    memo.authorName ||
+                    memo.author ||
+                    "작성자"
+                )}
+            </div>
+
+            <div class="memo-card-preview">
+                ${escapeHtml(
+                    preview ||
+                    "내용 미리보기가 없습니다."
+                )}
+            </div>
+
+            ${
+                tagHtml
+                    ? `
+                        <div class="memo-card-tags">
+                            ${tagHtml}
+                        </div>
+                    `
+                    : ""
+            }
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            () => openMemo(memo)
+        );
+
+
+        memoList.appendChild(card);
+
+    });
+
+}
+
+
+/* ==================================================
+   새 글
+================================================== */
+
+newMemoButton.addEventListener(
+    "click",
+    () => {
+
+        currentMemoId = null;
+        currentMemoData = null;
+
+        titleInput.value = "";
+
+        contentEditor.innerHTML = "";
+
+        pendingFiles = [];
+
+        existingFiles = [];
+
+        renderFiles();
+
+        closeView();
+
+        editor.classList.add("active");
+
+        listHeader.style.display =
+            "none";
+
+        memoList.style.display =
+            "none";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+);
+
+
+/* ==================================================
+   수정
+================================================== */
+
+function editMemo(memo) {
+
+    currentMemoId =
+        memo.id;
+
+    currentMemoData =
+        memo;
+
+    titleInput.value =
+        memo.title || "";
+
+    subtitleInput.value =
+    memo.subtitle || "";
+
+    contentEditor.innerHTML =
+        memo.contentHtml || "";
+
+    pendingFiles = [];
+
+    existingFiles =
+        Array.isArray(memo.attachments)
+            ? memo.attachments.map(
+                file => ({
+                    ...file,
+                    removed: false
+                })
+            )
+            : [];
+
+    renderFiles();
+
+    closeView();
+
+    editor.classList.add("active");
+
+    listHeader.style.display =
+        "none";
+
+    memoList.style.display =
+        "none";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* ==================================================
+   취소
+================================================== */
+
+cancelButton.addEventListener(
+    "click",
+    () => {
+
+        closeEditor();
+
+        listHeader.style.display =
+            "";
+
+        memoList.style.display =
+            "";
+
+        renderMemoList();
+
+    }
+);
+
+
+/* ==================================================
+   에디터 닫기
+================================================== */
+
+function closeEditor() {
+
+    editor.classList.remove(
+        "active"
+    );
+
+}
+
+
+/* ==================================================
+   파일 선택
+================================================== */
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        const newFiles =
+            Array.from(
+                fileInput.files || []
+            );
+
+        pendingFiles.push(
+            ...newFiles
+        );
+
+        fileInput.value = "";
+
+        renderFiles();
+
+    }
+);
+
+
+/* ==================================================
+   파일 목록
+================================================== */
+
+function renderFiles() {
+
+    fileList.innerHTML = "";
+
+
+    existingFiles.forEach(
+        (file, index) => {
+
+            if (file.removed) {
+                return;
+            }
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "memo-file-item";
+
+
+            item.innerHTML = `
+
+                <span>
+                    📎
+                    ${escapeHtml(
+                        file.name
+                    )}
+                </span>
+
+                <button
+                    type="button"
+                    class="memo-file-remove"
+                >
+                    삭제
+                </button>
+
+            `;
+
+
+            item
+                .querySelector("button")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        existingFiles[
+                            index
+                        ].removed = true;
+
+                        renderFiles();
+
+                    }
+                );
+
+
+            fileList.appendChild(item);
+
+        }
+    );
+
+
+    pendingFiles.forEach(
+        (file, index) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "memo-file-item";
+
+
+            item.innerHTML = `
+
+                <span>
+                    📎
+                    ${escapeHtml(
+                        file.name
+                    )}
+                    <small>
+                        (새 파일)
+                    </small>
+                </span>
+
+                <button
+                    type="button"
+                    class="memo-file-remove"
+                >
+                    삭제
+                </button>
+
+            `;
+
+
+            item
+                .querySelector("button")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        pendingFiles.splice(
+                            index,
+                            1
+                        );
+
+                        renderFiles();
+
+                    }
+                );
+
+
+            fileList.appendChild(item);
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   리치 텍스트
+================================================== */
+
+document
+    .querySelectorAll(
+        ".memo-toolbar button"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const command =
+                    button.dataset.command;
+
+                document.execCommand(
+                    command,
+                    false,
+                    null
+                );
+
+                contentEditor.focus();
+
+            }
+        );
+
+    });
+
+
+document
+    .getElementById(
+        "memo-font-size"
+    )
+    .addEventListener(
+        "change",
+        event => {
+
+            document.execCommand(
+                "fontSize",
+                false,
+                event.target.value
+            );
+
+            contentEditor.focus();
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "memo-font-name"
+    )
+    .addEventListener(
+        "change",
+        event => {
+
+            document.execCommand(
+                "fontName",
+                false,
+                event.target.value
+            );
+
+            contentEditor.focus();
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "memo-color"
+    )
+    .addEventListener(
+        "input",
+        event => {
+
+            document.execCommand(
+                "foreColor",
+                false,
+                event.target.value
+            );
+
+            contentEditor.focus();
+
+        }
+    );
+
+
+/* ==================================================
+   저장 버튼
+================================================== */
+
+saveButton.addEventListener(
+    "click",
+    () => {
+
+        const title =
+            titleInput.value.trim();
+
+        const text =
+            contentEditor.innerText.trim();
+
+
+        if (!title) {
+
+            alert(
+                "제목을 입력해주세요."
+            );
+
+            return;
+        }
+
+
+        if (!text) {
+
+            alert(
+                "본문을 입력해주세요."
+            );
+
+            return;
+        }
+
+
+        passwordInput.value = "";
+
+        tagsInput.value =
+            currentMemoData &&
+            Array.isArray(
+                currentMemoData.hashtags
+            )
+                ? currentMemoData.hashtags.join(" ")
+                : "";
+
+
+        saveModal.classList.add(
+            "active"
+        );
+
+    }
+);
+
+
+/* ==================================================
+   저장 모달 취소
+================================================== */
+
+modalCancel.addEventListener(
+    "click",
+    () => {
+
+        saveModal.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* ==================================================
+   저장
+================================================== */
+
+modalSave.addEventListener(
+    "click",
+    async () => {
+
+
+        const title =
+            titleInput.value.trim();
+
+        const subtitle =
+            subtitleInput.value.trim();
+
+        const contentHtml =
+            contentEditor.innerHTML;
+
+        const plainText =
+            contentEditor.innerText.trim();
+
+        const password =
+            passwordInput.value;
+
+        const hashtags =
+            parseHashtags(
+                tagsInput.value
+            );
+
+
+        modalSave.disabled =
+            true;
+
+
+        try {
+
+            const passwordHash =
+                password
+                    ? await hashPassword(
+                        password
+                    )
+                    : "";
+
+
+            const attachments =
+                [];
+
+
+            /*
+             * 기존 파일
+             */
+
+            existingFiles.forEach(
+    file => {
+
+        if (!file.removed) {
+
+            const existingFile = {
+
+                name:
+                    file.name || "",
+
+                url:
+                    file.url || "",
+
+                type:
+                    file.type || "",
+
+                size:
+                    file.size || 0
+
+            };
+
+            if (file.path) {
+                existingFile.path =
+                    file.path;
+            }
+
+            if (file.dataUrl) {
+                existingFile.dataUrl =
+                    file.dataUrl;
+            }
+
+            attachments.push(
+                existingFile
+            );
+
+        }
+
+    }
+);
+
+
+
+
+
+            /*
+ * 새 이미지 첨부
+ */
+
+for (
+    let i = 0;
+    i < pendingFiles.length;
+    i++
+) {
+
+    const file =
+        pendingFiles[i];
+
+    if (
+        !file.type.startsWith("image/")
+    ) {
+
+        alert(
+            `"${file.name}"은 이미지 파일이 아니라서 저장하지 않았어요.`
+        );
+
+        continue;
+    }
+
+    if (
+        file.size >
+        10 * 1024 * 1024
+    ) {
+
+        throw new Error(
+            "이미지는 파일 하나당 10MB 이하로 해주세요."
+        );
+
+    }
+
+    const dataUrl =
+        await compressImage(file);
+
+    attachments.push({
+
+        name:
+            file.name,
+
+        url:
+            dataUrl,
+
+        type:
+            file.type,
+
+        size:
+            file.size,
+
+        dataUrl:
+            dataUrl
+
+    });
+
+}
+
+
+let authorName = "작성자";
+
+try {
+
+    const userDoc =
+        await getDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            )
+        );
+
+    if (userDoc.exists()) {
+
+        const userData =
+            userDoc.data();
+
+        authorName =
+            userData.nickname ||
+            userData.authorName ||
+            "작성자";
+    }
+
+} catch (error) {
+
+    console.warn(
+        "닉네임 불러오기 실패:",
+        error
+    );
+
+}
+
+
+
+console.log(
+    "MEMO DATA CHECK:",
+    {
+        title,
+        contentHtml,
+        plainText,
+        authorUid: currentUser?.uid,
+        authorName,
+        hashtags,
+        passwordHash,
+        attachments
+    }
+);
+
+
+
+const memoData = {
+
+    title:
+        title || "",
+
+    subtitle:
+        subtitle || "",
+
+    contentHtml:
+        contentHtml || "",
+
+    plainText:
+        plainText || "",
+
+    authorUid:
+        currentUser.uid,
+
+    authorName:
+        authorName || "작성자",
+
+    hashtags:
+        Array.isArray(hashtags)
+            ? hashtags
+            : [],
+
+    isPrivate:
+        Boolean(passwordHash),
+
+    passwordHash:
+        passwordHash || "",
+
+    attachments:
+        Array.isArray(attachments)
+            ? attachments
+            : [],
+
+    updatedAt:
+        serverTimestamp()
+
+};
+
+
+            /*
+             * 새 글
+             */
+
+            if (!currentMemoId) {
+
+                memoData.createdAt =
+                    serverTimestamp();
+
+                await addDoc(
+                    collection(
+                        db,
+                        "memos"
+                    ),
+                    memoData
+                );
+
+            }
+
+            /*
+             * 수정
+             */
+
+            else {
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "memos",
+                        currentMemoId
+                    ),
+                    memoData
+                );
+
+            }
+
+
+            saveModal.classList.remove(
+                "active"
+            );
+
+            closeEditor();
+
+            listHeader.style.display =
+                "";
+
+            memoList.style.display =
+                "";
+
+
+            alert(
+                currentMemoId
+                    ? "글이 수정되었습니다!"
+                    : "글이 저장되었습니다!"
+            );
+
+
+            await loadMemos();
+
+        } catch (error) {
+
+            console.error(
+                "MEMO SAVE ERROR:",
+                error?.code || "",
+                error?.message || "",
+                error
+            );
+
+            alert(
+                "저장하지 못했어요.\n\n" +
+                "에러 내용:\n" +
+                (error?.message || error)
+            );
+
+        } finally {
+
+            modalSave.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   글 열기
+================================================== */
+
+function openMemo(memo) {
+
+    if (
+        memo.isPrivate &&
+        memo.authorUid !== currentUser.uid
+    ) {
+
+        currentMemoData =
+            memo;
+
+        passwordCheck.value = "";
+
+        passwordModal.classList.add(
+            "active"
+        );
+
+        setTimeout(
+            () =>
+                passwordCheck.focus(),
+            50
+        );
+
+        return;
+
+    }
+
+
+    showMemo(memo);
+
+}
+
+
+/* ==================================================
+   비밀번호 확인
+================================================== */
+
+passwordConfirm.addEventListener(
+    "click",
+    async () => {
+
+        if (!currentMemoData) {
+            return;
+        }
+
+
+        const password =
+            passwordCheck.value;
+
+
+        if (!password) {
+
+            alert(
+                "비밀번호를 입력해주세요."
+            );
+
+            return;
+
+        }
+
+
+        const hash =
+            await hashPassword(
+                password
+            );
+
+
+        if (
+            hash !==
+            currentMemoData.passwordHash
+        ) {
+
+            alert(
+                "비밀번호가 맞지 않아요."
+            );
+
+            return;
+
+        }
+
+
+        passwordModal.classList.remove(
+            "active"
+        );
+
+
+        showMemo(
+            currentMemoData
+        );
+
+    }
+);
+
+
+/* ==================================================
+   비밀번호 모달 취소
+================================================== */
+
+passwordCancel.addEventListener(
+    "click",
+    () => {
+
+        passwordModal.classList.remove(
+            "active"
+        );
+
+        currentMemoData = null;
+
+    }
+);
+
+
+/* ==================================================
+   글 표시
+================================================== */
+
+function showMemo(memo) {
+
+    closeEditor();
+
+    memoList.style.display = "none";
+    listHeader.style.display = "none";
+
+    document.getElementById("memo-view-title").textContent =
+        memo.title || "제목 없음";
+
+    document.getElementById("memo-view-subtitle").textContent =
+    memo.subtitle || "";
+
+    document.getElementById("memo-view-meta").textContent =
+        `${formatDate(memo.createdAt)} · ${
+            memo.authorName ||
+            memo.author ||
+            "작성자"
+        }`;
+
+    const tagArea =
+        document.getElementById("memo-view-tags");
+
+    tagArea.innerHTML = "";
+
+    const tags =
+        Array.isArray(memo.hashtags)
+            ? memo.hashtags
+            : [];
+
+    tags.forEach(tag => {
+
+        const tagElement =
+            document.createElement("span");
+
+        tagElement.className = "memo-tag";
+
+        tagElement.textContent = tag;
+
+        tagArea.appendChild(tagElement);
+
+    });
+
+    document.getElementById("memo-view-content").innerHTML =
+        memo.contentHtml || "";
+
+    const filesArea =
+        document.getElementById("memo-view-files");
+
+    filesArea.innerHTML = "";
+
+    const attachments =
+        Array.isArray(memo.attachments)
+            ? memo.attachments
+            : [];
+
+    attachments.forEach(file => {
+
+        if (
+            file.type &&
+            file.type.startsWith("image/") &&
+            file.dataUrl
+        ) {
+
+            const image =
+                document.createElement("img");
+
+            image.src = file.dataUrl;
+
+            image.alt =
+                file.name || "첨부 이미지";
+
+            image.className =
+                "memo-attached-image";
+                
+            image.addEventListener(
+    "click",
+    () => {
+
+        const imageList =
+            attachments.filter(
+                file =>
+                    file.type &&
+                    file.type.startsWith("image/") &&
+                    file.dataUrl
+            );
+
+        let currentIndex =
+            imageList.findIndex(
+                file =>
+                    file.dataUrl ===
+                    image.src
+            );
+
+        const overlay =
+            document.createElement("div");
+
+        overlay.className =
+            "memo-image-overlay";
+
+        const enlarged =
+            document.createElement("img");
+
+        enlarged.className =
+            "memo-enlarged-image";
+
+        const prevButton =
+            document.createElement("button");
+
+        prevButton.className =
+            "memo-image-prev";
+
+        prevButton.innerHTML =
+    "<span>‹</span>";
+
+        const nextButton =
+            document.createElement("button");
+
+        nextButton.className =
+            "memo-image-next";
+
+        nextButton.innerHTML =
+    "<span>›</span>";
+
+
+        function updateImage() {
+
+            enlarged.src =
+                imageList[currentIndex].dataUrl;
+
+            enlarged.alt =
+                imageList[currentIndex].name ||
+                "첨부 이미지";
+
+        }
+
+
+        prevButton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                currentIndex =
+                    (
+                        currentIndex -
+                        1 +
+                        imageList.length
+                    ) %
+                    imageList.length;
+
+                updateImage();
+
+            }
+        );
+
+
+        nextButton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                currentIndex =
+                    (
+                        currentIndex +
+                        1
+                    ) %
+                    imageList.length;
+
+                updateImage();
+
+            }
+        );
+
+
+        overlay.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    overlay
+                ) {
+
+                    overlay.remove();
+
+                }
+
+            }
+        );
+
+
+        updateImage();
+
+
+        overlay.appendChild(
+            enlarged
+        );
+
+
+        if (
+            imageList.length > 1
+        ) {
+
+            overlay.appendChild(
+                prevButton
+            );
+
+            overlay.appendChild(
+                nextButton
+            );
+
+        }
+
+
+        document.body.appendChild(
+            overlay
+        );
+
+    }
+);
+        
+            
+            filesArea.appendChild(image);
+
+        }
+
+    });
+
+    const buttons =
+        document.getElementById("memo-view-buttons");
+
+    buttons.innerHTML = "";
+
+    const backButton =
+        document.createElement("button");
+
+    backButton.textContent = "목록으로";
+
+    backButton.onclick = () => {
+
+        closeView();
+
+        listHeader.style.display = "";
+        memoList.style.display = "";
+
+        renderMemoList();
+
+    };
+
+    buttons.appendChild(backButton);
+
+    if (
+        memo.authorUid === currentUser.uid
+    ) {
+
+        const editButton =
+            document.createElement("button");
+
+        editButton.textContent = "수정";
+
+        editButton.onclick =
+            () => editMemo(memo);
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.textContent = "삭제";
+
+        deleteButton.onclick =
+            () => deleteMemo(memo);
+
+        buttons.appendChild(editButton);
+        buttons.appendChild(deleteButton);
+
+    }
+
+    view.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* ==================================================
+   글 보기 닫기
+================================================== */
+
+function closeView() {
+
+    view.classList.remove(
+        "active"
+    );
+
+}
+
+
+/* ==================================================
+   글 삭제
+================================================== */
+
+async function deleteMemo(memo) {
+
+    if (
+        memo.authorUid !==
+        currentUser.uid
+    ) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "이 글을 정말 삭제할까요?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const attachments =
+            Array.isArray(
+                memo.attachments
+            )
+                ? memo.attachments
+                : [];
+
+
+        for (
+            const file
+            of attachments
+        ) {
+
+            if (!file.path) {
+                continue;
+            }
+
+
+            try {
+
+                await deleteObject(
+                    ref(
+                        storage,
+                        file.path
+                    )
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "첨부파일 삭제 실패:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        await deleteDoc(
+            doc(
+                db,
+                "memos",
+                memo.id
+            )
+        );
+
+
+        closeView();
+
+        listHeader.style.display =
+            "";
+
+        memoList.style.display =
+            "";
+
+
+        alert(
+            "글이 삭제되었습니다."
+        );
+
+
+        await loadMemos();
+
+    } catch (error) {
+
+        console.error(
+            "MEMO DELETE ERROR:",
+            error
+        );
+
+        alert(
+            "삭제하지 못했어요."
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   해시태그
+================================================== */
+
+function parseHashtags(value) {
+
+    return value
+        .split(/\s+/)
+        .map(
+            item =>
+                item.trim()
+        )
+        .filter(Boolean)
+        .map(
+            item =>
+                item.startsWith("#")
+                    ? item
+                    : "#" + item
+        );
+
+}
+
+
+/* ==================================================
+   첫 문장
+================================================== */
+
+function getFirstSentence(text) {
+
+    const clean =
+        String(text || "")
+            .replace(/\s+/g, " ")
+            .trim();
+
+
+    if (!clean) {
+        return "";
+    }
+
+
+    const match =
+        clean.match(
+            /^.*?[.!?。！？](?:\s|$)/
+        );
+
+
+    if (match) {
+
+        return match[0].trim();
+
+    }
+
+
+    return clean.length > 80
+        ? clean.slice(0, 80) + "..."
+        : clean;
+
+}
+
+
+/* ==================================================
+   HTML 제거
+================================================== */
+
+function stripHtml(html) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.innerHTML =
+        html || "";
+
+    return div.textContent ||
+        div.innerText ||
+        "";
+
+}
+
+
+/* ==================================================
+   날짜
+================================================== */
+
+function formatDate(timestamp) {
+
+    if (!timestamp) {
+        return "날짜 없음";
+    }
+
+
+    let date;
+
+
+    if (
+        timestamp.toDate
+    ) {
+
+        date =
+            timestamp.toDate();
+
+    } else {
+
+        date =
+            new Date(timestamp);
+
+    }
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "날짜 없음";
+
+    }
+
+
+    return date
+        .toLocaleDateString(
+            "ko-KR",
+            {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }
+        )
+        .replace(/\.$/, "");
+
+}
+
+
+/* ==================================================
+   HTML 이스케이프
+================================================== */
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==================================================
+   로그인
+================================================== */
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        sessionStorage.setItem(
+            "loginReturnPage",
+            "memo.html"
+        );
+
+        window.location.replace("login.html");
+
+        return;
+    }
+
+    currentUser = user;
+
+    loadMemos();
+});
+
+</script>
+
+</body>
+</html>
