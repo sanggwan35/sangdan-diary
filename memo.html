@@ -25,6 +25,146 @@
             margin: 0 auto 60px;
         }
 
+.memo-main-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+    margin-bottom: 22px;
+}
+
+.relay-editor {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9998;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: rgba(40, 32, 27, 0.45);
+}
+
+.relay-editor-box {
+    width: 100%;
+    max-width: 620px;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    background: #fcf8ee;
+
+    border: 1px solid rgba(98, 80, 68, 0.35);
+    border-radius: 6px;
+
+    box-shadow:
+        0 8px 30px rgba(98, 80, 68, 0.2);
+}
+
+.relay-editor-box h2 {
+    margin: 0 0 28px;
+
+    color: #625044;
+
+    font-size: 24px;
+}
+
+.relay-description-input {
+    width: 100%;
+    min-height: 130px;
+
+    padding: 14px;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+    border: 1px solid rgba(98, 80, 68, 0.3);
+    border-radius: 5px;
+
+    background: #fffaf3;
+    color: #625044;
+
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.6;
+
+    outline: none;
+}
+
+
+.relay-story-card {
+    position: relative;
+    min-height: 430px;
+    box-sizing: border-box;
+}
+
+.relay-story-chapters {
+    margin-top: auto;
+    padding-top: 16px;
+
+    color: #8a7567;
+
+    font-size: 14px;
+}
+
+
+.relay-description-input:focus {
+    border-color: rgba(98, 80, 68, 0.6);
+}
+
+
+.memo-main-tab {
+    position: relative;
+
+    padding: 10px 24px 11px;
+
+    border: 1px solid rgba(98, 80, 68, 0.22);
+    border-bottom: 2px solid rgba(98, 80, 68, 0.28);
+    border-radius: 8px 8px 3px 3px;
+
+    background: rgba(255, 250, 243, 0.42);
+
+    color: #8a7567;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.memo-main-tab:hover {
+    background: rgba(255, 250, 243, 0.72);
+    color: #625044;
+}
+
+.memo-main-tab.active {
+    background: rgba(255, 250, 243, 0.92);
+
+    color: #625044;
+
+    font-weight: 600;
+
+    border-color: rgba(98, 80, 68, 0.32);
+    border-bottom-color: #625044;
+}
+
 
         /* ==================================================
            프로필
@@ -899,6 +1039,28 @@
     <main class="memo-container">
 
 
+        <!-- 메모 / 릴레이 소설 탭 -->
+<div class="memo-main-tabs">
+
+    <button
+        type="button"
+        id="memo-tab-button"
+        class="memo-main-tab active"
+    >
+        📝 생각 메모
+    </button>
+
+    <button
+        type="button"
+        id="relay-tab-button"
+        class="memo-main-tab"
+    >
+        📖 릴레이 소설
+    </button>
+
+</div>
+
+
         <!-- 프로필 -->
 
         <div id="memo-profiles" class="memo-profiles">
@@ -1185,7 +1347,432 @@
             </div>
 
 
+                </section>
+
+
+        <!-- ==================================================
+             릴레이 소설
+        ================================================== -->
+
+        <section
+            id="relay-paper"
+            class="memo-paper relay-paper"
+        >
+
+            <div class="memo-header">
+
+                <div>
+                    <h2>📖 릴레이 소설</h2>
+
+                    <p>
+                        한 사람이 시작하면, 다음 사람이 이야기를 이어갑니다.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="new-relay-button"
+                    class="memo-write-button"
+                >
+                    + 새 소설
+                </button>
+
+            </div>
+
+
+            <div
+    id="relay-list"
+    class="memo-list"
+>
+
+    <div class="memo-empty">
+        아직 시작된 소설이 없습니다.
+    </div>
+
+</div>
+
+
+<!-- 릴레이 소설 상세 보기 -->
+
+<div
+    id="relay-view"
+    class="relay-view"
+>
+
+    <div class="relay-view-header">
+
+        <button
+            type="button"
+            id="relay-back-button"
+            class="relay-back-button"
+        >
+            ← 목록으로
+        </button>
+
+        <h2
+            id="relay-view-title"
+            class="memo-view-title"
+        ></h2>
+
+        <div
+            id="relay-view-description"
+            class="memo-view-subtitle"
+        ></div>
+
+        <div
+            id="relay-view-meta"
+            class="memo-view-meta"
+        ></div>
+
+        <div class="relay-story-buttons">
+    <button
+        type="button"
+        id="relay-edit-story-button"
+        class="memo-cancel-button"
+    >
+        ✏️ 소설 수정
+    </button>
+
+    <button
+        type="button"
+        id="relay-delete-story-button"
+        class="memo-cancel-button"
+    >
+        🗑️ 소설 삭제
+    </button>
+</div>
+
+    </div>
+
+
+    <div
+        id="relay-chapters"
+        class="relay-chapters"
+    ></div>
+
+
+<div class="relay-view-buttons">
+    <button
+        type="button"
+        id="relay-add-chapter-button"
+        class="memo-save-button"
+    >
+        + 이어쓰기
+    </button>
+</div>
+
+
+
+</div>
+
+<!-- 릴레이 소설 챕터 작성 -->
+
+<div
+    id="relay-chapter-editor"
+    class="relay-editor"
+>
+
+    <div class="relay-editor-box">
+
+        <h2>
+            이어쓰기
+        </h2>
+
+        <div class="memo-field">
+
+            <label>
+                본문
+            </label>
+
+            <div class="memo-toolbar">
+
+                <button
+                    type="button"
+                    data-relay-command="bold"
+                >
+                    <b>B</b>
+                </button>
+
+                <button
+                    type="button"
+                    data-relay-command="italic"
+                >
+                    <i>I</i>
+                </button>
+
+                <button
+                    type="button"
+                    data-relay-command="underline"
+                >
+                    <u>U</u>
+                </button>
+
+
+                <select id="relay-font-size">
+
+                    <option value="3">
+                        기본
+                    </option>
+
+                    <option value="1">
+                        작게
+                    </option>
+
+                    <option value="4">
+                        크게
+                    </option>
+
+                    <option value="5">
+                        매우 크게
+                    </option>
+
+                </select>
+
+                <select id="relay-font-name">
+
+                    <option value="Pretendard">
+                        기본 글씨
+                    </option>
+
+                    <option value="Gowun Batang">
+                        고운 바탕
+                    </option>
+
+                    <option value="serif">
+                        Serif
+                    </option>
+
+                    <option value="monospace">
+                        Monospace
+                    </option>
+
+                </select>
+
+                <button
+                    type="button"
+                    data-relay-command="justifyLeft"
+                >
+                    ←
+                </button>
+
+                <button
+                    type="button"
+                    data-relay-command="justifyCenter"
+                >
+                    ≡
+                </button>
+
+                <button
+                    type="button"
+                    data-relay-command="justifyRight"
+                >
+                    →
+                </button>
+
+                <input
+                    id="relay-color"
+                    type="color"
+                    value="#625044"
+                    title="글자색"
+                >
+
+            </div>
+
+
+            <div
+                id="relay-chapter-content"
+                class="memo-content-editor"
+                contenteditable="true"
+            ></div>
+
+        </div>
+
+
+        <div class="memo-editor-buttons">
+
+            <button
+                type="button"
+                id="relay-chapter-cancel"
+                class="memo-cancel-button"
+            >
+                취소
+            </button>
+
+            <button
+                type="button"
+                id="relay-chapter-save"
+                class="memo-save-button"
+            >
+                이어쓰기
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 릴레이 소설 정보 수정 -->
+<div
+    id="relay-story-editor"
+    class="relay-editor"
+>
+    <div class="relay-editor-box">
+
+        <h2>소설 수정</h2>
+
+        <div class="memo-field">
+
+            <label for="relay-edit-title">
+                소설 제목
+            </label>
+
+            <input
+                id="relay-edit-title"
+                class="memo-title-input"
+                type="text"
+                placeholder="소설 제목을 적어주세요."
+            >
+
+        </div>
+
+
+        <div class="memo-field">
+
+            <label for="relay-edit-description">
+                소설 소개
+            </label>
+
+            <textarea
+                id="relay-edit-description"
+                class="relay-description-input"
+                placeholder="어떤 이야기인지 간단하게 적어주세요."
+            ></textarea>
+
+        </div>
+
+    
+
+
+        <div class="memo-editor-buttons">
+
+            <button
+                type="button"
+                id="relay-story-edit-cancel"
+                class="memo-cancel-button"
+            >
+                취소
+            </button>
+
+            <button
+                type="button"
+                id="relay-story-edit-save"
+                class="memo-save-button"
+            >
+                수정하기
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+
+            </div>
+
         </section>
+
+
+        <!-- ==================================================
+     릴레이 소설 작성 / 수정
+================================================== -->
+
+<div
+    id="relay-editor"
+    class="relay-editor"
+>
+
+    <div class="relay-editor-box">
+
+        <h2 id="relay-editor-title">
+            새 릴레이 소설
+        </h2>
+
+
+        <div class="memo-field">
+
+            <label for="relay-title">
+                소설 제목
+            </label>
+
+            <input
+                id="relay-title"
+                class="memo-title-input"
+                type="text"
+                placeholder="소설 제목을 적어주세요."
+            >
+
+        </div>
+
+
+        <div class="memo-field">
+
+            <label for="relay-description">
+                소설 소개
+            </label>
+
+            <textarea
+                id="relay-description"
+                class="relay-description-input"
+                placeholder="어떤 이야기인지 간단하게 적어주세요."
+            ></textarea>
+
+            <div class="memo-field">
+
+    <label for="relay-cover-image">
+        소설 표지
+    </label>
+
+    <input
+        id="relay-cover-image"
+        type="file"
+        accept="image/*"
+    >
+
+    <div
+        id="relay-cover-preview"
+        class="relay-cover-preview"
+    ></div>
+
+</div>
+
+        </div>
+
+
+        <div class="memo-editor-buttons">
+
+            <button
+                type="button"
+                id="relay-cancel-button"
+                class="memo-cancel-button"
+            >
+                취소
+            </button>
+
+            <button
+                type="button"
+                id="relay-save-button"
+                class="memo-save-button"
+            >
+                소설 만들기
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 
     </main>
 
@@ -1310,6 +1897,1766 @@
 
 <script type="module">
 
+
+const memoTabButton =
+    document.getElementById("memo-tab-button");
+
+const relayTabButton =
+    document.getElementById("relay-tab-button");
+
+const relayPaper =
+    document.getElementById("relay-paper");
+
+const memoPaper =
+    document.querySelector(".memo-paper:not(#relay-paper)");
+
+relayPaper.style.display = "none";
+
+
+memoTabButton.addEventListener(
+    "click",
+    () => {
+
+        memoTabButton.classList.add("active");
+        relayTabButton.classList.remove("active");
+
+        memoPaper.style.display = "";
+        relayPaper.style.display = "none";
+
+    }
+);
+
+
+relayTabButton.addEventListener(
+    "click",
+    () => {
+
+        relayTabButton.classList.add("active");
+        memoTabButton.classList.remove("active");
+
+        memoPaper.style.display = "none";
+        relayPaper.style.display = "";
+
+        loadRelayStories();
+
+    }
+);
+
+
+const newRelayButton =
+    document.getElementById("new-relay-button");
+
+const relayEditor =
+    document.getElementById("relay-editor");
+
+const relayCancelButton =
+    document.getElementById("relay-cancel-button");
+
+const relayTitleInput =
+    document.getElementById("relay-title");
+
+const relayDescriptionInput =
+    document.getElementById("relay-description");
+
+const relayCoverImage =
+    document.getElementById("relay-cover-image");
+
+const relayCoverPreview =
+    document.getElementById("relay-cover-preview");
+
+let relayCoverImageData = "";
+
+relayCoverImage.addEventListener(
+    "change",
+    async () => {
+
+        const file =
+            relayCoverImage.files[0];
+
+        relayCoverPreview.innerHTML = "";
+
+        relayCoverImageData = "";
+
+        if (!file) {
+            return;
+        }
+
+        try {
+
+            relayCoverImageData =
+                await compressImage(file);
+
+            relayCoverPreview.innerHTML = `
+                <img
+                    src="${relayCoverImageData}"
+                    alt="소설 표지 미리보기"
+                >
+            `;
+
+            console.log(
+                "표지 이미지 저장 완료:",
+                relayCoverImageData.length
+            );
+
+        } catch (error) {
+
+            console.error(
+                "표지 이미지 처리 실패:",
+                error
+            );
+
+            relayCoverImageData = "";
+
+            alert(
+                "표지 이미지를 불러오지 못했어요."
+            );
+        }
+    }
+);
+
+const relaySaveButton =
+    document.getElementById("relay-save-button");
+
+const relayList =
+    document.getElementById("relay-list");
+
+
+const relayView =
+    document.getElementById("relay-view");
+
+const relayViewTitle =
+    document.getElementById("relay-view-title");
+
+const relayViewDescription =
+    document.getElementById("relay-view-description");
+
+const relayViewMeta =
+    document.getElementById("relay-view-meta");
+
+const relayChapters =
+    document.getElementById("relay-chapters");
+
+const relayBackButton =
+    document.getElementById("relay-back-button");
+
+const relayAddChapterButton =
+    document.getElementById("relay-add-chapter-button");
+
+const relayEditStoryButton =
+    document.getElementById(
+        "relay-edit-story-button"
+    );
+
+const relayDeleteStoryButton =
+    document.getElementById(
+        "relay-delete-story-button"
+    );
+
+const relayStoryEditor =
+    document.getElementById(
+        "relay-story-editor"
+    );
+
+const relayEditTitle =
+    document.getElementById(
+        "relay-edit-title"
+    );
+
+const relayEditDescription =
+    document.getElementById(
+        "relay-edit-description"
+    );
+
+const relayStoryEditCancel =
+    document.getElementById(
+        "relay-story-edit-cancel"
+    );
+
+const relayStoryEditSave =
+    document.getElementById(
+        "relay-story-edit-save"
+    );
+
+
+const relayChapterEditor =
+    document.getElementById("relay-chapter-editor");
+
+const relayChapterContent =
+    document.getElementById("relay-chapter-content");
+
+const relayFontName =
+    document.getElementById("relay-font-name");
+
+relayFontName.addEventListener(
+    "change",
+    () => {
+
+        relayChapterContent.focus();
+
+        document.execCommand(
+            "fontName",
+            false,
+            relayFontName.value
+        );
+
+    }
+);
+
+
+const relayChapterCancel =
+    document.getElementById("relay-chapter-cancel");
+
+const relayChapterSave =
+    document.getElementById("relay-chapter-save");
+
+relayBackButton.addEventListener(
+    "click",
+    () => {
+
+        currentRelayStoryId =
+            null;
+
+        relayView.style.display =
+            "none";
+
+        relayList.style.display =
+            "";
+
+        loadRelayStories();
+
+    }
+);
+
+relayEditStoryButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!currentRelayStoryId) {
+            return;
+        }
+
+
+        const storySnapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "relayStories",
+                    currentRelayStoryId
+                )
+            );
+
+
+        if (!storySnapshot.exists()) {
+
+            alert(
+                "소설을 찾을 수 없습니다."
+            );
+
+            return;
+
+        }
+
+
+        const story =
+            storySnapshot.data();
+
+
+        if (
+            story.authorUid !==
+            currentUser.uid
+        ) {
+
+            alert(
+                "이 소설을 만든 사람만 수정할 수 있어요."
+            );
+
+            return;
+
+        }
+
+
+        relayEditTitle.value =
+            story.title || "";
+
+        relayEditDescription.value =
+            story.description || "";
+
+
+        relayStoryEditor.style.display =
+            "flex";
+
+        relayEditTitle.focus();
+
+    }
+);
+
+relayStoryEditCancel.addEventListener(
+    "click",
+    () => {
+
+        relayStoryEditor.style.display =
+            "none";
+
+    }
+);
+
+relayStoryEditSave.addEventListener(
+    "click",
+    async () => {
+
+        const title =
+            relayEditTitle.value.trim();
+
+        const description =
+            relayEditDescription.value.trim();
+
+
+        if (!title) {
+
+            alert(
+                "소설 제목을 적어주세요."
+            );
+
+            relayEditTitle.focus();
+
+            return;
+
+        }
+
+
+        if (!currentRelayStoryId) {
+            return;
+        }
+
+
+        relayStoryEditSave.disabled =
+            true;
+
+
+        try {
+
+            const storyRef =
+                doc(
+                    db,
+                    "relayStories",
+                    currentRelayStoryId
+                );
+
+
+            const storySnapshot =
+                await getDoc(
+                    storyRef
+                );
+
+
+            if (!storySnapshot.exists()) {
+
+                alert(
+                    "소설을 찾을 수 없습니다."
+                );
+
+                return;
+
+            }
+
+
+            const story =
+                storySnapshot.data();
+
+
+            if (
+                story.authorUid !==
+                currentUser.uid
+            ) {
+
+                alert(
+                    "이 소설을 만든 사람만 수정할 수 있어요."
+                );
+
+                return;
+
+            }
+
+
+            await updateDoc(
+                storyRef,
+                {
+                    title:
+                        title,
+
+                    description:
+                        description,
+
+                    updatedAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            relayStoryEditor.style.display =
+                "none";
+
+
+            alert(
+                "소설 정보가 수정되었습니다!"
+            );
+
+
+            await showRelayStory(
+                currentRelayStoryId,
+                {
+                    ...story,
+
+                    title:
+                        title,
+
+                    description:
+                        description
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "RELAY STORY EDIT ERROR:",
+                error
+            );
+
+            alert(
+                "소설 정보를 수정하지 못했어요.\n\n" +
+                (error?.message || error)
+            );
+
+        } finally {
+
+            relayStoryEditSave.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+relayDeleteStoryButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!currentRelayStoryId) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                "이 소설을 정말 삭제할까요?\n\n" +
+                "소설 안에 있는 모든 챕터도 함께 삭제됩니다."
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        relayDeleteStoryButton.disabled =
+            true;
+
+
+        try {
+
+            const storyRef =
+                doc(
+                    db,
+                    "relayStories",
+                    currentRelayStoryId
+                );
+
+
+            const storySnapshot =
+                await getDoc(
+                    storyRef
+                );
+
+
+            if (!storySnapshot.exists()) {
+
+                alert(
+                    "소설을 찾을 수 없습니다."
+                );
+
+                return;
+
+            }
+
+
+            const story =
+                storySnapshot.data();
+
+
+            /*
+             * 다른 사람이 삭제하려는 경우 방지
+             */
+            if (
+                story.authorUid !==
+                currentUser.uid
+            ) {
+
+                alert(
+                    "이 소설을 만든 사람만 삭제할 수 있어요."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * =================================
+             * 챕터 전부 삭제
+             * =================================
+             */
+
+            const chapterSnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "relayStories",
+                        currentRelayStoryId,
+                        "chapters"
+                    )
+                );
+
+
+            for (
+                const chapterDoc
+                of chapterSnapshot.docs
+            ) {
+
+                await deleteDoc(
+                    doc(
+                        db,
+                        "relayStories",
+                        currentRelayStoryId,
+                        "chapters",
+                        chapterDoc.id
+                    )
+                );
+
+            }
+
+
+            /*
+             * =================================
+             * 소설 삭제
+             * =================================
+             */
+
+            await deleteDoc(
+                storyRef
+            );
+
+
+            currentRelayStoryId =
+                null;
+
+
+            relayView.style.display =
+                "none";
+
+            relayList.style.display =
+                "";
+
+
+            alert(
+                "소설이 삭제되었습니다."
+            );
+
+
+            await loadRelayStories();
+
+
+        } catch (error) {
+
+            console.error(
+                "RELAY STORY DELETE ERROR:",
+                error
+            );
+
+            alert(
+                "소설을 삭제하지 못했어요.\n\n" +
+                (error?.message || error)
+            );
+
+        } finally {
+
+            relayDeleteStoryButton.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+relayAddChapterButton.addEventListener(
+    "click",
+    () => {
+
+        if (!currentRelayStoryId) {
+
+            alert(
+                "먼저 소설을 선택해주세요."
+            );
+
+            return;
+
+        }
+
+        relayChapterContent.innerHTML =
+            "";
+
+        relayChapterEditor.style.display =
+            "flex";
+
+        relayChapterContent.focus();
+
+    }
+);
+
+
+let editingRelayChapterId = null;
+
+async function editRelayChapter(
+    chapterId,
+    chapter
+) {
+    editingRelayChapterId =
+        chapterId;
+
+    relayChapterContent.innerHTML =
+        chapter.contentHtml || "";
+
+    relayChapterEditor.style.display =
+        "flex";
+
+    relayChapterContent.focus();
+
+    relayChapterSave.textContent =
+        "수정하기";
+}
+
+
+relayChapterCancel.addEventListener(
+    "click",
+    () => {
+
+        relayChapterEditor.style.display =
+            "none";
+
+        relayChapterContent.innerHTML =
+            "";
+
+    }
+);
+
+
+
+relayChapterSave.addEventListener(
+    "click",
+    async () => {
+
+        const contentHtml =
+            relayChapterContent.innerHTML.trim();
+
+
+        if (
+            !contentHtml ||
+            contentHtml === "<br>"
+        ) {
+
+            alert(
+                "내용을 적어주세요."
+            );
+
+            relayChapterContent.focus();
+
+            return;
+
+        }
+
+
+        if (!currentRelayStoryId) {
+
+            alert(
+                "소설을 찾을 수 없습니다."
+            );
+
+            return;
+
+        }
+
+
+        relayChapterSave.disabled =
+            true;
+
+
+        try {
+
+            /*
+             * =================================
+             * 챕터 수정
+             * =================================
+             */
+
+            if (editingRelayChapterId) {
+
+                const chapterRef =
+                    doc(
+                        db,
+                        "relayStories",
+                        currentRelayStoryId,
+                        "chapters",
+                        editingRelayChapterId
+                    );
+
+
+                await updateDoc(
+                    chapterRef,
+                    {
+                        contentHtml:
+                            contentHtml,
+
+                        updatedAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                editingRelayChapterId =
+                    null;
+
+
+                relayChapterEditor.style.display =
+                    "none";
+
+
+                relayChapterContent.innerHTML =
+                    "";
+
+
+                relayChapterSave.textContent =
+                    "이어쓰기";
+
+
+                alert(
+                    "챕터가 수정되었습니다!"
+                );
+
+
+                await showRelayStory(
+                    currentRelayStoryId,
+                    {
+                        ...(await getDoc(
+                            doc(
+                                db,
+                                "relayStories",
+                                currentRelayStoryId
+                            )
+                        )).data()
+                    }
+                );
+
+
+                return;
+
+            }
+
+
+            /*
+             * =================================
+             * 새 챕터 작성
+             * =================================
+             */
+
+            let authorName =
+                "작성자";
+
+
+            try {
+
+                const userDoc =
+                    await getDoc(
+                        doc(
+                            db,
+                            "users",
+                            currentUser.uid
+                        )
+                    );
+
+
+                if (userDoc.exists()) {
+
+                    const userData =
+                        userDoc.data();
+
+                    authorName =
+                        userData.nickname ||
+                        userData.authorName ||
+                        "작성자";
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "닉네임 불러오기 실패:",
+                    error
+                );
+
+            }
+
+
+            const storyRef =
+                doc(
+                    db,
+                    "relayStories",
+                    currentRelayStoryId
+                );
+
+
+            const storySnapshot =
+                await getDoc(
+                    storyRef
+                );
+
+
+            if (!storySnapshot.exists()) {
+
+                alert(
+                    "소설이 존재하지 않습니다."
+                );
+
+                return;
+
+            }
+
+
+            const story =
+                storySnapshot.data();
+
+
+            const chapterSnapshot =
+    await getDocs(
+        collection(
+            db,
+            "relayStories",
+            currentRelayStoryId,
+            "chapters"
+        )
+    );
+
+
+let highestChapterNumber =
+    0;
+
+
+chapterSnapshot.forEach(
+    chapterDoc => {
+
+        const chapter =
+            chapterDoc.data();
+
+        const chapterNumber =
+            Number(
+                chapter.chapterNumber || 0
+            );
+
+
+        if (
+            chapterNumber >
+            highestChapterNumber
+        ) {
+
+            highestChapterNumber =
+                chapterNumber;
+
+        }
+
+    }
+);
+
+
+const nextChapterNumber =
+    highestChapterNumber + 1;
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "relayStories",
+                    currentRelayStoryId,
+                    "chapters"
+                ),
+                {
+
+                    chapterNumber:
+                        nextChapterNumber,
+
+                    contentHtml:
+                        contentHtml,
+
+                    authorUid:
+                        currentUser.uid,
+
+                    authorName:
+                        authorName,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            await updateDoc(
+                storyRef,
+                {
+
+                    chapterCount:
+                        nextChapterNumber,
+
+                    updatedAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            relayChapterEditor.style.display =
+                "none";
+
+
+            relayChapterContent.innerHTML =
+                "";
+
+
+            alert(
+                `${nextChapterNumber}화가 추가되었습니다!`
+            );
+
+
+            const updatedStory =
+                {
+                    ...story,
+
+                    chapterCount:
+                        nextChapterNumber
+                };
+
+
+            await showRelayStory(
+                currentRelayStoryId,
+                updatedStory
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "RELAY CHAPTER SAVE ERROR:",
+                error
+            );
+
+            alert(
+                "챕터를 저장하지 못했어요.\n\n" +
+                (error?.message || error)
+            );
+
+        } finally {
+
+            relayChapterSave.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+document
+    .querySelectorAll(
+        "[data-relay-command]"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const command =
+                        button.dataset.relayCommand;
+
+                    document.execCommand(
+                        command,
+                        false,
+                        null
+                    );
+
+                    relayChapterContent.focus();
+
+                }
+            );
+
+        }
+    );
+
+    document
+    .getElementById("relay-font-size")
+    .addEventListener(
+        "change",
+        event => {
+
+            document.execCommand(
+                "fontSize",
+                false,
+                event.target.value
+            );
+
+            relayChapterContent.focus();
+
+        }
+    );
+
+    document
+    .getElementById("relay-color")
+    .addEventListener(
+        "input",
+        event => {
+
+            document.execCommand(
+                "foreColor",
+                false,
+                event.target.value
+            );
+
+            relayChapterContent.focus();
+
+        }
+    );
+
+
+
+
+async function loadRelayStories() {
+
+    relayList.innerHTML = `
+        <div class="memo-empty">
+            불러오는 중...
+        </div>
+    `;
+
+
+    try {
+
+        const storyQuery =
+            query(
+                collection(
+                    db,
+                    "relayStories"
+                ),
+                orderBy(
+                    "updatedAt",
+                    "desc"
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                storyQuery
+            );
+
+
+        if (snapshot.empty) {
+
+            relayList.innerHTML = `
+                <div class="memo-empty">
+                    아직 시작된 소설이 없습니다.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        relayList.innerHTML = "";
+
+
+        snapshot.forEach(
+            storyDoc => {
+
+                const story =
+                    storyDoc.data();
+
+                console.log("표지 확인:", story.coverImage);
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "memo-card relay-story-card";
+
+
+                card.innerHTML = `
+
+    ${
+        story.coverImage
+            ? `
+                <div class="relay-story-cover">
+                    <img
+                        src="${story.coverImage}"
+                        alt="소설 표지"
+                    >
+                </div>
+            `
+            : ""
+    }
+
+
+    <div class="memo-card-title">
+
+        📖
+        ${escapeHtml(
+            story.title ||
+            "제목 없음"
+        )}
+
+    </div>
+
+
+    <div class="memo-card-date">
+
+        ${formatDate(
+            story.createdAt
+        )}
+
+        ·
+
+        ${escapeHtml(
+            story.authorName ||
+            "작성자"
+        )}
+
+    </div>
+
+
+    <div class="memo-card-preview">
+
+        ${escapeHtml(
+            story.description ||
+            "소개가 없습니다."
+        )}
+
+    </div>
+
+
+    <div class="relay-story-chapters">
+
+        챕터
+        ${story.chapterCount || 0}
+
+    </div>
+
+`;
+
+
+card.addEventListener(
+    "click",
+    () => {
+
+        showRelayStory(
+            storyDoc.id,
+            story
+        );
+
+    }
+);
+
+                
+                relayList.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "RELAY STORY LOAD ERROR:",
+            error
+        );
+
+        relayList.innerHTML = `
+            <div class="memo-empty">
+                소설을 불러오지 못했어요.
+            </div>
+        `;
+
+    }
+
+}
+
+async function showRelayStory(
+    storyId,
+    story
+) {
+
+    console.log("소설 클릭됨:", storyId, story);
+
+    currentRelayStoryId =
+        storyId;
+
+
+    relayList.style.display =
+        "none";
+
+    relayView.style.display =
+        "";
+
+
+    relayViewTitle.textContent =
+        story.title ||
+        "제목 없음";
+
+
+    relayViewDescription.textContent =
+        story.description ||
+        "";
+
+
+    relayViewMeta.textContent =
+        `${formatDate(
+            story.createdAt
+        )} · ${
+            story.authorName ||
+            "작성자"
+        }`;
+
+if (
+    story.authorUid ===
+    currentUser.uid
+) {
+
+    relayEditStoryButton.style.display =
+        "inline-block";
+
+    relayDeleteStoryButton.style.display =
+        "inline-block";
+
+} else {
+
+    relayEditStoryButton.style.display =
+        "none";
+
+    relayDeleteStoryButton.style.display =
+        "none";
+
+}
+
+
+    relayChapters.innerHTML = `
+        <div class="memo-empty">
+            챕터를 불러오는 중...
+        </div>
+    `;
+
+
+    try {
+
+        const chapterQuery =
+            query(
+                collection(
+                    db,
+                    "relayStories",
+                    storyId,
+                    "chapters"
+                ),
+                orderBy(
+                    "chapterNumber",
+                    "asc"
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                chapterQuery
+            );
+
+
+        if (snapshot.empty) {
+
+            relayChapters.innerHTML = `
+                <div class="memo-empty">
+                    아직 작성된 챕터가 없습니다.<br>
+                    첫 번째 이야기를 시작해보세요.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        relayChapters.innerHTML =
+            "";
+
+
+        snapshot.forEach(
+            chapterDoc => {
+
+                const chapter =
+                    chapterDoc.data();
+
+
+                const chapterElement =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                chapterElement.className =
+                    "relay-chapter";
+
+
+                chapterElement.innerHTML = `
+    <div class="relay-chapter-header">
+        <strong>
+            제
+            ${chapter.chapterNumber || 1}
+            화
+        </strong>
+
+        <span>
+            ${escapeHtml(
+                chapter.authorName ||
+                "작성자"
+            )}
+            ·
+            ${formatDate(
+                chapter.createdAt
+            )}
+        </span>
+    </div>
+
+    <div class="relay-chapter-content">
+        ${
+            chapter.contentHtml ||
+            ""
+        }
+    </div>
+
+    ${
+        chapter.authorUid === currentUser.uid
+            ? `
+                <div class="relay-chapter-actions">
+                    <button
+                        type="button"
+                        class="relay-edit-chapter-button"
+                    >
+                        ✏️ 수정
+                    </button>
+
+                    <button
+                        type="button"
+                        class="relay-delete-chapter-button"
+                    >
+                        🗑️ 삭제
+                    </button>
+                </div>
+            `
+            : ""
+    }
+`;
+
+
+const editButton =
+    chapterElement.querySelector(
+        ".relay-edit-chapter-button"
+    );
+
+const deleteButton =
+    chapterElement.querySelector(
+        ".relay-delete-chapter-button"
+    );
+
+
+if (editButton) {
+
+    editButton.addEventListener(
+        "click",
+        () => {
+
+            editingRelayChapterId =
+                chapterDoc.id;
+
+            relayChapterContent.innerHTML =
+                chapter.contentHtml || "";
+
+            relayChapterSave.textContent =
+                "수정하기";
+
+            relayChapterEditor.style.display =
+                "flex";
+
+            relayChapterContent.focus();
+
+        }
+    );
+
+}
+
+
+if (deleteButton) {
+
+    deleteButton.addEventListener(
+        "click",
+        async () => {
+
+            const confirmed =
+                confirm(
+                    `${chapter.chapterNumber || 1}화를 삭제할까요?`
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                await deleteDoc(
+                    doc(
+                        db,
+                        "relayStories",
+                        currentRelayStoryId,
+                        "chapters",
+                        chapterDoc.id
+                    )
+                );
+
+            
+
+
+// 남은 챕터를 다시 1화부터 순서대로 정렬
+const remainingChapters =
+    await getDocs(
+        query(
+            collection(
+                db,
+                "relayStories",
+                currentRelayStoryId,
+                "chapters"
+            ),
+            orderBy(
+                "chapterNumber",
+                "asc"
+            )
+        )
+    );
+
+let newChapterNumber = 1;
+
+for (
+    const remainingChapterDoc
+    of remainingChapters.docs
+) {
+    await updateDoc(
+        remainingChapterDoc.ref,
+        {
+            chapterNumber:
+                newChapterNumber
+        }
+    );
+
+    newChapterNumber++;
+}
+
+// 현재 챕터 수 갱신
+await updateDoc(
+    doc(
+        db,
+        "relayStories",
+        currentRelayStoryId
+    ),
+    {
+        chapterCount:
+            remainingChapters.size,
+
+        updatedAt:
+            serverTimestamp()
+    }
+);
+
+
+                alert(
+                    "챕터가 삭제되었습니다."
+                );
+
+
+                const storyRef =
+                    doc(
+                        db,
+                        "relayStories",
+                        currentRelayStoryId
+                    );
+
+
+                const storySnapshot =
+                    await getDoc(
+                        storyRef
+                    );
+
+
+                if (
+                    storySnapshot.exists()
+                ) {
+
+                    await showRelayStory(
+                        currentRelayStoryId,
+                        storySnapshot.data()
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "RELAY CHAPTER DELETE ERROR:",
+                    error
+                );
+
+                alert(
+                    "챕터를 삭제하지 못했어요.\n\n" +
+                    (error?.message || error)
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+                relayChapters.appendChild(
+                    chapterElement
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "RELAY CHAPTER LOAD ERROR:",
+            error
+        );
+
+        relayChapters.innerHTML = `
+            <div class="memo-empty">
+                챕터를 불러오지 못했어요.
+            </div>
+        `;
+
+    }
+
+}
+
+
+relayEditor.style.display = "none";
+relayView.style.display = "none";
+relayChapterEditor.style.display = "none";
+relayStoryEditor.style.display = "none";
+
+
+newRelayButton.addEventListener(
+    "click",
+    () => {
+
+        relayTitleInput.value = "";
+        relayDescriptionInput.value = "";
+
+        relayEditor.style.display = "flex";
+
+        relayTitleInput.focus();
+
+    }
+);
+
+
+relayCancelButton.addEventListener(
+    "click",
+    () => {
+
+        relayEditor.style.display = "none";
+
+    }
+);
+
+relaySaveButton.addEventListener(
+    "click",
+    async () => {
+
+        const title =
+            relayTitleInput.value.trim();
+
+        const description =
+            relayDescriptionInput.value.trim();
+
+    const coverImage =
+    relayCoverImageData;
+
+console.log(
+    "최종 저장할 표지:",
+    coverImage ? "이미지 있음" : "이미지 없음",
+    coverImage.length
+);
+
+
+
+        if (!title) {
+
+            alert(
+                "소설 제목을 적어주세요."
+            );
+
+            relayTitleInput.focus();
+
+            return;
+
+        }
+
+
+        relaySaveButton.disabled = true;
+
+        try {
+
+            let authorName =
+                "작성자";
+
+
+            try {
+
+                const userDoc =
+                    await getDoc(
+                        doc(
+                            db,
+                            "users",
+                            currentUser.uid
+                        )
+                    );
+
+                if (userDoc.exists()) {
+
+                    const userData =
+                        userDoc.data();
+
+                    authorName =
+                        userData.nickname ||
+                        userData.authorName ||
+                        "작성자";
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "닉네임 불러오기 실패:",
+                    error
+                );
+
+            }
+
+        
+
+            await addDoc(
+                collection(
+                    db,
+                    "relayStories"
+                ),
+                {
+
+                    title:
+                        title,
+
+                    description:
+                        description,
+
+                        coverImage: coverImage,
+
+                    authorUid:
+                        currentUser.uid,
+
+                    authorName:
+                        authorName,
+
+                    chapterCount:
+                        0,
+
+                    createdAt:
+                        serverTimestamp(),
+
+                    updatedAt:
+                        serverTimestamp()
+
+                }
+            );
+
+            relayCoverImage.value = "";
+            relayCoverPreview.innerHTML = "";
+
+
+            relayEditor.style.display =
+                "none";
+
+
+            alert(
+                "새 릴레이 소설이 만들어졌어요!"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "RELAY STORY SAVE ERROR:",
+                error
+            );
+
+            alert(
+                "소설을 저장하지 못했어요.\n\n" +
+                (error?.message || error)
+            );
+
+        } finally {
+
+            relaySaveButton.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+
 /* ==================================================
    Firebase
 ================================================== */
@@ -1372,6 +3719,8 @@ const db =
 ================================================== */
 
 let currentUser = null;
+
+let currentRelayStoryId = null;
 
 let allMemos = [];
 
