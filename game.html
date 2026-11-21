@@ -38,6 +38,64 @@
             font-size: 26px;
         }
 
+        /* =================================
+   GAME TABS
+================================= */
+
+.game-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+    margin-bottom: 28px;
+}
+
+.game-tab {
+    position: relative;
+
+    padding: 10px 24px 11px;
+
+    border: 1px solid rgba(98, 80, 68, 0.22);
+    border-bottom: 2px solid rgba(98, 80, 68, 0.28);
+    border-radius: 8px 8px 3px 3px;
+
+    background: rgba(255, 250, 243, 0.42);
+
+    color: #8a7567;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.game-tab:hover {
+    background: rgba(255, 250, 243, 0.72);
+    color: #625044;
+}
+
+.game-tab.active {
+    background: rgba(255, 250, 243, 0.92);
+
+    color: #625044;
+
+    font-weight: 600;
+
+    border-color: rgba(98, 80, 68, 0.32);
+    border-bottom-color: #625044;
+}
+
         .game-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -313,6 +371,292 @@
         0 0 10px rgba(202,255,128,0.5);
 }
 
+
+.trpg-section {
+    width: 100%;
+}
+
+.trpg-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.trpg-header h3 {
+    margin: 0 0 8px;
+    color: #625044;
+    font-size: 20px;
+}
+
+.trpg-header p {
+    margin: 0;
+    color: #8a7567;
+    font-size: 13px;
+}
+
+.trpg-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.trpg-card {
+    position: relative;
+    min-height: 150px;
+    padding: 28px;
+    box-sizing: border-box;
+
+    background: #d9cbb5;
+    border: 1px solid #b9a68a;
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 0 #a18d72,
+        0 8px 20px rgba(39, 31, 25, 0.10);
+}
+
+.trpg-card-title {
+    margin-bottom: 20px;
+
+    color: #c8ffcf;
+    font-family: monospace;
+    font-size: 18px;
+
+    text-shadow:
+        0 0 5px rgba(157,255,177,0.55),
+        0 0 13px rgba(157,255,177,0.18);
+
+    word-break: break-all;
+}
+
+@media (max-width: 768px) {
+
+    .trpg-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .trpg-list {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.trpg-card-cover {
+    width: 150px;
+    height: 200px;
+    margin: 0 auto 16px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(98, 80, 68, 0.2);
+    border-radius: 5px;
+
+    background: rgba(255, 250, 243, 0.5);
+}
+
+.trpg-card-cover img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+
+/* =================================
+   TRPG 등록창
+================================= */
+
+.trpg-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    box-sizing: border-box;
+
+    background: rgba(39, 31, 25, 0.45);
+}
+
+.trpg-modal-box {
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    background: #fffaf3;
+    border: 2px solid #625044;
+    border-radius: 8px;
+
+    box-shadow:
+        0 8px 30px rgba(39, 31, 25, 0.18);
+}
+
+.trpg-modal-title {
+    margin: 0 0 25px;
+
+    color: #625044;
+    font-size: 22px;
+}
+
+.trpg-form-field {
+    margin-bottom: 20px;
+}
+
+.trpg-form-field label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #625044;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.trpg-form-field input[type="text"],
+.trpg-form-field textarea {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(98, 80, 68, 0.3);
+    border-radius: 5px;
+
+    background: #fffdf8;
+    color: #625044;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.trpg-form-field textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.trpg-form-field input[type="text"]:focus,
+.trpg-form-field textarea:focus {
+    border-color: #625044;
+}
+
+.trpg-file-box {
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    border: 1px dashed rgba(98, 80, 68, 0.35);
+    border-radius: 6px;
+
+    background: rgba(255, 250, 243, 0.55);
+}
+
+.trpg-file-box input[type="file"] {
+    width: 100%;
+    font-size: 13px;
+}
+
+.trpg-file-name {
+    margin-top: 9px;
+
+    color: #8a7567;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.trpg-cover-preview {
+    display: none;
+
+    width: 130px;
+    height: 170px;
+
+    margin-top: 12px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(98, 80, 68, 0.25);
+    border-radius: 5px;
+}
+
+.trpg-cover-preview img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.trpg-modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    margin-top: 28px;
+}
+
+.trpg-modal-button {
+    height: 38px;
+
+    padding: 0 16px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #625044;
+    border-radius: 5px;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.trpg-modal-cancel {
+    background: #fffaf3;
+    color: #625044;
+}
+
+.trpg-modal-cancel:hover {
+    background: #f1e9dc;
+}
+
+.trpg-modal-save {
+    background: #625044;
+    color: #fffaf3;
+}
+
+.trpg-modal-save:hover {
+    background: #756154;
+}
+
+
     </style>
 </head>
 
@@ -362,9 +706,28 @@
         <h2>🎮 게임 보관함</h2>
 
 
+        <div class="game-tabs">
+    <button
+        type="button"
+        id="game-tab-button"
+        class="game-tab active"
+    >
+        🎮 미연시
+    </button>
+
+    <button
+        type="button"
+        id="trpg-tab-button"
+        class="game-tab"
+    >
+        🎭 TRPG 스크립트
+    </button>
+</div>
+
+
         
 
-        <div class="game-list">
+        <div id="visual-novel-section" class="game-list">
 
             <div class="game-card">
 
@@ -417,12 +780,260 @@
     </a>
 </div>
 
+</div>
 
+<div
+    id="trpg-section"
+    class="trpg-section"
+    style="display: none;"
+>
+
+    <div class="trpg-header">
+
+        <div>
+            <h3>🎭 TRPG 스크립트</h3>
+
+            <p>
+                GitHub에 등록된 TRPG 게임을 자동으로 불러옵니다.
+            </p>
         </div>
 
-    </section>
+    </div>
+
+
+    <div
+        id="trpg-list"
+        class="trpg-list"
+    >
+
+        <div class="trpg-empty">
+            TRPG 게임을 불러오는 중...
+        </div>
+
+    </div>
 
 </div>
+
+
+<script>
+
+    /* =================================
+       GAME TAB
+    ================================= */
+
+    const gameTabButton =
+        document.getElementById("game-tab-button");
+
+    const trpgTabButton =
+        document.getElementById("trpg-tab-button");
+
+    const visualNovelSection =
+        document.getElementById("visual-novel-section");
+
+    const trpgSection =
+        document.getElementById("trpg-section");
+
+    const trpgList =
+        document.getElementById("trpg-list");
+
+
+    gameTabButton.addEventListener(
+        "click",
+        () => {
+
+            gameTabButton.classList.add("active");
+            trpgTabButton.classList.remove("active");
+
+            visualNovelSection.style.display = "grid";
+            trpgSection.style.display = "none";
+
+        }
+    );
+
+
+    trpgTabButton.addEventListener(
+        "click",
+        () => {
+
+            trpgTabButton.classList.add("active");
+            gameTabButton.classList.remove("active");
+
+            visualNovelSection.style.display = "none";
+            trpgSection.style.display = "block";
+
+            loadTrpgGames();
+
+        }
+    );
+
+
+    /* =================================
+       GitHub TRPG 게임 불러오기
+    ================================= */
+
+    async function loadTrpgGames() {
+
+        trpgList.innerHTML = `
+            <div class="trpg-empty">
+                TRPG 게임을 불러오는 중...
+            </div>
+        `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "https://api.github.com/repos/sanggwan35/sangdan-diary/contents/games/trpg?ref=main"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "GitHub 게임 목록을 불러오지 못했습니다."
+                );
+
+            }
+
+
+            const files =
+                await response.json();
+
+
+            const gameFolders =
+                files.filter(
+                    item =>
+                        item.type === "dir"
+                );
+
+
+            if (gameFolders.length === 0) {
+
+                trpgList.innerHTML = `
+                    <div class="trpg-empty">
+                        아직 등록된 TRPG 게임이 없습니다.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            trpgList.innerHTML = "";
+
+
+            for (
+                const folder of gameFolders
+            ) {
+
+                const folderName =
+                    folder.name;
+
+
+                const gameUrl =
+                    `games/trpg/${encodeURIComponent(folderName)}/index.html`;
+
+
+                const card =
+                    document.createElement("div");
+
+
+                card.className =
+                    "trpg-card";
+
+
+                card.innerHTML = `
+
+                    <div class="trpg-card-title">
+                        🎭
+                        ${escapeHtml(
+                            folderName
+                        )}
+                    </div>
+
+                    <div class="trpg-card-file">
+                        📁
+                        ${escapeHtml(
+                            folderName
+                        )}
+                    </div>
+
+                    <button
+                        type="button"
+                        class="game-open-button trpg-play-button"
+                    >
+                        ▶ 플레이
+                    </button>
+
+                `;
+
+
+                const playButton =
+                    card.querySelector(
+                        ".trpg-play-button"
+                    );
+
+
+                playButton.addEventListener(
+                    "click",
+                    () => {
+
+                        window.open(
+                            new URL(
+                                gameUrl,
+                                window.location.href
+                            ).href,
+                            "_blank"
+                        );
+
+                    }
+                );
+
+
+                trpgList.appendChild(card);
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "TRPG 게임 목록 불러오기 오류:",
+                error
+            );
+
+
+            trpgList.innerHTML = `
+                <div class="trpg-empty">
+                    TRPG 게임 목록을 불러오지 못했습니다.
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* =================================
+       HTML 문자 처리
+    ================================= */
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+
+    }
+
+
+</script>
 
 
 
