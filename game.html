@@ -550,6 +550,10 @@
     letter-spacing: 0.7px;
 }
 
+.trpg-card-file {
+    line-height: 1.6;
+}
+
 
 /* =================================
    FOOTER
@@ -1087,21 +1091,33 @@
                 const folderName =
                     folder.name;
 
-let quote = "";
+let quote = [];
 
 try {
     const infoResponse = await fetch(
-        `https://raw.githubusercontent.com/sanggwan35/sangdan-diary/main/games/trpg/${encodeURIComponent(folderName)}/info.json`
+        `https://api.github.com/repos/sanggwan35/sangdan-diary/contents/games/trpg/${encodeURIComponent(folderName)}/info.json?ref=main`
     );
 
     if (infoResponse.ok) {
-        const info = await infoResponse.json();
-        quote = info.quote || "";
+        const infoFile = await infoResponse.json();
+
+        const infoText = decodeURIComponent(
+            escape(
+                atob(infoFile.content.replace(/\n/g, ""))
+            )
+        );
+
+        const info = JSON.parse(infoText);
+
+        quote = Array.isArray(info.quote)
+    ? info.quote
+    : [info.quote || ""];
     }
 } catch (error) {
     console.log(
         "게임 설명을 불러오지 못했습니다:",
-        folderName
+        folderName,
+        error
     );
 }
 
@@ -1140,11 +1156,11 @@ card.innerHTML = `
             ${escapeHtml(folderName)}
         </div>
 
-        <div class="trpg-card-file">
-            ${escapeHtml(
-                quote || "TRPG SCRIPT"
-            )}
-        </div>
+<div class="trpg-card-file">
+    ${(quote.length ? quote : ["TRPG SCRIPT"])
+        .map(line => escapeHtml(line))
+        .join("<br>")}
+</div>
 
     </div>
 
