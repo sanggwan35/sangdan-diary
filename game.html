@@ -402,34 +402,223 @@
     gap: 20px;
 }
 
+/* =================================
+   TRPG GAME FILE
+================================= */
+
 .trpg-card {
     position: relative;
-    min-height: 150px;
-    padding: 28px;
-    box-sizing: border-box;
 
-    background: #d9cbb5;
-    border: 1px solid #b9a68a;
-    border-radius: 15px;
+    overflow: hidden;
+
+    padding: 0;
+
+    border: 1px solid #625044;
+    border-radius: 2px;
+
+    background: #f8f3e9;
 
     box-shadow:
-        0 4px 0 #a18d72,
-        0 8px 20px rgba(39, 31, 25, 0.10);
+        3px 3px 0 rgba(98, 80, 68, 0.12);
+
+    box-sizing: border-box;
+}
+
+
+/* =================================
+   FILE HEADER
+================================= */
+
+.trpg-card-header {
+    display: flex;
+    align-items: center;
+
+    height: 38px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border-bottom: 1px solid #625044;
+
+    background: #625044;
+
+    color: #fffaf3;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    letter-spacing: 0.8px;
+}
+
+.trpg-card-header-icon {
+    margin-right: 8px;
+
+    font-size: 13px;
+}
+
+
+/* =================================
+   COVER
+================================= */
+
+.trpg-card-cover {
+    width: 100%;
+
+    aspect-ratio: 16 / 7;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    border-bottom: 1px solid rgba(98, 80, 68, 0.35);
+
+    background: #e7dfd2;
+}
+
+.trpg-card-cover img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* =================================
+   GAME INFO
+================================= */
+
+.trpg-card-info {
+    padding: 16px 18px 12px;
+
+    box-sizing: border-box;
+
+    background: #f8f3e9;
 }
 
 .trpg-card-title {
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
 
-    color: #c8ffcf;
-    font-family: monospace;
-    font-size: 18px;
+    margin: 0;
 
-    text-shadow:
-        0 0 5px rgba(157,255,177,0.55),
-        0 0 13px rgba(157,255,177,0.18);
+    padding: 0;
 
-    word-break: break-all;
+    color: #625044;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.4;
 }
+
+.trpg-file-icon {
+    margin-right: 7px;
+
+    font-size: 14px;
+}
+
+.trpg-card-file {
+    margin-top: 5px;
+
+    padding: 0 0 0 21px;
+
+    color: #9a887c;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 0.7px;
+}
+
+
+/* =================================
+   FOOTER
+================================= */
+
+.trpg-card-footer {
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+
+    padding: 0 18px 16px;
+
+    box-sizing: border-box;
+
+    background: #f8f3e9;
+}
+
+
+/* =================================
+   PLAY BUTTON
+================================= */
+
+.trpg-play-button {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 90px;
+    height: 32px;
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    border: 1px solid #625044;
+    border-radius: 2px;
+
+    background: transparent;
+
+    color: #625044;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.18s ease,
+        color 0.18s ease;
+}
+
+.trpg-play-button:hover {
+    background: #625044;
+
+    color: #fffaf3;
+}
+
 
 @media (max-width: 768px) {
 
@@ -444,27 +633,6 @@
 
 }
 
-.trpg-card-cover {
-    width: 150px;
-    height: 200px;
-    margin: 0 auto 16px;
-
-    overflow: hidden;
-
-    border: 1px solid rgba(98, 80, 68, 0.2);
-    border-radius: 5px;
-
-    background: rgba(255, 250, 243, 0.5);
-}
-
-.trpg-card-cover img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-}
 
 
 
@@ -720,7 +888,7 @@
         id="trpg-tab-button"
         class="game-tab"
     >
-        🎭 TRPG 스크립트
+        💾 TRPG
     </button>
 </div>
 
@@ -787,18 +955,6 @@
     class="trpg-section"
     style="display: none;"
 >
-
-    <div class="trpg-header">
-
-        <div>
-            <h3>🎭 TRPG 스크립트</h3>
-
-            <p>
-                GitHub에 등록된 TRPG 게임을 자동으로 불러옵니다.
-            </p>
-        </div>
-
-    </div>
 
 
     <div
@@ -931,6 +1087,24 @@
                 const folderName =
                     folder.name;
 
+let quote = "";
+
+try {
+    const infoResponse = await fetch(
+        `https://raw.githubusercontent.com/sanggwan35/sangdan-diary/main/games/trpg/${encodeURIComponent(folderName)}/info.json`
+    );
+
+    if (infoResponse.ok) {
+        const info = await infoResponse.json();
+        quote = info.quote || "";
+    }
+} catch (error) {
+    console.log(
+        "게임 설명을 불러오지 못했습니다:",
+        folderName
+    );
+}
+
 
                 const gameUrl =
                     `games/trpg/${encodeURIComponent(folderName)}/index.html`;
@@ -944,30 +1118,49 @@
                     "trpg-card";
 
 
-                card.innerHTML = `
+card.innerHTML = `
 
-                    <div class="trpg-card-title">
-                        🎭
-                        ${escapeHtml(
-                            folderName
-                        )}
-                    </div>
+    <div class="trpg-card-header">
+        <span class="trpg-card-header-icon">▣</span>
+        <span>TRPG BACKUP</span>
+    </div>
 
-                    <div class="trpg-card-file">
-                        📁
-                        ${escapeHtml(
-                            folderName
-                        )}
-                    </div>
+    <div class="trpg-card-cover">
+        <img
+            src="games/trpg/${encodeURIComponent(folderName)}/cover.jpg"
+            alt="${escapeHtml(folderName)} 표지"
+            onerror="this.parentElement.style.display='none';"
+        >
+    </div>
 
-                    <button
-                        type="button"
-                        class="game-open-button trpg-play-button"
-                    >
-                        ▶ 플레이
-                    </button>
+    <div class="trpg-card-info">
 
-                `;
+        <div class="trpg-card-title">
+            <span class="trpg-file-icon">📄</span>
+            ${escapeHtml(folderName)}
+        </div>
+
+        <div class="trpg-card-file">
+            ${escapeHtml(
+                quote || "TRPG SCRIPT"
+            )}
+        </div>
+
+    </div>
+
+    <div class="trpg-card-footer">
+
+        <button
+            type="button"
+            class="game-open-button trpg-play-button"
+        >
+            PLAY ▶
+        </button>
+
+    </div>
+
+`;
+            
 
 
                 const playButton =
